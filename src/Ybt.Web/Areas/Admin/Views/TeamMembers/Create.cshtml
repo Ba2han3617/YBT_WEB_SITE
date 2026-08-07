@@ -1,0 +1,55 @@
+@model Ybt.Core.Entities.TeamMember
+@{
+    ViewData["Title"] = "Yeni Ekip Üyesi Ekle";
+    Layout = "_AdminLayout";
+}
+
+<div class="card p-4">
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="FullName" class="form-label">Ad Soyad</label>
+                    <input asp-for="FullName" class="form-control" placeholder="Örn: Ahmet Yılmaz" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Role" class="form-label">Görev</label>
+                    <input asp-for="Role" class="form-control" placeholder="Örn: Başkan / Koordinatör" />
+                    <span asp-validation-for="Role" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Ekip Üyesi Fotoğrafı</label>
+                    <input type="file" name="imageFile" class="form-control" accept="image/*" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Order" class="form-label">Görüntülenme Sırası</label>
+                    <input asp-for="Order" class="form-control" type="number" value="1" />
+                    <span asp-validation-for="Order" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input asp-for="IsActive" class="form-check-input" type="checkbox" checked />
+                        <label asp-for="IsActive" class="form-check-label">Aktif mi?</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary px-5">Kaydet</button>
+            <a asp-action="Index" class="btn btn-outline-secondary px-4">İptal</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

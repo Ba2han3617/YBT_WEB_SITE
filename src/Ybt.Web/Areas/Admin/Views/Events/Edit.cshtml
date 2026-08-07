@@ -1,0 +1,72 @@
+@model Ybt.Core.Entities.Event
+@{
+    ViewData["Title"] = "Etkinliği Düzenle";
+    Layout = "_AdminLayout";
+}
+
+<div class="card p-4">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ImageUrl" />
+        <input type="hidden" asp-for="CreatedAt" />
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label">Etkinlik Başlığı</label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Açıklama</label>
+                    <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EventDate" class="form-label">Etkinlik Tarihi</label>
+                    <input asp-for="EventDate" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="EventDate" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Location" class="form-label">Konum</label>
+                    <input asp-for="Location" class="form-control" />
+                    <span asp-validation-for="Location" class="text-danger"></span>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <div class="mb-3">
+                        <label class="form-label d-block">Mevcut Görsel</label>
+                        <img src="@Model.ImageUrl" class="img-thumbnail" style="max-height: 150px;" />
+                    </div>
+                }
+
+                <div class="mb-3">
+                    <label class="form-label">Görseli Değiştir</label>
+                    <input type="file" name="imageFile" class="form-control" accept="image/*" />
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                        <label asp-for="IsActive" class="form-check-label">Aktif mi?</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary px-5">Güncelle</button>
+            <a asp-action="Index" class="btn btn-outline-secondary px-4">İptal</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

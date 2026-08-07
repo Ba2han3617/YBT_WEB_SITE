@@ -1,0 +1,45 @@
+@model IEnumerable<Ybt.Core.Entities.Project>
+@{
+    ViewData["Title"] = "Projelerimiz";
+}
+
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="text-center mb-5 reveal">
+            <h1 class="display-4 fw-bold">Projelerimiz</h1>
+            <p class="lead text-secondary">Açık kaynak dünyasına sunduğumuz katkılar.</p>
+        </div>
+        <div class="row g-4">
+            @if (!Model.Any())
+            {
+                <div class="col-12 text-center py-5">
+                    <p class="text-secondary">Henüz yayınlanmış bir proje bulunmamaktadır.</p>
+                </div>
+            }
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="card h-100 border-0 shadow-sm glass-card">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-github fs-2 me-3 text-dark"></i>
+                                <h4 class="fw-bold mb-0">@item.Name</h4>
+                            </div>
+                            <p class="text-secondary mb-4">@item.Description</p>
+                            @if (!string.IsNullOrEmpty(item.TechTags))
+                            {
+                                <div class="mb-4">
+                                    @foreach (var tag in item.TechTags.Split(','))
+                                    {
+                                        <span class="badge bg-light text-primary border border-primary-subtle me-1">@tag.Trim()</span>
+                                    }
+                                </div>
+                            }
+                            <a href="@item.GitHubUrl" target="_blank" class="btn btn-dark w-100 rounded-pill">GitHub'da Görüntüle</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,112 @@
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 reveal">
+                <h1 class="display-1 hero-title fw-bolder mb-4">Geleceği Birlikte Kodluyoruz.</h1>
+                <p class="lead mb-5 fs-4 text-secondary">Yazılım ve Bilişim Topluluğu (YBT), öğrencilerin teknoloji dünyasındaki yolculuklarına rehberlik eden, projeler üreten ve topluluk ruhunu yaşatan bir platformdur.</p>
+                <div class="d-flex gap-3">
+                    <a href="#about" class="btn btn-primary btn-lg px-5">Topluluğu Keşfet</a>
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary btn-lg px-5 rounded-pill">Hemen Katıl</a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block reveal">
+                <div class="hero-image-wrapper p-4 floating">
+                    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Hero Image" class="img-fluid rounded-5 shadow-lg">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="counter-section py-5 bg-white shadow-sm reveal">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-6">
+                <div class="counter-box">
+                    <span class="counter-value" data-target="500">0</span>
+                    <span class="counter-label">Aktif Üye</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="counter-box">
+                    <span class="counter-value" data-target="25">0</span>
+                    <span class="counter-label">Tamamlanan Proje</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="counter-box">
+                    <span class="counter-value" data-target="12">0</span>
+                    <span class="counter-label">Yıllık Etkinlik</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="counter-box">
+                    <span class="counter-value" data-target="100">0</span>
+                    <span class="counter-label">Eğitim Saati</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="py-5 mt-5">
+    <div class="container">
+        <div class="text-center mb-5 reveal">
+            <h6 class="text-primary fw-bold text-uppercase">Neler Yapıyoruz?</h6>
+            <h2 class="display-4 fw-bold">Topluluk Faaliyetlerimiz</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4 reveal">
+                <div class="card h-100 p-4 border-0">
+                    <div class="mb-4">
+                        <i class="bi bi-code-square fs-1 text-primary"></i>
+                    </div>
+                    <h3>Yazılım Geliştirme</h3>
+                    <p class="text-secondary">Açık kaynaklı projelerden kurumsal çözümlere kadar geniş bir yelpazede yazılım geliştiriyoruz.</p>
+                </div>
+            </div>
+            <div class="col-md-4 reveal">
+                <div class="card h-100 p-4 border-0">
+                    <div class="mb-4">
+                        <i class="bi bi-trophy fs-1 text-primary"></i>
+                    </div>
+                    <h3>Hackathonlar</h3>
+                    <p class="text-secondary">Yarışmalar ve maratonlarla yeteneklerimizi sınıyoruz, sınırları zorluyoruz.</p>
+                </div>
+            </div>
+            <div class="col-md-4 reveal">
+                <div class="card h-100 p-4 border-0">
+                    <div class="mb-4">
+                        <i class="bi bi-people fs-1 text-primary"></i>
+                    </div>
+                    <h3>Network</h3>
+                    <p class="text-secondary">Sektörün devleri ve deneyimli mühendislerle tanışma, staj ve iş imkanları yakalama şansı.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light mt-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 reveal">
+                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="About" class="img-fluid rounded-5 shadow">
+            </div>
+            <div class="col-lg-6 reveal">
+                <h2 class="display-5 fw-bold mb-4">Bizimle Birlikte Büyüyün</h2>
+                <p class="fs-5 text-secondary mb-4">YBT, sadece bir topluluk değil, aynı zamanda bir aile. Burada her fikir değerli, her proje bir öğrenme fırsatıdır.</p>
+                <ul class="list-unstyled">
+                    <li class="mb-3 fs-5"><i class="bi bi-check-circle-fill text-primary me-2"></i> Ücretsiz Eğitimler</li>
+                    <li class="mb-3 fs-5"><i class="bi bi-check-circle-fill text-primary me-2"></i> Proje Destekleri</li>
+                    <li class="mb-3 fs-5"><i class="bi bi-check-circle-fill text-primary me-2"></i> Mentorluk Sistemi</li>
+                </ul>
+                <a asp-controller="About" asp-action="Index" class="btn btn-primary mt-4">Daha Fazla Bilgi</a>
+            </div>
+        </div>
+    </div>
+</section>

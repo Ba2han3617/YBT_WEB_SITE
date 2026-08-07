@@ -1,0 +1,98 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4 mb-4">
+    <div class="col">
+        <div class="card h-100 p-3 shadow-sm border-0 text-white stats-card members">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h6 class="mb-0">Toplam Üye</h6>
+                    <h2 class="mb-0 fw-bold">1,234</h2>
+                </div>
+                <div class="fs-1"><i class="bi bi-people"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100 p-3 shadow-sm border-0 text-white stats-card events">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h6 class="mb-0">Etkinlikler</h6>
+                    <h2 class="mb-0 fw-bold">12</h2>
+                </div>
+                <div class="fs-1"><i class="bi bi-calendar-check"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100 p-3 shadow-sm border-0 text-white stats-card applications">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h6 class="mb-0">Yeni Başvurular</h6>
+                    <h2 class="mb-0 fw-bold">45</h2>
+                </div>
+                <div class="fs-1"><i class="bi bi-person-plus"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100 p-3 shadow-sm border-0 text-white stats-card blogs">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h6 class="mb-0">Blog Yazıları</h6>
+                    <h2 class="mb-0 fw-bold">28</h2>
+                </div>
+                <div class="fs-1"><i class="bi bi-file-earmark-post"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card p-4">
+            <h5 class="mb-4">Son Başvurular</h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Ad Soyad</th>
+                            <th>Etkinlik</th>
+                            <th>Tarih</th>
+                            <th>Durum</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ali Yılmaz</td>
+                            <td>Hackathon 2026</td>
+                            <td>12.05.2026</td>
+                            <td><span class="badge bg-warning">Beklemede</span></td>
+                            <td><button class="btn btn-sm btn-primary">Detay</button></td>
+                        </tr>
+                        <tr>
+                            <td>Ayşe Demir</td>
+                            <td>AI Workshop</td>
+                            <td>11.05.2026</td>
+                            <td><span class="badge bg-success">Onaylandı</span></td>
+                            <td><button class="btn btn-sm btn-primary">Detay</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card p-4 h-100">
+            <h5 class="mb-4">Hızlı Erişim</h5>
+            <div class="d-grid gap-2">
+                <a asp-controller="Events" asp-action="Create" class="btn btn-outline-primary text-start"><i class="bi bi-plus-circle me-2"></i> Yeni Etkinlik</a>
+                <a asp-controller="Blogs" asp-action="Create" class="btn btn-outline-primary text-start"><i class="bi bi-plus-circle me-2"></i> Yeni Blog</a>
+                <a asp-controller="Projects" asp-action="Create" class="btn btn-outline-primary text-start"><i class="bi bi-plus-circle me-2"></i> Yeni Proje</a>
+            </div>
+
+        </div>
+    </div>
+</div>

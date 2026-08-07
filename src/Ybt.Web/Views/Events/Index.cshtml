@@ -1,0 +1,32 @@
+@model IEnumerable<Ybt.Core.Entities.Event>
+@{
+    ViewData["Title"] = "Etkinlikler";
+}
+
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="text-center mb-5 reveal">
+            <h1 class="display-4 fw-bold">Etkinlikler</h1>
+            <p class="lead text-secondary">Gelecek vizyonumuzu paylaştığımız buluşmalar.</p>
+        </div>
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 reveal">
+                    <div class="card h-100 border-0 shadow-sm overflow-hidden">
+                        <img src="@(item.ImageUrl ?? "https://images.unsplash.com/photo-1540575861501-7ad05823c9f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80")" class="card-img-top" alt="@item.Title" style="height: 200px; object-fit: cover;">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="badge bg-primary rounded-pill px-3">Etkinlik</span>
+                                <small class="text-secondary"><i class="bi bi-calendar3 me-1"></i> @item.EventDate.ToString("dd MMM yyyy")</small>
+                            </div>
+                            <h4 class="fw-bold mb-3">@item.Title</h4>
+                            <p class="text-secondary mb-4">@(item.Description?.Length > 100 ? item.Description.Substring(0, 100) + "..." : item.Description)</p>
+                            <a asp-action="Details" asp-route-slug="@item.Slug" class="btn btn-outline-primary w-100 rounded-pill">Detayları Gör</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

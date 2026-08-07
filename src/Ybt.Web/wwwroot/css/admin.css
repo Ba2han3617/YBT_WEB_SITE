@@ -1,0 +1,126 @@
+/* Admin area dark theme overrides */
+body {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+}
+
+#sidebarMenu .admin-logo-container {
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+}
+
+#sidebarMenu .admin-logo {
+    height: 32px;
+    width: auto;
+    display: block;
+}
+
+.admin-logo-text .title {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.admin-logo-text .subtitle {
+    display: block;
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.card,
+.table,
+.table-responsive,
+.table th,
+.table td,
+.form-control,
+.form-select,
+.btn-outline-primary,
+.btn-outline-secondary {
+    background-color: #111827 !important;
+    color: #f8fafc !important;
+    border-color: #374151 !important;
+}
+
+.table th,
+.table td {
+    border-color: #334155 !important;
+}
+
+.table thead th {
+    background-color: #111827 !important;
+    color: #e2e8f0 !important;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: #111827 !important;
+    border-color: #2563eb !important;
+    color: #f8fafc !important;
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25) !important;
+}
+
+.table-responsive {
+    background-color: transparent !important;
+}
+
+.card p,
+.card h5,
+.card h6,
+.card .btn {
+    color: #f8fafc !important;
+}
+
+.sidebar .nav-link {
+    background: transparent !important;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+}
+
+@media (max-width: 767.98px) {
+    #sidebarMenu .admin-logo-container {
+        justify-content: flex-start;
+    }
+}
+
+.stats-card {
+    background: #111827 !important;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.25);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 50px rgba(59, 130, 246, 0.22);
+}
+
+.stats-card.members {
+    background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+}
+
+.stats-card.events {
+    background: linear-gradient(135deg, #16a34a, #166534) !important;
+}
+
+.stats-card.applications {
+    background: linear-gradient(135deg, #06b6d4, #2563eb) !important;
+}
+
+.stats-card.blogs {
+    background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+}
+
+.stats-card h6,
+.stats-card h2,
+.stats-card i {
+    color: #ffffff !important;
+}

@@ -1,0 +1,54 @@
+@model Ybt.Core.Entities.Blog
+@{
+    ViewData["Title"] = Model?.Title ?? "Blog Detayı";
+}
+
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <article class="card border-0 shadow-sm overflow-hidden">
+                    @if (!string.IsNullOrEmpty(Model?.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" style="max-height: 400px; object-fit: cover;">
+                    }
+                    <div class="card-body p-4 p-md-5">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2">Teknoloji</span>
+                            @if (Model != null)
+                            {
+                                <small class="text-secondary fw-semibold">
+                                    <i class="bi bi-clock me-1"></i> @Model.CreatedAt.ToString("dd MMMM yyyy")
+                                </small>
+                            }
+                        </div>
+
+                        <h1 class="display-6 fw-bold mb-4">@Model?.Title</h1>
+
+                        @if (Model?.Author != null && !string.IsNullOrEmpty(Model.Author.FullName))
+                        {
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px;">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                                <span class="text-secondary fw-semibold">@Model.Author.FullName</span>
+                            </div>
+                        }
+
+                        <hr class="my-4" />
+
+                        <div class="mb-5 lead text-dark" style="white-space: pre-line;">
+                            @Model?.Content
+                        </div>
+
+                        <div class="mt-4">
+                            <a asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
+                                <i class="bi bi-arrow-left me-2"></i>Bloga Geri Dön
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>

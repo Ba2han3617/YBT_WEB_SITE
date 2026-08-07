@@ -1,0 +1,121 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Üye Ol";
+}
+
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 reveal">
+            <div class="card p-4 p-md-5 border-0 shadow-lg glass-card">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold">YBT'ye Katılın</h2>
+                    <p class="text-secondary">Teknoloji dünyasındaki yerinizi almak için formu eksiksiz doldurun.</p>
+                </div>
+                <form asp-action="Register" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="FirstName" class="form-control rounded-pill px-4" placeholder="Ad">
+                                <label asp-for="FirstName" class="ms-3">Ad *</label>
+                                <span asp-validation-for="FirstName" class="text-danger small ms-3"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="LastName" class="form-control rounded-pill px-4" placeholder="Soyad">
+                                <label asp-for="LastName" class="ms-3">Soyad *</label>
+                                <span asp-validation-for="LastName" class="text-danger small ms-3"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="Email" class="form-control rounded-pill px-4" placeholder="name@example.com">
+                                <label asp-for="Email" class="ms-3">E-posta Adresi *</label>
+                                <span asp-validation-for="Email" class="text-danger small ms-3"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="PhoneNumber" class="form-control rounded-pill px-4" placeholder="05XXXXXXXXX">
+                                <label asp-for="PhoneNumber" class="ms-3">Cep Numarası *</label>
+                                <span asp-validation-for="PhoneNumber" class="text-danger small ms-3"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="TcNo" class="form-control rounded-pill px-4" maxlength="11" placeholder="TC Numarası">
+                                <label asp-for="TcNo" class="ms-3">TC Kimlik Numarası (11 Hane) *</label>
+                                <span asp-validation-for="TcNo" class="text-danger small ms-3"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="StudentNumber" class="form-control rounded-pill px-4" placeholder="Öğrenci Numarası">
+                                <label asp-for="StudentNumber" class="ms-3">Öğrenci Numarası *</label>
+                                <span asp-validation-for="StudentNumber" class="text-danger small ms-3"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <select asp-for="Faculty" class="form-select rounded-pill px-4 pt-3 pb-2" style="height: 58px;">
+                                    <option value="">-- Seçiniz --</option>
+                                    <option value="Mühendislik Fakültesi">Mühendislik Fakültesi</option>
+                                    <option value="Teknoloji Fakültesi">Teknoloji Fakültesi</option>
+                                    <option value="Fen Edebiyat Fakültesi">Fen Edebiyat Fakültesi</option>
+                                    <option value="İşletme Fakültesi">İşletme Fakültesi</option>
+                                    <option value="Sanat Tasarım ve Mimarlık Fakültesi">Sanat Tasarım ve Mimarlık Fakültesi</option>
+                                    <option value="Düzce Meslek Yüksekokulu">Düzce Meslek Yüksekokulu</option>
+                                    <option value="Gölyaka Meslek Yüksekokulu">Gölyaka Meslek Yüksekokulu</option>
+                                    <option value="Diğer">Diğer</option>
+                                </select>
+                                <label asp-for="Faculty" class="ms-3">Fakülte / Yüksekokul / MYO *</label>
+                                <span asp-validation-for="Faculty" class="text-danger small ms-3"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea asp-for="Address" class="form-control px-4 pt-4" style="height: 100px; border-radius: 25px;" placeholder="Adres"></textarea>
+                                <label asp-for="Address" class="ms-3">Adres *</label>
+                                <span asp-validation-for="Address" class="text-danger small ms-3"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="Password" class="form-control rounded-pill px-4" placeholder="Şifre">
+                                <label asp-for="Password" class="ms-3">Şifre *</label>
+                                <span asp-validation-for="Password" class="text-danger small ms-3"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="ConfirmPassword" class="form-control rounded-pill px-4" placeholder="Şifre Tekrar">
+                                <label asp-for="ConfirmPassword" class="ms-3">Şifre Tekrar *</label>
+                                <span asp-validation-for="ConfirmPassword" class="text-danger small ms-3"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-3 rounded-pill fw-bold mt-4">Kaydol</button>
+                </form>
+                <div class="text-center mt-4">
+                    <p class="text-secondary">Zaten üye misiniz? <a asp-action="Login" class="text-primary text-decoration-none fw-bold">Giriş Yapın</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

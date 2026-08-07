@@ -1,0 +1,166 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
+using Ybt.Core.Entities;
+using Ybt.Web.Models;
+
+namespace Ybt.Web.Controllers;
+
+public class AccountController : Controller
+{
+    private readonly UserManager<AppUser> _userManager;
+    private readonly SignInManager<AppUser> _signInManager;
+
+    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+    {
+        _userManager = userManager;
+        _signInManager = signInManager;
+    }
+
+    [HttpGet]
+    public IActionResult Login(string? returnUrl = null)
+    {
+        ViewData["ReturnUrl"] = returnUrl;
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [EnableRateLimiting("strict-limit")]
+    public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
+    {
+        if (ModelState.IsValid)
+        {
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
+            if (result.Succeeded)
+            {
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (result.IsLockedOut)
+            {
+                ModelState.AddModelError(string.Empty, "Hesabınız çok sayıda hatalı giriş nedeniyle geçici olarak kilitlenmiştir. Lütfen daha sonra tekrar deneyiniz.");
+                return View(model);
+            }
+
+            ModelState.AddModelError(string.Empty, "Geçersiz giriş denemesi.");
+        }
+        return View(model);
+    }
+
+    [HttpGet]
+    public IActionResult Register()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Register(RegisterViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var existingUser = await _userManager.FindByEmailAsync(model.Email);
+            if (existingUser != null)
+            {
+                ModelState.AddModelError("Email", "Bu e-posta adresi ile zaten kayıtlı bir kullanıcı bulunmaktadır.");
+                return View(model);
+            }
+
+            var user = new AppUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                FullName = $"{model.FirstName} {model.LastName}",
+                Faculty = model.Faculty,
+                TcNo = model.TcNo,
+                StudentNumber = model.StudentNumber,
+                PhoneNumber = model.PhoneNumber,
+                Address = model.Address
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "User");
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return RedirectToAction("Index", "Home");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+        }
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
+    }
+
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult AdminLogin(string? returnUrl = null)
+    {
+        ViewData["ReturnUrl"] = returnUrl;
+        ViewData["IsAdminLogin"] = true;
+        return View("AdminLogin");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [EnableRateLimiting("strict-limit")]
+    public async Task<IActionResult> AdminLogin(LoginViewModel model, string? returnUrl = null)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                user = await _userManager.FindByNameAsync(model.Email);
+            }
+
+            if (user != null)
+            {
+                var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: true);
+                if (result.Succeeded)
+                {
+                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                            return Redirect(returnUrl);
+                        return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    }
+
+                    await _signInManager.SignOutAsync();
+                    ModelState.AddModelError(string.Empty, "Admin yetkiniz bulunmamaktadır.");
+                    ViewData["IsAdminLogin"] = true;
+                    return View("AdminLogin", model);
+                }
+
+                if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError(string.Empty, "Hesabınız çok sayıda hatalı giriş nedeniyle geçici olarak kilitlenmiştir. Lütfen daha sonra tekrar deneyiniz.");
+                    ViewData["IsAdminLogin"] = true;
+                    return View("AdminLogin", model);
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "Geçersiz giriş denemesi.");
+        }
+        ViewData["IsAdminLogin"] = true;
+        return View("AdminLogin", model);
+    }
+}

@@ -1,0 +1,53 @@
+@model IEnumerable<Ybt.Core.Entities.Blog>
+@{
+    ViewData["Title"] = "Blog";
+}
+
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="text-center mb-5 reveal">
+            <h1 class="display-4 fw-bold">YBT Blog</h1>
+            <p class="lead text-secondary">Teknoloji, yazılım ve topluluk haberleri.</p>
+        </div>
+        <div class="row g-5">
+            <div class="col-lg-8">
+                @foreach (var item in Model)
+                {
+                    <article class="mb-5 reveal">
+                        <div class="card border-0 shadow-sm overflow-hidden">
+                            <img src="@(item.ImageUrl ?? "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80")" class="card-img-top" alt="@item.Title" style="height: 350px; object-fit: cover;">
+                            <div class="card-body p-4 p-md-5">
+                                <div class="mb-3">
+                                    <span class="badge bg-primary-subtle text-primary rounded-pill px-3">Teknoloji</span>
+                                    <span class="text-secondary ms-3 small"><i class="bi bi-clock me-1"></i> @item.CreatedAt.ToString("dd MMM yyyy")</span>
+                                </div>
+                                <h2 class="fw-bold mb-4">@item.Title</h2>
+                                <p class="text-secondary fs-5 mb-4">@(item.Content?.Length > 200 ? item.Content.Substring(0, 200) + "..." : item.Content)</p>
+                                <a asp-action="Details" asp-route-slug="@item.Slug" class="btn btn-primary px-4 rounded-pill">Devamını Oku</a>
+                            </div>
+                        </div>
+                    </article>
+                }
+            </div>
+            <div class="col-lg-4">
+                <div class="position-sticky" style="top: 100px;">
+                    <div class="card p-4 border-0 shadow-sm mb-4">
+                        <h5 class="fw-bold mb-3">Ara</h5>
+                        <div class="input-group">
+                            <input type="text" class="form-control rounded-start-pill" placeholder="Blogda ara...">
+                            <button class="btn btn-primary rounded-end-pill px-4"><i class="bi bi-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="card p-4 border-0 shadow-sm">
+                        <h5 class="fw-bold mb-3">Kategoriler</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between">Yazılım <span>(12)</span></a></li>
+                            <li class="mb-2"><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between">Yapay Zeka <span>(8)</span></a></li>
+                            <li class="mb-2"><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between">Etkinlikler <span>(5)</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
