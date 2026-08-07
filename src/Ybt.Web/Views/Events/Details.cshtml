@@ -7,34 +7,34 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="card p-0 border-0 overflow-hidden shadow-lg">
                     @if (!string.IsNullOrEmpty(Model?.ImageUrl))
                     {
                         <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" style="max-height: 400px; object-fit: cover;">
                     }
                     <div class="card-body p-4 p-md-5">
                         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-                            <span class="badge bg-primary rounded-pill px-3 py-2">Etkinlik</span>
+                            <span class="badge bg-info bg-opacity-25 text-info px-3 py-2 border border-info border-opacity-25 rounded-pill"><i class="bi bi-rocket me-1"></i> Etkinlik</span>
                             @if (Model != null)
                             {
-                                <small class="text-secondary fw-semibold">
-                                    <i class="bi bi-calendar3 me-1"></i> @Model.EventDate.ToString("dd MMMM yyyy, HH:mm")
+                                <small class="text-secondary font-monospace">
+                                    <i class="bi bi-calendar3 me-1 text-primary"></i> @Model.EventDate.ToString("dd MMMM yyyy, HH:mm")
                                 </small>
                             }
                         </div>
 
-                        <h1 class="display-6 fw-bold mb-3">@Model?.Title</h1>
+                        <h1 class="display-6 fw-bold text-white mb-3">@Model?.Title</h1>
 
                         @if (!string.IsNullOrEmpty(Model?.Location))
                         {
-                            <p class="text-muted mb-4">
+                            <p class="text-info mb-4">
                                 <i class="bi bi-geo-alt me-1"></i> <strong>Konum:</strong> @Model.Location
                             </p>
                         }
 
-                        <hr class="my-4" />
+                        <hr class="border-secondary border-opacity-25 my-4" />
 
-                        <div class="mb-5 lead text-dark" style="white-space: pre-line;">
+                        <div class="mb-5 lead text-secondary fs-5" style="white-space: pre-line;">
                             @Model?.Description
                         </div>
 

@@ -5,45 +5,57 @@
 
 <section class="py-5 mt-5">
     <div class="container">
-        <div class="row align-items-center mb-5 reveal">
+        <div class="row align-items-center mb-5 g-5 reveal">
             <div class="col-lg-6">
-                <h1 class="display-3 fw-bold mb-4">Biz Kimiz?</h1>
-                <p class="fs-4 text-secondary">Yazılım ve Bilişim Topluluğu, teknolojiye gönül vermiş öğrencilerin bir araya gelerek oluşturduğu dinamik bir topluluktur.</p>
+                <span class="section-tag">YBT Ekosistemi</span>
+                <h1 class="display-3 fw-extrabold mb-4 gradient-text">Biz Kimiz?</h1>
+                <p class="fs-4 text-secondary">Yazılım ve Bilişim Topluluğu, teknolojiye, yazılıma ve bilime gönül vermiş üniversite öğrencilerinin geleceği şekillendirmek için kurduğu güçlü bir inovasyon platformudur.</p>
             </div>
             <div class="col-lg-6">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Team" class="img-fluid rounded-5 shadow">
+                <div class="hero-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Team" class="img-fluid rounded-4 shadow-lg">
+                </div>
             </div>
         </div>
 
         <div class="row g-4 mb-5">
             <div class="col-md-6 reveal">
-                <div class="card p-5 border-0 shadow-sm h-100 bg-primary text-white">
-                    <h2 class="fw-bold mb-4">Misyonumuz</h2>
-                    <p class="fs-5">Öğrencilere sadece teorik bilgi değil, aynı zamanda pratik uygulama alanları sunarak onları profesyonel iş hayatına hazırlamak.</p>
+                <div class="card p-4 p-md-5 h-100">
+                    <div class="feature-icon-box mb-3">
+                        <i class="bi bi-compass"></i>
+                    </div>
+                    <h2 class="fw-bold mb-3 text-white">Misyonumuz</h2>
+                    <p class="fs-5 text-secondary">Öğrencilere teorik bilginin ötesinde pratik proje deneyimi, takım çalışması ve staj/iş fırsatları sunarak onları uzay çağı teknolojilerine hazırlamak.</p>
                 </div>
             </div>
             <div class="col-md-6 reveal">
-                <div class="card p-5 border-0 shadow-sm h-100">
-                    <h2 class="fw-bold mb-4 text-primary">Vizyonumuz</h2>
-                    <p class="fs-5 text-secondary">Türkiye'nin en aktif ve yenilikçi öğrenci topluluğu olarak teknoloji ekosistemine yön vermek.</p>
+                <div class="card p-4 p-md-5 h-100">
+                    <div class="feature-icon-box mb-3">
+                        <i class="bi bi-eye"></i>
+                    </div>
+                    <h2 class="fw-bold mb-3 text-white">Vizyonumuz</h2>
+                    <p class="fs-5 text-secondary">Türkiye'nin en üretken, teknoloji odaklı ve ilham veren öğrenci topluluklarından biri olarak ulusal ve uluslararası platformlarda iz bırakmak.</p>
                 </div>
             </div>
         </div>
 
         <div class="py-5 reveal">
             <div class="text-center mb-5">
-                <h2 class="display-5 fw-bold">Yönetim Ekibimiz</h2>
+                <span class="section-tag">Topluluk Liderleri</span>
+                <h2 class="display-5 fw-bold gradient-text">Yönetim Ekibimiz</h2>
             </div>
             <div class="row g-4">
                 @if (Model != null && Model.Any())
                 {
                     @foreach (var member in Model)
                     {
-                        <div class="col-md-3">
-                            <div class="text-center">
-                                <img src="@(member.ImageUrl ?? "https://i.pravatar.cc/300")" class="rounded-circle mb-3 shadow" width="150" height="150" style="object-fit: cover;">
-                                <h5 class="fw-bold">@member.FullName</h5>
-                                <p class="text-secondary">@member.Role</p>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="card team-card h-100">
+                                <div class="team-avatar-wrapper">
+                                    <img src="@(member.ImageUrl ?? "https://i.pravatar.cc/300")" class="rounded-circle shadow" width="130" height="130" style="object-fit: cover;">
+                                </div>
+                                <h5 class="fw-bold text-white mb-1">@member.FullName</h5>
+                                <p class="text-info small mb-0 font-monospace">@member.Role</p>
                             </div>
                         </div>
                     }

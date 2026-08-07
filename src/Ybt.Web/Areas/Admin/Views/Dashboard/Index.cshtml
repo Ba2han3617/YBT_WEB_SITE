@@ -2,48 +2,57 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4 mb-4">
+<!-- Stats Overview Cards -->
+<div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3 mb-4">
     <div class="col">
-        <div class="card h-100 p-3 shadow-sm border-0 text-white stats-card members">
+        <div class="card stats-card members h-100">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <h6 class="mb-0">Toplam Üye</h6>
-                    <h2 class="mb-0 fw-bold">1,234</h2>
+                    <div class="stat-label">Toplam Üye</div>
+                    <div class="stat-value mt-1">1,234</div>
                 </div>
-                <div class="fs-1"><i class="bi bi-people"></i></div>
+                <div class="stats-icon-badge members">
+                    <i class="bi bi-people"></i>
+                </div>
             </div>
         </div>
     </div>
     <div class="col">
-        <div class="card h-100 p-3 shadow-sm border-0 text-white stats-card events">
+        <div class="card stats-card events h-100">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <h6 class="mb-0">Etkinlikler</h6>
-                    <h2 class="mb-0 fw-bold">12</h2>
+                    <div class="stat-label">Etkinlikler</div>
+                    <div class="stat-value mt-1">12</div>
                 </div>
-                <div class="fs-1"><i class="bi bi-calendar-check"></i></div>
+                <div class="stats-icon-badge events">
+                    <i class="bi bi-calendar-check"></i>
+                </div>
             </div>
         </div>
     </div>
     <div class="col">
-        <div class="card h-100 p-3 shadow-sm border-0 text-white stats-card applications">
+        <div class="card stats-card applications h-100">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <h6 class="mb-0">Yeni Başvurular</h6>
-                    <h2 class="mb-0 fw-bold">45</h2>
+                    <div class="stat-label">Yeni Başvurular</div>
+                    <div class="stat-value mt-1">45</div>
                 </div>
-                <div class="fs-1"><i class="bi bi-person-plus"></i></div>
+                <div class="stats-icon-badge applications">
+                    <i class="bi bi-person-plus"></i>
+                </div>
             </div>
         </div>
     </div>
     <div class="col">
-        <div class="card h-100 p-3 shadow-sm border-0 text-white stats-card blogs">
+        <div class="card stats-card blogs h-100">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <h6 class="mb-0">Blog Yazıları</h6>
-                    <h2 class="mb-0 fw-bold">28</h2>
+                    <div class="stat-label">Blog Yazıları</div>
+                    <div class="stat-value mt-1">28</div>
                 </div>
-                <div class="fs-1"><i class="bi bi-file-earmark-post"></i></div>
+                <div class="stats-icon-badge blogs">
+                    <i class="bi bi-journal-text"></i>
+                </div>
             </div>
         </div>
     </div>
@@ -51,33 +60,36 @@
 
 <div class="row g-4">
     <div class="col-lg-8">
-        <div class="card p-4">
-            <h5 class="mb-4">Son Başvurular</h5>
+        <div class="card p-3 p-md-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0 fw-bold text-white"><i class="bi bi-clock-history me-2 text-info"></i>Son Etkinlik Başvuruları</h6>
+                <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25 font-monospace small">Son 5 Başvuru</span>
+            </div>
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-hover align-middle mb-0">
                     <thead>
                         <tr>
                             <th>Ad Soyad</th>
                             <th>Etkinlik</th>
                             <th>Tarih</th>
                             <th>Durum</th>
-                            <th>İşlem</th>
+                            <th class="text-end">İşlem</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Ali Yılmaz</td>
-                            <td>Hackathon 2026</td>
-                            <td>12.05.2026</td>
-                            <td><span class="badge bg-warning">Beklemede</span></td>
-                            <td><button class="btn btn-sm btn-primary">Detay</button></td>
+                            <td class="fw-semibold text-white">Ali Yılmaz</td>
+                            <td class="text-light">Hackathon 2026</td>
+                            <td class="text-secondary small font-monospace">12.05.2026</td>
+                            <td><span class="badge bg-warning bg-opacity-25 text-warning px-2 py-1 border border-warning border-opacity-25">Beklemede</span></td>
+                            <td class="text-end"><button type="button" class="btn btn-sm btn-outline-light-space">Detay</button></td>
                         </tr>
                         <tr>
-                            <td>Ayşe Demir</td>
-                            <td>AI Workshop</td>
-                            <td>11.05.2026</td>
-                            <td><span class="badge bg-success">Onaylandı</span></td>
-                            <td><button class="btn btn-sm btn-primary">Detay</button></td>
+                            <td class="fw-semibold text-white">Ayşe Demir</td>
+                            <td class="text-light">AI Workshop</td>
+                            <td class="text-secondary small font-monospace">11.05.2026</td>
+                            <td><span class="badge bg-success bg-opacity-25 text-success px-2 py-1 border border-success border-opacity-25">Onaylandı</span></td>
+                            <td class="text-end"><button type="button" class="btn btn-sm btn-outline-light-space">Detay</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -85,14 +97,22 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="card p-4 h-100">
-            <h5 class="mb-4">Hızlı Erişim</h5>
-            <div class="d-grid gap-2">
-                <a asp-controller="Events" asp-action="Create" class="btn btn-outline-primary text-start"><i class="bi bi-plus-circle me-2"></i> Yeni Etkinlik</a>
-                <a asp-controller="Blogs" asp-action="Create" class="btn btn-outline-primary text-start"><i class="bi bi-plus-circle me-2"></i> Yeni Blog</a>
-                <a asp-controller="Projects" asp-action="Create" class="btn btn-outline-primary text-start"><i class="bi bi-plus-circle me-2"></i> Yeni Proje</a>
+        <div class="card p-3 p-md-4 h-100">
+            <h6 class="mb-3 fw-bold text-white"><i class="bi bi-lightning-charge me-2 text-warning"></i>Hızlı İşlemler</h6>
+            <div class="d-flex flex-column gap-2">
+                <a asp-controller="Events" asp-action="Create" class="quick-action-btn">
+                    <i class="bi bi-calendar-plus text-info"></i> Yeni Etkinlik Ekle
+                </a>
+                <a asp-controller="Blogs" asp-action="Create" class="quick-action-btn">
+                    <i class="bi bi-file-earmark-plus text-warning"></i> Yeni Blog Ekle
+                </a>
+                <a asp-controller="Projects" asp-action="Create" class="quick-action-btn">
+                    <i class="bi bi-code-square text-primary"></i> Yeni Proje Ekle
+                </a>
+                <a asp-controller="TeamMembers" asp-action="Create" class="quick-action-btn">
+                    <i class="bi bi-person-plus text-success"></i> Yeni Ekip Üyesi Ekle
+                </a>
             </div>
-
         </div>
     </div>
 </div>

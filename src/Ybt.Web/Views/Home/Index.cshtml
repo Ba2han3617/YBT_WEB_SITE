@@ -2,29 +2,34 @@
     ViewData["Title"] = "Ana Sayfa";
 }
 
+<!-- Futuristic Hero Banner -->
 <section class="hero">
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row align-items-center g-5">
             <div class="col-lg-6 reveal">
-                <h1 class="display-1 hero-title fw-bolder mb-4">Geleceği Birlikte Kodluyoruz.</h1>
-                <p class="lead mb-5 fs-4 text-secondary">Yazılım ve Bilişim Topluluğu (YBT), öğrencilerin teknoloji dünyasındaki yolculuklarına rehberlik eden, projeler üreten ve topluluk ruhunu yaşatan bir platformdur.</p>
-                <div class="d-flex gap-3">
-                    <a href="#about" class="btn btn-primary btn-lg px-5">Topluluğu Keşfet</a>
-                    <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary btn-lg px-5 rounded-pill">Hemen Katıl</a>
+                <div class="tech-badge">
+                    <i class="bi bi-stars me-2"></i> Düzce Üniversitesi Yazılım & Bilişim Topluluğu
+                </div>
+                <h1 class="display-1 hero-title fw-extrabold mb-4">Geleceğin Teknolojisini Birlikte Kodluyoruz.</h1>
+                <p class="lead mb-5 fs-5 text-secondary">Yazılım ve Bilişim Topluluğu (YBT), öğrencilerin uzay ve teknoloji çağındaki yolculuklarına rehberlik eden, açık kaynak projeler üreten ve inovasyonu yaşatan topluluk platformudur.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="#features" class="btn btn-primary btn-lg px-5 rounded-pill shadow-lg"><i class="bi bi-rocket-takeoff me-2"></i>Topluluğu Keşfet</a>
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary btn-lg px-5 rounded-pill"><i class="bi bi-person-plus me-2"></i>Hemen Katıl</a>
                 </div>
             </div>
             <div class="col-lg-6 d-none d-lg-block reveal">
-                <div class="hero-image-wrapper p-4 floating">
-                    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Hero Image" class="img-fluid rounded-5 shadow-lg">
+                <div class="hero-image-wrapper p-2 floating">
+                    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Space Tech Hero" class="img-fluid rounded-4 shadow-lg">
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="counter-section py-5 bg-white shadow-sm reveal">
+<!-- Space Counter Bar -->
+<section class="counter-section py-4 reveal">
     <div class="container">
-        <div class="row">
+        <div class="row g-4">
             <div class="col-md-3 col-6">
                 <div class="counter-box">
                     <span class="counter-value" data-target="500">0</span>
@@ -53,59 +58,64 @@
     </div>
 </section>
 
+<!-- Features Grid -->
 <section id="features" class="py-5 mt-5">
     <div class="container">
         <div class="text-center mb-5 reveal">
-            <h6 class="text-primary fw-bold text-uppercase">Neler Yapıyoruz?</h6>
-            <h2 class="display-4 fw-bold">Topluluk Faaliyetlerimiz</h2>
+            <span class="section-tag">Neler Yapıyoruz?</span>
+            <h2 class="display-4 fw-bold gradient-text">Topluluk Faaliyetlerimiz</h2>
         </div>
         <div class="row g-4">
             <div class="col-md-4 reveal">
                 <div class="card h-100 p-4 border-0">
-                    <div class="mb-4">
-                        <i class="bi bi-code-square fs-1 text-primary"></i>
+                    <div class="feature-icon-box">
+                        <i class="bi bi-code-square"></i>
                     </div>
-                    <h3>Yazılım Geliştirme</h3>
-                    <p class="text-secondary">Açık kaynaklı projelerden kurumsal çözümlere kadar geniş bir yelpazede yazılım geliştiriyoruz.</p>
+                    <h3 class="h4 fw-bold text-white mb-3">Yazılım Geliştirme</h3>
+                    <p class="text-secondary">Açık kaynaklı projelerden kurumsal yazılımlara kadar geniş bir yelpazede geleceğin sistemlerini inşa ediyoruz.</p>
                 </div>
             </div>
             <div class="col-md-4 reveal">
                 <div class="card h-100 p-4 border-0">
-                    <div class="mb-4">
-                        <i class="bi bi-trophy fs-1 text-primary"></i>
+                    <div class="feature-icon-box">
+                        <i class="bi bi-trophy"></i>
                     </div>
-                    <h3>Hackathonlar</h3>
-                    <p class="text-secondary">Yarışmalar ve maratonlarla yeteneklerimizi sınıyoruz, sınırları zorluyoruz.</p>
+                    <h3 class="h4 fw-bold text-white mb-3">Hackathonlar & Yarışmalar</h3>
+                    <p class="text-secondary">Bölgesel ve ulusal maratonlarda yeteneklerimizi sınıyoruz, inovatif çözümler üreterek sınırları zorluyoruz.</p>
                 </div>
             </div>
             <div class="col-md-4 reveal">
                 <div class="card h-100 p-4 border-0">
-                    <div class="mb-4">
-                        <i class="bi bi-people fs-1 text-primary"></i>
+                    <div class="feature-icon-box">
+                        <i class="bi bi-people"></i>
                     </div>
-                    <h3>Network</h3>
-                    <p class="text-secondary">Sektörün devleri ve deneyimli mühendislerle tanışma, staj ve iş imkanları yakalama şansı.</p>
+                    <h3 class="h4 fw-bold text-white mb-3">Network & Kariyer</h3>
+                    <p class="text-secondary">Sektörün lider mühendisleri ve teknoloji devleriyle buluşarak staj ve iş imkanlarını öğrencilerimize ulaştırıyoruz.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-5 bg-light mt-5">
+<!-- About Callout Section -->
+<section class="py-5 mt-5">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 reveal">
-                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="About" class="img-fluid rounded-5 shadow">
-            </div>
-            <div class="col-lg-6 reveal">
-                <h2 class="display-5 fw-bold mb-4">Bizimle Birlikte Büyüyün</h2>
-                <p class="fs-5 text-secondary mb-4">YBT, sadece bir topluluk değil, aynı zamanda bir aile. Burada her fikir değerli, her proje bir öğrenme fırsatıdır.</p>
-                <ul class="list-unstyled">
-                    <li class="mb-3 fs-5"><i class="bi bi-check-circle-fill text-primary me-2"></i> Ücretsiz Eğitimler</li>
-                    <li class="mb-3 fs-5"><i class="bi bi-check-circle-fill text-primary me-2"></i> Proje Destekleri</li>
-                    <li class="mb-3 fs-5"><i class="bi bi-check-circle-fill text-primary me-2"></i> Mentorluk Sistemi</li>
-                </ul>
-                <a asp-controller="About" asp-action="Index" class="btn btn-primary mt-4">Daha Fazla Bilgi</a>
+        <div class="card p-4 p-md-5 border-0 shadow-lg">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6 reveal">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="About Us" class="img-fluid rounded-4 shadow-lg border border-secondary border-opacity-25">
+                </div>
+                <div class="col-lg-6 reveal">
+                    <span class="section-tag">Geleceğe Adım Atın</span>
+                    <h2 class="display-5 fw-bold mb-4 gradient-text">Bizimle Birlikte Büyüyün</h2>
+                    <p class="fs-5 text-secondary mb-4">YBT sadece bir öğrenci kulübü değil; aynı zamanda üretken, meraklı ve birbirini destekleyen dinamik bir teknoloji ekosistemidir.</p>
+                    <ul class="list-unstyled d-flex flex-column gap-3 mb-4">
+                        <li class="fs-5 text-light"><i class="bi bi-check-circle-fill text-info me-3"></i> Ücretsiz Kodlama & Yapay Zeka Eğitimleri</li>
+                        <li class="fs-5 text-light"><i class="bi bi-check-circle-fill text-info me-3"></i> Gerçek Dünya Projelerine Katılım Desteği</li>
+                        <li class="fs-5 text-light"><i class="bi bi-check-circle-fill text-info me-3"></i> Birebir Ekip Mentorluğu & Yol Haritası</li>
+                    </ul>
+                    <a asp-controller="About" asp-action="Index" class="btn btn-primary btn-lg rounded-pill px-5">Daha Fazla Bilgi</a>
+                </div>
             </div>
         </div>
     </div>
