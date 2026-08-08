@@ -1146,4 +1146,4 @@ C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\Ybt.Web.sourcelink.json
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\fl7jkc0mn5-go3a0w9yrn.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\ve1k5il125-4a3fepbcr9.gz
-C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\uto8i4gp62-kqotsmakr7.gz
+C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\uto8i4gp62-yzivquh29e.gz

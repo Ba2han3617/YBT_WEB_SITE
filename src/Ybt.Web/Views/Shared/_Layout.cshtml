@@ -53,7 +53,7 @@
                                     <i class="bi bi-person-circle me-2"></i>@User.Identity.Name
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg glass-card" aria-labelledby="userMenu">
-                                    <li><a class="dropdown-item text-white" asp-controller="Account" asp-action="Profile">Profilim</a></li>
+                                    <li><a class="dropdown-item text-white" asp-area="" asp-controller="Account" asp-action="Profile">Profilim</a></li>
                                     @if (User.IsInRole("Admin"))
                                     {
                                         <li><a class="dropdown-item text-info" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Panel</a></li>

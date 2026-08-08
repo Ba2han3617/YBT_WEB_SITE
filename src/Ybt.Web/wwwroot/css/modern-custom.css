@@ -186,7 +186,9 @@
 /* Login Logo Sizing */
 .login-logo {
     max-height: 80px !important;
+    max-width: 120px !important;
     width: auto !important;
+    height: auto !important;
     object-fit: contain !important;
     filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
 }
