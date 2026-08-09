@@ -44,7 +44,29 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
+            var user = await _userManager.FindByEmailAsync(model.Email) ?? await _userManager.FindByNameAsync(model.Email);
+            if (user != null)
+            {
+                if (await _userManager.CheckPasswordAsync(user, model.Password))
+                {
+                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Admin hesapları yalnızca yönetici giriş ekranından giriş yapabilir.");
+                        return View(model);
+                    }
+                }
+            }
+
+            Microsoft.AspNetCore.Identity.SignInResult result;
+            if (user != null)
+            {
+                result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: true);
+            }
+            else
+            {
+                result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
+            }
+
             if (result.Succeeded)
             {
                 if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
@@ -124,7 +146,8 @@ public class AccountController : Controller
         return View();
     }
 
-    [HttpGet]
+    [HttpGet("adminstrator")]
+    [HttpGet("administrative")]
     public IActionResult AdminLogin(string? returnUrl = null)
     {
         ViewData["ReturnUrl"] = returnUrl;
@@ -132,21 +155,27 @@ public class AccountController : Controller
         return View("AdminLogin");
     }
 
-    [HttpPost]
+    [HttpPost("adminstrator")]
+    [HttpPost("administrative")]
     [ValidateAntiForgeryToken]
     [EnableRateLimiting("strict-limit")]
     public async Task<IActionResult> AdminLogin(LoginViewModel model, string? returnUrl = null)
     {
         if (ModelState.IsValid)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                user = await _userManager.FindByNameAsync(model.Email);
-            }
-
+            var user = await _userManager.FindByEmailAsync(model.Email) ?? await _userManager.FindByNameAsync(model.Email);
             if (user != null)
             {
+                if (await _userManager.CheckPasswordAsync(user, model.Password))
+                {
+                    if (!await _userManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Bu giriş ekranı yalnızca yöneticiler içindir.");
+                        ViewData["IsAdminLogin"] = true;
+                        return View("AdminLogin", model);
+                    }
+                }
+
                 var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
@@ -158,7 +187,7 @@ public class AccountController : Controller
                     }
 
                     await _signInManager.SignOutAsync();
-                    ModelState.AddModelError(string.Empty, "Admin yetkiniz bulunmamaktadır.");
+                    ModelState.AddModelError(string.Empty, "Bu giriş ekranı yalnızca yöneticiler içindir.");
                     ViewData["IsAdminLogin"] = true;
                     return View("AdminLogin", model);
                 }

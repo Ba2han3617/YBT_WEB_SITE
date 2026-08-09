@@ -36,12 +36,22 @@ builder.Services.AddIdentity<AppUser, AppRole>(options => {
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
-    options.AccessDeniedPath = "/administrative";
+    options.AccessDeniedPath = "/adminstrator";
     options.LogoutPath = "/Account/Logout";
     options.Cookie.HttpOnly = true;
     options.Cookie.SameSite = SameSiteMode.Lax;
     options.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    options.Events.OnRedirectToLogin = context =>
+    {
+        if (context.Request.Path.StartsWithSegments("/Admin") || context.Request.Path.StartsWithSegments("/admin"))
+        {
+            context.Response.Redirect("/adminstrator?ReturnUrl=" + System.Net.WebUtility.UrlEncode(context.Request.Path + context.Request.QueryString));
+            return Task.CompletedTask;
+        }
+        context.Response.Redirect(context.RedirectUri);
+        return Task.CompletedTask;
+    };
 });
 
 // Rate Limiting
@@ -131,7 +141,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "adminstrator",
     pattern: "adminstrator",
-    defaults: new { area = "Admin", controller = "Dashboard", action = "Index" });
+    defaults: new { controller = "Account", action = "AdminLogin" });
 
 app.MapControllerRoute(
     name: "areas",
