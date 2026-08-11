@@ -151,4 +151,13 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    Console.WriteLine("\n==================================================");
+    Console.WriteLine(" 🚀 YBT Web Uygulaması Başlatıldı!");
+    Console.WriteLine(" 🌐 HTTP:  http://localhost:5261");
+    Console.WriteLine(" 🔒 HTTPS: https://localhost:7277");
+    Console.WriteLine("==================================================\n");
+});
+
 app.Run();

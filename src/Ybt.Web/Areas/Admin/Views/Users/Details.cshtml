@@ -1,0 +1,114 @@
+@model Ybt.Core.Entities.AppUser
+@{
+    ViewData["Title"] = "Kullanıcı Detayı";
+    Layout = "_AdminLayout";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h5 class="mb-1 text-white"><i class="bi bi-person-lines-fill text-info me-2"></i>Kullanıcı Detayları</h5>
+        <span class="text-secondary small">Kullanıcı profil ve kayıt detayları</span>
+    </div>
+    <a asp-action="Index" class="btn btn-sm btn-outline-light-space">
+        <i class="bi bi-arrow-left me-1"></i> Geri Dön
+    </a>
+</div>
+
+<div class="card p-4">
+    <!-- Profil Üst Bilgisi -->
+    <div class="d-flex align-items-center pb-4 mb-4 border-bottom border-secondary border-opacity-25">
+        <div class="stats-icon-badge members me-3" style="width: 56px; height: 56px; font-size: 1.6rem;">
+            <i class="bi bi-person"></i>
+        </div>
+        <div>
+            <h4 class="mb-1 fw-bold text-white">@(string.IsNullOrWhiteSpace(Model.FullName) ? Model.UserName : Model.FullName)</h4>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-primary bg-opacity-25 text-info border border-info border-opacity-25 px-2 py-1">
+                    <i class="bi bi-shield-check me-1"></i>Rol: @(ViewBag.Roles ?? "Belirtilmemiş")
+                </span>
+                <span class="text-secondary small">
+                    <i class="bi bi-calendar3 me-1"></i>Kayıt Tarihi: @Model.CreatedAt.ToString("dd MMMM yyyy HH:mm")
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detay Tablosu / Grid -->
+    <div class="row g-4">
+        <!-- Temel ve İletişim Bilgileri -->
+        <div class="col-md-6">
+            <div class="p-3 rounded-3" style="background: rgba(7, 11, 20, 0.5); border: 1px solid rgba(56, 189, 248, 0.15);">
+                <h6 class="text-info fw-semibold mb-3">
+                    <i class="bi bi-person-vcard me-2"></i>Kişisel ve İletişim Bilgileri
+                </h6>
+                <div class="row g-3">
+                    <div class="col-6">
+                        <span class="stat-label d-block text-secondary small">Kullanıcı Adı</span>
+                        <span class="fw-medium text-white">@(string.IsNullOrWhiteSpace(Model.UserName) ? "Belirtilmemiş" : Model.UserName)</span>
+                    </div>
+                    <div class="col-6">
+                        <span class="stat-label d-block text-secondary small">E-posta</span>
+                        <span class="fw-medium text-white">@(string.IsNullOrWhiteSpace(Model.Email) ? "Belirtilmemiş" : Model.Email)</span>
+                    </div>
+                    <div class="col-6">
+                        <span class="stat-label d-block text-secondary small">Ad</span>
+                        <span class="fw-medium text-white">@(string.IsNullOrWhiteSpace(Model.FirstName) ? "Belirtilmemiş" : Model.FirstName)</span>
+                    </div>
+                    <div class="col-6">
+                        <span class="stat-label d-block text-secondary small">Soyad</span>
+                        <span class="fw-medium text-white">@(string.IsNullOrWhiteSpace(Model.LastName) ? "Belirtilmemiş" : Model.LastName)</span>
+                    </div>
+                    <div class="col-12">
+                        <span class="stat-label d-block text-secondary small">Ad Soyad (Tam Ad)</span>
+                        <span class="fw-medium text-white">@(string.IsNullOrWhiteSpace(Model.FullName) ? "Belirtilmemiş" : Model.FullName)</span>
+                    </div>
+                    <div class="col-12">
+                        <span class="stat-label d-block text-secondary small">Cep Numarası</span>
+                        <span class="fw-medium text-white">@(string.IsNullOrWhiteSpace(Model.PhoneNumber) ? "Belirtilmemiş" : Model.PhoneNumber)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Akademik ve Kimlik Bilgileri -->
+        <div class="col-md-6">
+            <div class="p-3 rounded-3" style="background: rgba(7, 11, 20, 0.5); border: 1px solid rgba(56, 189, 248, 0.15);">
+                <h6 class="text-info fw-semibold mb-3">
+                    <i class="bi bi-mortarboard me-2"></i>Akademik ve Kimlik Bilgileri
+                </h6>
+                <div class="row g-3">
+                    <div class="col-12">
+                        <span class="stat-label d-block text-secondary small">Fakülte / Yüksekokul / MYO</span>
+                        <span class="fw-medium text-white">@(string.IsNullOrWhiteSpace(Model.Faculty) ? "Belirtilmemiş" : Model.Faculty)</span>
+                    </div>
+                    <div class="col-6">
+                        <span class="stat-label d-block text-secondary small">TC Numarası</span>
+                        <span class="fw-medium text-white">@(string.IsNullOrWhiteSpace(Model.TcNo) ? "Belirtilmemiş" : Model.TcNo)</span>
+                    </div>
+                    <div class="col-6">
+                        <span class="stat-label d-block text-secondary small">Öğrenci Numarası</span>
+                        <span class="fw-medium text-white">@(string.IsNullOrWhiteSpace(Model.StudentNumber) ? "Belirtilmemiş" : Model.StudentNumber)</span>
+                    </div>
+                    <div class="col-6">
+                        <span class="stat-label d-block text-secondary small">Rol Bilgisi</span>
+                        <span class="fw-medium text-white">@(ViewBag.Roles ?? "Belirtilmemiş")</span>
+                    </div>
+                    <div class="col-6">
+                        <span class="stat-label d-block text-secondary small">Kayıt Tarihi</span>
+                        <span class="fw-medium text-white">@Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Adres Bilgisi -->
+        <div class="col-12">
+            <div class="p-3 rounded-3" style="background: rgba(7, 11, 20, 0.5); border: 1px solid rgba(56, 189, 248, 0.15);">
+                <h6 class="text-info fw-semibold mb-2">
+                    <i class="bi bi-geo-alt me-2"></i>Adres Bilgisi
+                </h6>
+                <p class="mb-0 text-white">@(string.IsNullOrWhiteSpace(Model.Address) ? "Belirtilmemiş" : Model.Address)</p>
+            </div>
+        </div>
+    </div>
+</div>

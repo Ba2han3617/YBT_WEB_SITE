@@ -22,4 +22,18 @@ public class UsersController : Controller
         var users = await _userManager.Users.ToListAsync();
         return View(users);
     }
+
+    public async Task<IActionResult> Details(int id)
+    {
+        var user = await _userManager.FindByIdAsync(id.ToString());
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        ViewBag.Roles = roles.Any() ? string.Join(", ", roles) : "Belirtilmemiş";
+
+        return View(user);
+    }
 }

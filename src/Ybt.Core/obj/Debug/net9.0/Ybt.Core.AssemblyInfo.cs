@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ybt.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6a85135a1e27b11ab0fe4fbd84da6cf4c67b63e4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+22d6639cf349904e7bfdfdc3b554c78a4800157a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ybt.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ybt.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
