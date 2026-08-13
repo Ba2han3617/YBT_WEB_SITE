@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ybt.Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+27c72719f2fd92c7a2ac3c85f6ba35324be8ac3a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c57fac3d94b9f9cee32843c537a3fd965fdaea90")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ybt.Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ybt.Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

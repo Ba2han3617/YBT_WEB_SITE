@@ -545,11 +545,7 @@ C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\yymat3qxnb-h1s4sie4z3.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\jhhg4dn2xo-63fj8s7r0e.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\lu1dv3pa3g-0j3bgjxly4.gz
-C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\q3wyuknllr-47otxtyo56.gz
-C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\euer0dv77y-4v8eqarkd7.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\x2ju6x7mpt-356vix0kms.gz
-C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\y62598gc3b-83jwlth58m.gz
-C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\h45sro2chw-mrlpezrjn3.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\yn2htn0iod-lzl9nlhx6b.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\hr37hierwr-ag7o75518u.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\jxiwj1spl4-x0q3zqp4vz.gz
@@ -572,3 +568,8 @@ C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\Ybt.Web.pdb
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\Ybt.Web.genruntimeconfig.cache
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\ref\Ybt.Web.dll
+C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\bin\Release\net9.0\libman.json
+C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\q3wyuknllr-03hjc8e09r.gz
+C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\euer0dv77y-48y08845bh.gz
+C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\y62598gc3b-ilo7uva0vt.gz
+C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Release\net9.0\compressed\h45sro2chw-qlccset4i1.gz

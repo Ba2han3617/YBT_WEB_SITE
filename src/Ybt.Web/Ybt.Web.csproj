@@ -19,5 +19,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+  <Target Name="RestoreLibman" BeforeTargets="Build" Condition="Exists('libman.json')">
+    <Exec Command="libman restore" ConsoleToMSBuild="true" ContinueOnError="WarnAndContinue" />
+  </Target>
 
 </Project>
