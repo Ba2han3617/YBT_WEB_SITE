@@ -21,7 +21,7 @@
             <div class="col-lg-6 reveal">
                 <div class="card p-4 p-md-5 border-0 shadow-lg">
                     <h3 class="fw-bold text-white mb-4"><i class="bi bi-send me-2 text-info"></i>Mesaj Gönderin</h3>
-                    <form asp-action="SendMessage" method="post">
+                    <form asp-action="SendMessage" method="post" asp-antiforgery="true">
                         <div class="mb-3">
                             <label class="form-label text-secondary small">Adınız</label>
                             <input type="text" class="form-control rounded-pill px-4" required>

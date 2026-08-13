@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "/rsIHmaZ2Lg=",
+  "dgSpecHash": "M0/43V6RzZM=",
   "success": true,
   "projectFilePath": "C:\\Users\\Batuhan\\OneDrive\\Masaüstü\\2025-2026 projeler\\YBT WEB SİTESİ\\src\\Ybt.Service\\Ybt.Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Batuhan\\.nuget\\packages\\automapper\\16.1.1\\automapper.16.1.1.nupkg.sha512",
-    "C:\\Users\\Batuhan\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Batuhan\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\Batuhan\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.1\\fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
     "C:\\Users\\Batuhan\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.1\\fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
@@ -36,18 +35,5 @@
     "C:\\Users\\Batuhan\\.nuget\\packages\\system.diagnostics.diagnosticsource\\10.0.0\\system.diagnostics.diagnosticsource.10.0.0.nupkg.sha512",
     "C:\\Users\\Batuhan\\.nuget\\packages\\system.text.json\\9.0.0\\system.text.json.9.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1608",
-      "level": "Warning",
-      "message": "Bağımlılık kısıtlaması dışında algılanan paket sürümü: AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1, AutoMapper (= 12.0.1) gerektiriyor ancak sürüm AutoMapper 16.1.1 çözümlenmiş.",
-      "projectPath": "C:\\Users\\Batuhan\\OneDrive\\Masaüstü\\2025-2026 projeler\\YBT WEB SİTESİ\\src\\Ybt.Service\\Ybt.Service.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\Batuhan\\OneDrive\\Masaüstü\\2025-2026 projeler\\YBT WEB SİTESİ\\src\\Ybt.Service\\Ybt.Service.csproj",
-      "libraryId": "AutoMapper",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  "logs": []
 }

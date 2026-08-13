@@ -10,6 +10,7 @@ public class ContactController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult SendMessage()
     {
         // For demonstration, just redirect back with a success message

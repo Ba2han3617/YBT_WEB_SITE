@@ -72,7 +72,7 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
 
 // AutoMapper
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddAutoMapper(cfg => { }, Assembly.GetExecutingAssembly());
 
 // FluentValidation
 builder.Services.AddFluentValidationAutoValidation();

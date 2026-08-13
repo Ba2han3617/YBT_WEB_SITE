@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ybt.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+22d6639cf349904e7bfdfdc3b554c78a4800157a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+27c72719f2fd92c7a2ac3c85f6ba35324be8ac3a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ybt.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ybt.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
