@@ -5,17 +5,22 @@ using Microsoft.AspNetCore.RateLimiting;
 using Ybt.Core.Entities;
 using Ybt.Web.Models;
 
+using Microsoft.EntityFrameworkCore;
+using Ybt.Data.Context;
+
 namespace Ybt.Web.Controllers;
 
 public class AccountController : Controller
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
+    private readonly AppDbContext _context;
 
-    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, AppDbContext context)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _context = context;
     }
 
     [Authorize]
@@ -28,6 +33,68 @@ public class AccountController : Controller
             return RedirectToAction("Login");
         }
         return View(user);
+    }
+
+    [Authorize]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditProfile(ProfileEditViewModel model)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction("Login");
+        }
+
+        if (ModelState.IsValid)
+        {
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.FullName = $"{model.FirstName} {model.LastName}";
+            user.PhoneNumber = model.PhoneNumber;
+            user.Faculty = model.Faculty;
+            user.Department = model.Department;
+            user.Grade = model.Grade;
+            user.StudentNumber = model.StudentNumber;
+            user.Address = model.Address;
+            user.Interests = model.Interests;
+            user.GitHubUrl = model.GitHubUrl;
+            user.LinkedInUrl = model.LinkedInUrl;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                TempData["Success"] = "Profil bilgileriniz başarıyla güncellendi.";
+                return RedirectToAction("Profile");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+        }
+
+        TempData["Error"] = "Lütfen formdaki hataları kontrol ediniz.";
+        return View("Profile", user);
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<IActionResult> Applications()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction("Login");
+        }
+
+        var applications = await _context.EventApplications
+            .Include(ea => ea.Event)
+            .Where(ea => ea.UserId == user.Id)
+            .OrderByDescending(ea => ea.CreatedAt)
+            .ToListAsync();
+
+        return View(applications);
     }
 
     [HttpGet]

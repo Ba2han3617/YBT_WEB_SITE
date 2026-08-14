@@ -8,6 +8,9 @@ public class Event : BaseEntity
     public string Location { get; set; } = null!;
     public string? ImageUrl { get; set; }
     public string Slug { get; set; } = null!;
+    public int? Capacity { get; set; }
+    public string? Category { get; set; }
+    public string? Speaker { get; set; }
     
     public ICollection<EventApplication> Applications { get; set; } = new List<EventApplication>();
 }
@@ -37,7 +40,9 @@ public class EventApplication : BaseEntity
     public Event Event { get; set; } = null!;
     public int UserId { get; set; }
     public AppUser User { get; set; } = null!;
-    public string Status { get; set; } = "Pending"; // Pending, Approved, Rejected
+    public string Status { get; set; } = "Yeni Başvuru"; // Yeni Başvuru, Değerlendiriliyor, Onaylandı, Reddedildi
+    public string? Notes { get; set; }
+    public string? AdminNotes { get; set; }
 }
 
 public class TeamMember : BaseEntity

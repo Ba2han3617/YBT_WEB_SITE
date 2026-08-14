@@ -72,3 +72,51 @@ public class RegisterViewModel
     [Display(Name = "KVKK Onayı")]
     public bool KvkkConsent { get; set; }
 }
+
+public class ProfileEditViewModel
+{
+    [Required(ErrorMessage = "Lütfen adınızı giriniz.")]
+    [Display(Name = "Ad")]
+    public string FirstName { get; set; } = null!;
+
+    [Required(ErrorMessage = "Lütfen soyadınızı giriniz.")]
+    [Display(Name = "Soyad")]
+    public string LastName { get; set; } = null!;
+
+    [Display(Name = "Fakülte / Yüksekokul / MYO")]
+    public string? Faculty { get; set; }
+
+    [Display(Name = "Bölüm")]
+    public string? Department { get; set; }
+
+    [Display(Name = "Sınıf")]
+    public string? Grade { get; set; }
+
+    [Display(Name = "Öğrenci Numarası")]
+    public string? StudentNumber { get; set; }
+
+    [Required(ErrorMessage = "Cep telefonu numarası zorunludur.")]
+    [Phone(ErrorMessage = "Geçerli bir telefon numarası giriniz.")]
+    [Display(Name = "Cep Numarası")]
+    public string PhoneNumber { get; set; } = null!;
+
+    [Display(Name = "İkametgah / Adres")]
+    public string? Address { get; set; }
+
+    [Display(Name = "İlgi Alanları / Teknolojiler")]
+    public string? Interests { get; set; }
+
+    [Display(Name = "GitHub Profil Linki")]
+    public string? GitHubUrl { get; set; }
+
+    [Display(Name = "LinkedIn Profil Linki")]
+    public string? LinkedInUrl { get; set; }
+}
+
+public class ApplyEventViewModel
+{
+    public int EventId { get; set; }
+    public string EventTitle { get; set; } = null!;
+    public string EventSlug { get; set; } = null!;
+    public string? Notes { get; set; }
+}

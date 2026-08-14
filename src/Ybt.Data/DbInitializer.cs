@@ -32,17 +32,22 @@ public static class DbInitializer
                 UserName = adminUserName,
                 Email = adminEmail,
                 FullName = "System Admin",
+                SecurityStamp = Guid.NewGuid().ToString(),
                 EmailConfirmed = true
             };
             await userManager.CreateAsync(admin, initialPassword);
         }
         else
         {
+            if (string.IsNullOrEmpty(admin.SecurityStamp))
+            {
+                admin.SecurityStamp = Guid.NewGuid().ToString();
+            }
             if (admin.UserName != adminUserName)
             {
                 admin.UserName = adminUserName;
-                await userManager.UpdateAsync(admin);
             }
+            await userManager.UpdateAsync(admin);
         }
 
         if (!await userManager.IsInRoleAsync(admin, "Admin"))
@@ -50,42 +55,131 @@ public static class DbInitializer
             await userManager.AddToRoleAsync(admin, "Admin");
         }
 
-        // Sample Events
-        if (!await context.Events.AnyAsync())
+        // Seed / Update Events with Capacity, Category, Speaker
+        var existingEvents = await context.Events.ToListAsync();
+        if (!existingEvents.Any())
         {
-            context.Events.AddRange(new List<Event>
+            var event1 = new Event
             {
-                new Event
+                Title = "YBT Hackathon 2026: Yapay Zeka ve Gelecek",
+                Description = "48 saatlik kesintisiz kodlama maratonunda yapay zeka, sürdürülebilirlik ve akıllı şehirler alanlarında yenilikçi projeler geliştiriyoruz. Mentör desteği, sürpriz ödüller ve sektör liderleriyle tanışma fırsatı seni bekliyor!",
+                EventDate = DateTime.UtcNow.AddDays(25).AddHours(10),
+                Location = "Düzce Üniversitesi Mühendislik Fakültesi Konferans Salonu",
+                Slug = "ybt-hackathon-2026",
+                ImageUrl = "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+                Capacity = 100,
+                Category = "Hackathon",
+                Speaker = "YBT Yönetim & Sektör Mentörleri",
+                IsActive = true
+            };
+            var event2 = new Event
+            {
+                Title = "Modern Web ve Bulut Mimarileri Atölyesi",
+                Description = ".NET 9, Microservices, Docker ve modern frontend mimarilerinin ele alınacağı uygulamalı atölye çalışması. Gerçek bir senaryo üzerinden uçtan uca mimari geliştirme deneyimi yaşayacağız.",
+                EventDate = DateTime.UtcNow.AddDays(14).AddHours(14),
+                Location = "Merkezi Derslikler B Blok - Amfi 2",
+                Slug = "modern-web-bulut-mimarileri",
+                ImageUrl = "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+                Capacity = 60,
+                Category = "Workshop & Atölye",
+                Speaker = "Kıdemli Bulut Mimarı Burak Erdem",
+                IsActive = true
+            };
+            var event3 = new Event
+            {
+                Title = "Siber Güvenlik & CTF Maratonu 2026",
+                Description = "Web güvenliği, tersine mühendislik ve kriptografi alanlarında bilgi ve yeteneklerini test edebileceğin heyecan dolu bayrak yakalama (CTF) yarışması.",
+                EventDate = DateTime.UtcNow.AddDays(40).AddHours(11),
+                Location = "YBT İnovasyon ve Yazılım Laboratuvarı",
+                Slug = "siber-guvenlik-ctf-2026",
+                ImageUrl = "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+                Capacity = 50,
+                Category = "CTF & Siber Güvenlik",
+                Speaker = "Siber Güvenlik Uzmanı Deniz Yılmaz",
+                IsActive = true
+            };
+            context.Events.AddRange(event1, event2, event3);
+            await context.SaveChangesAsync();
+            existingEvents = new List<Event> { event1, event2, event3 };
+        }
+        else
+        {
+            foreach (var ev in existingEvents)
+            {
+                if (string.IsNullOrEmpty(ev.Category))
                 {
-                    Title = "YBT Hackathon 2026: Yapay Zeka ve Gelecek",
-                    Description = "48 saatlik kesintisiz kodlama maratonunda yapay zeka, sürdürülebilirlik ve akıllı şehirler alanlarında yenilikçi projeler geliştiriyoruz. Mentör desteği, sürpriz ödüller ve sektör liderleriyle tanışma fırsatı seni bekliyor!",
-                    EventDate = DateTime.UtcNow.AddDays(25).AddHours(10),
-                    Location = "Düzce Üniversitesi Mühendislik Fakültesi Konferans Salonu",
-                    Slug = "ybt-hackathon-2026",
-                    ImageUrl = "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-                    IsActive = true
+                    ev.Category = ev.Title.Contains("Hackathon") ? "Hackathon" : (ev.Title.Contains("CTF") ? "CTF & Siber Güvenlik" : "Workshop & Atölye");
+                    ev.Capacity = ev.Capacity ?? 75;
+                    ev.Speaker = ev.Speaker ?? "YBT Teknik Ekip & Davetli Konuşmacı";
+                }
+            }
+            await context.SaveChangesAsync();
+        }
+
+        // Demo Regular User (for testing applications flow)
+        var demoUserEmail = "uye@ybt.com";
+        var demoUser = await userManager.FindByEmailAsync(demoUserEmail);
+        if (demoUser == null)
+        {
+            var newDemoUser = new AppUser
+            {
+                UserName = demoUserEmail,
+                Email = demoUserEmail,
+                FirstName = "Zeynep",
+                LastName = "Kaya",
+                FullName = "Zeynep Kaya",
+                Faculty = "Mühendislik Fakültesi",
+                Department = "Bilgisayar Mühendisliği",
+                Grade = "3. Sınıf",
+                StudentNumber = "210501042",
+                TcNo = "11111111112",
+                PhoneNumber = "05321234567",
+                Address = "Düzce Üniversitesi Konuralp Yerleşkesi",
+                Interests = "Web Geliştirme, Bulut Bilişim, Yapay Zeka",
+                GitHubUrl = "https://github.com/zeynepkaya",
+                LinkedInUrl = "https://linkedin.com/in/zeynepkaya",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                EmailConfirmed = true
+            };
+            var createResult = await userManager.CreateAsync(newDemoUser, "Uye123*");
+            if (createResult.Succeeded)
+            {
+                demoUser = await userManager.FindByEmailAsync(demoUserEmail);
+                if (demoUser != null)
+                {
+                    await userManager.AddToRoleAsync(demoUser, "User");
+                }
+            }
+        }
+
+        // Sample Event Applications
+        if (demoUser != null && !await context.EventApplications.AnyAsync() && existingEvents.Any())
+        {
+            var firstEvent = existingEvents[0];
+            var secondEvent = existingEvents.Count > 1 ? existingEvents[1] : firstEvent;
+
+            context.EventApplications.AddRange(new List<EventApplication>
+            {
+                new EventApplication
+                {
+                    EventId = firstEvent.Id,
+                    UserId = demoUser.Id,
+                    Status = "Onaylandı",
+                    Notes = "Yapay zeka ve web geliştirme alanında projeler üretmek istiyorum. Takımımla birlikte katılacağım.",
+                    AdminNotes = "Ön yeterlilik sağlandı. Onaylandı.",
+                    CreatedAt = DateTime.UtcNow.AddDays(-3)
                 },
-                new Event
+                new EventApplication
                 {
-                    Title = "Modern Web ve Bulut Mimarileri Atölyesi",
-                    Description = ".NET 9, Microservices, Docker ve modern frontend mimarilerinin ele alınacağı uygulamalı atölye çalışması. Gerçek bir senaryo üzerinden uçtan uca mimari geliştirme deneyimi yaşayacağız.",
-                    EventDate = DateTime.UtcNow.AddDays(14).AddHours(14),
-                    Location = "Merkezi Derslikler B Blok - Amfi 2",
-                    Slug = "modern-web-bulut-mimarileri",
-                    ImageUrl = "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-                    IsActive = true
-                },
-                new Event
-                {
-                    Title = "Siber Güvenlik & CTF Maratonu 2026",
-                    Description = "Web güvenliği, tersine mühendislik ve kriptografi alanlarında bilgi ve yeteneklerini test edebileceğin heyecan dolu bayrak yakalama (CTF) yarışması.",
-                    EventDate = DateTime.UtcNow.AddDays(40).AddHours(11),
-                    Location = "YBT İnovasyon ve Yazılım Laboratuvarı",
-                    Slug = "siber-guvenlik-ctf-2026",
-                    ImageUrl = "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-                    IsActive = true
+                    EventId = secondEvent.Id,
+                    UserId = demoUser.Id,
+                    Status = "Değerlendiriliyor",
+                    Notes = ".NET 9 ve Docker mimarilerini öğrenmek istiyorum.",
+                    AdminNotes = "Kontenjan durumu kontrol ediliyor.",
+                    CreatedAt = DateTime.UtcNow.AddDays(-1)
                 }
             });
+            await context.SaveChangesAsync();
         }
 
         // Sample Blogs

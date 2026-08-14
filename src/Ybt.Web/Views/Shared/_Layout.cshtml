@@ -52,14 +52,25 @@
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <div class="dropdown">
-                                <button class="btn btn-primary rounded-pill px-4 dropdown-toggle d-flex align-items-center gap-2" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-primary rounded-pill px-4 dropdown-toggle d-flex align-items-center gap-2 shadow" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-person-circle fs-5"></i>
-                                    <span>@User.Identity.Name</span>
+                                    <span>Hesabım</span>
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg glass-card p-2" aria-labelledby="userMenu">
+                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg glass-card p-2" style="min-width: 200px;" aria-labelledby="userMenu">
+                                    <li>
+                                        <div class="px-3 py-2 text-secondary small border-bottom border-secondary border-opacity-25 mb-1">
+                                            <span class="text-white fw-bold d-block">@User.Identity.Name</span>
+                                            <span class="text-muted" style="font-size: 0.75rem;">YBT Üyesi</span>
+                                        </div>
+                                    </li>
                                     <li>
                                         <a class="dropdown-item rounded-3 py-2 text-white" asp-area="" asp-controller="Account" asp-action="Profile">
                                             <i class="bi bi-person-gear me-2 text-info"></i>Profilim
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item rounded-3 py-2 text-white" asp-area="" asp-controller="Account" asp-action="Applications">
+                                            <i class="bi bi-calendar-check me-2 text-info"></i>Başvurularım
                                         </a>
                                     </li>
                                     @if (User.IsInRole("Admin"))
@@ -84,7 +95,7 @@
                         else
                         {
                             <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary rounded-pill px-4">Giriş Yap</a>
-                            <a asp-controller="Account" asp-action="Register" class="btn btn-primary rounded-pill px-4">Katıl</a>
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-primary rounded-pill px-4 shadow">Katıl</a>
                         }
                     </div>
                 </div>

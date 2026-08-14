@@ -5,67 +5,248 @@
 
 <div class="container py-5 mt-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8 reveal">
+        <div class="col-lg-9 reveal">
             <div class="card p-4 p-md-5 border-0 shadow-lg glass-card">
-                <div class="text-center mb-4">
-                    <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle mb-3" style="width: 80px; height: 80px; font-size: 2.5rem;">
-                        <i class="bi bi-person-fill"></i>
+                <!-- Header -->
+                <div class="d-flex flex-column flex-md-row align-items-center justify-content-between pb-4 mb-4 border-bottom border-secondary border-opacity-25 gap-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle" style="width: 70px; height: 70px; font-size: 2.2rem;">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        <div>
+                            <h3 class="fw-bold text-white mb-1">@Model.FullName</h3>
+                            <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 px-3 py-1 font-monospace">YBT Topluluk Üyesi</span>
+                        </div>
                     </div>
-                    <h2 class="fw-bold">@Model.FullName</h2>
-                    <p class="text-secondary">Kullanıcı Profil Bilgileri</p>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                            <i class="bi bi-pencil-square me-2"></i>Profili Düzenle
+                        </button>
+                        <a asp-action="Applications" class="btn btn-outline-primary rounded-pill px-4">
+                            <i class="bi bi-calendar-check me-2"></i>Başvurularım
+                        </a>
+                    </div>
                 </div>
 
-                <div class="row g-4">
+                <!-- Info Grid -->
+                <div class="row g-3">
                     <div class="col-md-6">
-                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
-                            <label class="text-secondary small d-block mb-1"><i class="bi bi-person me-2 text-info"></i>Ad</label>
-                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.FirstName) ? "-" : Model.FirstName)</span>
+                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 h-100">
+                            <label class="text-secondary small d-block mb-1"><i class="bi bi-person me-2 text-info"></i>Ad Soyad</label>
+                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.FullName) ? "Belirtilmemiş" : Model.FullName)</span>
                         </div>
                     </div>
+
                     <div class="col-md-6">
-                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
-                            <label class="text-secondary small d-block mb-1"><i class="bi bi-person me-2 text-info"></i>Soyad</label>
-                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.LastName) ? "-" : Model.LastName)</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
+                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 h-100">
                             <label class="text-secondary small d-block mb-1"><i class="bi bi-envelope me-2 text-info"></i>E-posta Adresi</label>
-                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.Email) ? "-" : Model.Email)</span>
+                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.Email) ? "Belirtilmemiş" : Model.Email)</span>
                         </div>
                     </div>
+
                     <div class="col-md-6">
-                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
-                            <label class="text-secondary small d-block mb-1"><i class="bi bi-telephone me-2 text-info"></i>Cep Numarası</label>
-                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.PhoneNumber) ? "-" : Model.PhoneNumber)</span>
+                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 h-100">
+                            <label class="text-secondary small d-block mb-1"><i class="bi bi-telephone me-2 text-info"></i>Cep Telefonu</label>
+                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.PhoneNumber) ? "Belirtilmemiş" : Model.PhoneNumber)</span>
                         </div>
                     </div>
+
                     <div class="col-md-6">
-                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
-                            <label class="text-secondary small d-block mb-1"><i class="bi bi-building me-2 text-info"></i>Fakülte / MYO</label>
-                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.Faculty) ? "-" : Model.Faculty)</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
+                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 h-100">
                             <label class="text-secondary small d-block mb-1"><i class="bi bi-card-heading me-2 text-info"></i>Öğrenci Numarası</label>
-                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.StudentNumber) ? "-" : Model.StudentNumber)</span>
+                            <span class="fw-semibold text-white fs-6 font-monospace">@(string.IsNullOrEmpty(Model.StudentNumber) ? "Belirtilmemiş" : Model.StudentNumber)</span>
                         </div>
                     </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 h-100">
+                            <label class="text-secondary small d-block mb-1"><i class="bi bi-building me-2 text-info"></i>Fakülte / MYO</label>
+                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.Faculty) ? "Belirtilmemiş" : Model.Faculty)</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 h-100">
+                            <label class="text-secondary small d-block mb-1"><i class="bi bi-mortarboard me-2 text-info"></i>Bölüm / Program</label>
+                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.Department) ? "Belirtilmemiş" : Model.Department)</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 h-100">
+                            <label class="text-secondary small d-block mb-1"><i class="bi bi-layers me-2 text-info"></i>Sınıf</label>
+                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.Grade) ? "Belirtilmemiş" : Model.Grade)</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 h-100">
+                            <label class="text-secondary small d-block mb-1"><i class="bi bi-shield-check me-2 text-info"></i>TC Kimlik No (Gizli)</label>
+                            <span class="fw-semibold text-secondary fs-6 font-monospace">@(string.IsNullOrEmpty(Model.TcNo) ? "Belirtilmemiş" : Model.TcNo.Substring(0, 3) + "******" + Model.TcNo.Substring(Math.Max(0, Model.TcNo.Length - 2)))</span>
+                        </div>
+                    </div>
+
                     <div class="col-12">
                         <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
-                            <label class="text-secondary small d-block mb-1"><i class="bi bi-geo-alt me-2 text-info"></i>Adres</label>
-                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.Address) ? "-" : Model.Address)</span>
+                            <label class="text-secondary small d-block mb-1"><i class="bi bi-stars me-2 text-warning"></i>İlgi Alanları & Teknolojiler</label>
+                            @if (!string.IsNullOrEmpty(Model.Interests))
+                            {
+                                <div class="d-flex flex-wrap gap-1 mt-1">
+                                    @foreach (var tag in Model.Interests.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                                    {
+                                        <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 font-monospace">@tag.Trim()</span>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-secondary small">Belirtilmemiş (Profili düzenleyerek ekleyebilirsiniz)</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 h-100">
+                            <label class="text-secondary small d-block mb-1"><i class="bi bi-github me-2 text-light"></i>GitHub Profili</label>
+                            @if (!string.IsNullOrEmpty(Model.GitHubUrl))
+                            {
+                                <a href="@Model.GitHubUrl" target="_blank" rel="noopener noreferrer" class="text-info text-decoration-none small d-flex align-items-center gap-1 mt-1">
+                                    <span>@Model.GitHubUrl</span> <i class="bi bi-box-arrow-up-right font-monospace small"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-secondary small">Belirtilmemiş</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 h-100">
+                            <label class="text-secondary small d-block mb-1"><i class="bi bi-linkedin me-2 text-primary"></i>LinkedIn Profili</label>
+                            @if (!string.IsNullOrEmpty(Model.LinkedInUrl))
+                            {
+                                <a href="@Model.LinkedInUrl" target="_blank" rel="noopener noreferrer" class="text-info text-decoration-none small d-flex align-items-center gap-1 mt-1">
+                                    <span>@Model.LinkedInUrl</span> <i class="bi bi-box-arrow-up-right font-monospace small"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-secondary small">Belirtilmemiş</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
+                            <label class="text-secondary small d-block mb-1"><i class="bi bi-geo-alt me-2 text-info"></i>İkametgah / Adres</label>
+                            <span class="fw-semibold text-white fs-6">@(string.IsNullOrEmpty(Model.Address) ? "Belirtilmemiş" : Model.Address)</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center gap-3 mt-4 pt-3">
-                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
+                <!-- Footer Navigation -->
+                <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top border-secondary border-opacity-25">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
                         <i class="bi bi-house me-2"></i>Ana Sayfa
                     </a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="btn btn-outline-info rounded-pill px-4">
+                            <i class="bi bi-shield-lock me-2"></i>Yönetim Paneli
+                        </a>
+                    }
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content glass-card border-secondary text-white" style="background: rgba(15, 23, 42, 0.96);">
+            <div class="modal-header border-secondary border-opacity-25">
+                <h5 class="modal-title fw-bold" id="editProfileModalLabel">
+                    <i class="bi bi-person-gear text-info me-2"></i>Profil Bilgilerini Düzenle
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <form asp-action="EditProfile" method="post">
+                <div class="modal-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small">Ad *</label>
+                            <input type="text" name="FirstName" class="form-control rounded-pill px-3" value="@Model.FirstName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small">Soyad *</label>
+                            <input type="text" name="LastName" class="form-control rounded-pill px-3" value="@Model.LastName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small">Cep Telefonu *</label>
+                            <input type="text" name="PhoneNumber" class="form-control rounded-pill px-3" value="@Model.PhoneNumber" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small">Öğrenci Numarası</label>
+                            <input type="text" name="StudentNumber" class="form-control rounded-pill px-3" value="@Model.StudentNumber">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small">Fakülte / Yüksekokul</label>
+                            <select name="Faculty" class="form-select rounded-pill px-3">
+                                <option value="">-- Seçiniz --</option>
+                                <option value="Mühendislik Fakültesi" selected="@(Model.Faculty == "Mühendislik Fakültesi")">Mühendislik Fakültesi</option>
+                                <option value="Teknoloji Fakültesi" selected="@(Model.Faculty == "Teknoloji Fakültesi")">Teknoloji Fakültesi</option>
+                                <option value="Fen Edebiyat Fakültesi" selected="@(Model.Faculty == "Fen Edebiyat Fakültesi")">Fen Edebiyat Fakültesi</option>
+                                <option value="İşletme Fakültesi" selected="@(Model.Faculty == "İşletme Fakültesi")">İşletme Fakültesi</option>
+                                <option value="Sanat Tasarım ve Mimarlık Fakültesi" selected="@(Model.Faculty == "Sanat Tasarım ve Mimarlık Fakültesi")">Sanat Tasarım ve Mimarlık Fakültesi</option>
+                                <option value="Düzce Meslek Yüksekokulu" selected="@(Model.Faculty == "Düzce Meslek Yüksekokulu")">Düzce Meslek Yüksekokulu</option>
+                                <option value="Gölyaka Meslek Yüksekokulu" selected="@(Model.Faculty == "Gölyaka Meslek Yüksekokulu")">Gölyaka Meslek Yüksekokulu</option>
+                                <option value="Diğer" selected="@(Model.Faculty == "Diğer")">Diğer</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small">Bölüm / Program</label>
+                            <input type="text" name="Department" class="form-control rounded-pill px-3" placeholder="Örn: Bilgisayar Mühendisliği" value="@Model.Department">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small">Sınıf</label>
+                            <select name="Grade" class="form-select rounded-pill px-3">
+                                <option value="">-- Seçiniz --</option>
+                                <option value="Hazırlık" selected="@(Model.Grade == "Hazırlık")">Hazırlık</option>
+                                <option value="1. Sınıf" selected="@(Model.Grade == "1. Sınıf")">1. Sınıf</option>
+                                <option value="2. Sınıf" selected="@(Model.Grade == "2. Sınıf")">2. Sınıf</option>
+                                <option value="3. Sınıf" selected="@(Model.Grade == "3. Sınıf")">3. Sınıf</option>
+                                <option value="4. Sınıf" selected="@(Model.Grade == "4. Sınıf")">4. Sınıf</option>
+                                <option value="Yüksek Lisans / Doktora" selected="@(Model.Grade == "Yüksek Lisans / Doktora")">Yüksek Lisans / Doktora</option>
+                                <option value="Mezun" selected="@(Model.Grade == "Mezun")">Mezun</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small">İlgi Alanları & Teknolojiler</label>
+                            <input type="text" name="Interests" class="form-control rounded-pill px-3" placeholder="Örn: .NET, React, Yapay Zeka" value="@Model.Interests">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small">GitHub Profil Linki</label>
+                            <input type="url" name="GitHubUrl" class="form-control rounded-pill px-3" placeholder="https://github.com/kullaniciadi" value="@Model.GitHubUrl">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary small">LinkedIn Profil Linki</label>
+                            <input type="url" name="LinkedInUrl" class="form-control rounded-pill px-3" placeholder="https://linkedin.com/in/kullaniciadi" value="@Model.LinkedInUrl">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label text-secondary small">İkametgah / Adres</label>
+                            <textarea name="Address" class="form-control px-3 py-2" rows="2" style="border-radius: 16px;" placeholder="Adresiniz...">@Model.Address</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-secondary border-opacity-25">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 shadow">
+                        <i class="bi bi-check2 me-2"></i>Değişiklikleri Kaydet
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

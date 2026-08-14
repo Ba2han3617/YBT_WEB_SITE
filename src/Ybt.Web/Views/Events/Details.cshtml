@@ -1,58 +1,115 @@
 @model Ybt.Core.Entities.Event
 @{
     ViewData["Title"] = Model?.Title ?? "Etkinlik Detayı";
+    var userApplication = ViewBag.UserApplication as Ybt.Core.Entities.EventApplication;
 }
 
 <section class="py-5 mt-5">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card p-0 border-0 overflow-hidden shadow-lg">
+            <div class="col-lg-9 reveal">
+                <div class="card p-0 border-0 overflow-hidden shadow-lg glass-card">
                     @if (!string.IsNullOrEmpty(Model?.ImageUrl))
                     {
                         <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" style="max-height: 400px; object-fit: cover;">
                     }
                     <div class="card-body p-4 p-md-5">
-                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-                            <span class="badge bg-info bg-opacity-25 text-info px-3 py-2 border border-info border-opacity-25 rounded-pill"><i class="bi bi-rocket me-1"></i> Etkinlik</span>
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                            <span class="badge bg-info bg-opacity-25 text-info px-3 py-2 border border-info border-opacity-25 rounded-pill">
+                                <i class="bi bi-tag-fill me-1"></i> @(string.IsNullOrEmpty(Model?.Category) ? "Topluluk Etkinliği" : Model.Category)
+                            </span>
                             @if (Model != null)
                             {
-                                <small class="text-secondary font-monospace">
+                                <span class="text-secondary font-monospace small">
                                     <i class="bi bi-calendar3 me-1 text-primary"></i> @Model.EventDate.ToString("dd MMMM yyyy, HH:mm")
-                                </small>
+                                </span>
                             }
                         </div>
 
-                        <h1 class="display-6 fw-bold text-white mb-3">@Model?.Title</h1>
+                        <h1 class="display-6 fw-bold text-white mb-4">@Model?.Title</h1>
 
-                        @if (!string.IsNullOrEmpty(Model?.Location))
-                        {
-                            <p class="text-info mb-4">
-                                <i class="bi bi-geo-alt me-1"></i> <strong>Konum:</strong> @Model.Location
-                            </p>
-                        }
+                        <!-- Event Key Highlights -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-sm-6 col-md-3">
+                                <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 text-center h-100">
+                                    <i class="bi bi-calendar-event text-primary fs-4 d-block mb-1"></i>
+                                    <span class="text-secondary small d-block">Tarih & Saat</span>
+                                    <strong class="text-white small">@Model?.EventDate.ToString("dd MMM yyyy, HH:mm")</strong>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 text-center h-100">
+                                    <i class="bi bi-geo-alt text-info fs-4 d-block mb-1"></i>
+                                    <span class="text-secondary small d-block">Konum</span>
+                                    <strong class="text-white small">@(string.IsNullOrEmpty(Model?.Location) ? "Düzce Üniversitesi" : Model.Location)</strong>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 text-center h-100">
+                                    <i class="bi bi-people text-warning fs-4 d-block mb-1"></i>
+                                    <span class="text-secondary small d-block">Kontenjan</span>
+                                    <strong class="text-white small">@(Model?.Capacity.HasValue == true ? $"{Model.Capacity} Kişi" : "Sınırsız")</strong>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 text-center h-100">
+                                    <i class="bi bi-person-video3 text-success fs-4 d-block mb-1"></i>
+                                    <span class="text-secondary small d-block">Konuşmacı / Eğitmen</span>
+                                    <strong class="text-white small">@(string.IsNullOrEmpty(Model?.Speaker) ? "YBT Ekibi" : Model.Speaker)</strong>
+                                </div>
+                            </div>
+                        </div>
 
                         <hr class="border-secondary border-opacity-25 my-4" />
 
-                        <div class="mb-5 lead text-secondary fs-5" style="white-space: pre-line;">
+                        <!-- Description -->
+                        <h5 class="fw-bold text-white mb-3"><i class="bi bi-info-circle text-info me-2"></i>Etkinlik Detayları</h5>
+                        <div class="mb-5 lead text-secondary fs-5" style="white-space: pre-line; line-height: 1.8;">
                             @Model?.Description
                         </div>
 
-                        <div class="d-flex flex-wrap gap-3 mt-4">
-                            <a asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
+                        <!-- Application / Status Box -->
+                        @if (userApplication != null)
+                        {
+                            <div class="p-4 rounded-4 border border-success border-opacity-25 bg-success bg-opacity-10 mb-4">
+                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <i class="bi bi-check2-circle text-success fs-1"></i>
+                                        <div>
+                                            <h6 class="fw-bold text-white mb-1">Bu Etkinliğe Başvurunuz Bulunmaktadır</h6>
+                                            <span class="text-secondary small d-block">
+                                                Başvuru Tarihi: @userApplication.CreatedAt.ToString("dd.MM.yyyy HH:mm") &bull; Durum: 
+                                                <span class="fw-bold text-info">@userApplication.Status</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <a asp-controller="Account" asp-action="Applications" class="btn btn-success rounded-pill px-4">
+                                        <i class="bi bi-list-check me-2"></i>Başvurularımı Gör
+                                    </a>
+                                </div>
+                            </div>
+                        }
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex flex-wrap gap-3 mt-4 pt-3 border-top border-secondary border-opacity-25">
+                            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
                                 <i class="bi bi-arrow-left me-2"></i>Etkinliklere Geri Dön
                             </a>
-                            @if (User.Identity?.IsAuthenticated == true)
+
+                            @if (userApplication == null)
                             {
-                                <button type="button" class="btn btn-primary rounded-pill px-4 shadow-lg" onclick="alert('Etkinlik kaydınız başarıyla alındı! Katılım detayları e-posta adresinize iletilecektir.');">
-                                    <i class="bi bi-ticket-perforated me-2"></i>Etkinliğe Katıl
-                                </button>
-                            }
-                            else
-                            {
-                                <a asp-controller="Account" asp-action="Register" class="btn btn-primary rounded-pill px-4 shadow-lg">
-                                    <i class="bi bi-person-plus me-2"></i>Katılmak İçin Kayıt Ol
-                                </a>
+                                @if (User.Identity?.IsAuthenticated == true)
+                                {
+                                    <button type="button" class="btn btn-primary rounded-pill px-5 py-2 shadow-lg fw-bold" data-bs-toggle="modal" data-bs-target="#applyEventModal">
+                                        <i class="bi bi-ticket-perforated me-2"></i>Etkinliğe Başvur
+                                    </button>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Events/Details/@Model?.Slug" class="btn btn-primary rounded-pill px-5 py-2 shadow-lg fw-bold">
+                                        <i class="bi bi-box-arrow-in-right me-2"></i>Başvurmak İçin Giriş Yap
+                                    </a>
+                                }
                             }
                         </div>
                     </div>
@@ -61,3 +118,45 @@
         </div>
     </div>
 </section>
+
+<!-- Apply Event Modal -->
+@if (Model != null && User.Identity?.IsAuthenticated == true && userApplication == null)
+{
+    <div class="modal fade" id="applyEventModal" tabindex="-1" aria-labelledby="applyEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-card border-secondary text-white" style="background: rgba(15, 23, 42, 0.96);">
+                <div class="modal-header border-secondary border-opacity-25">
+                    <h5 class="modal-title fw-bold" id="applyEventModalLabel">
+                        <i class="bi bi-ticket-detailed text-info me-2"></i>Etkinlik Başvurusu
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <form asp-action="Apply" method="post">
+                    <input type="hidden" name="eventId" value="@Model.Id" />
+                    <div class="modal-body p-4">
+                        <div class="mb-3 p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
+                            <span class="text-secondary small d-block mb-1">Başvurulan Etkinlik:</span>
+                            <h6 class="fw-bold text-white mb-1">@Model.Title</h6>
+                            <span class="text-info small font-monospace"><i class="bi bi-calendar3 me-1"></i>@Model.EventDate.ToString("dd MMMM yyyy, HH:mm")</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label text-secondary small">Varsa Başvuru Notunuz / Beklentiniz (İsteğe Bağlı)</label>
+                            <textarea name="notes" class="form-control px-3 py-2" rows="3" style="border-radius: 16px;" placeholder="Bu etkinliğe katılma motivasyonunuz veya belirtmek istediğiniz özel bir durum varsa yazabilirsiniz..."></textarea>
+                        </div>
+
+                        <p class="text-secondary small mb-0" style="line-height: 1.6;">
+                            <i class="bi bi-shield-check text-info me-1"></i> Başvurunuz topluluk yöneticileri tarafından incelenecek ve kayıt durumunuz e-posta ile bildirilecektir.
+                        </p>
+                    </div>
+                    <div class="modal-footer border-secondary border-opacity-25">
+                        <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Vazgeç</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 shadow">
+                            <i class="bi bi-send-check me-2"></i>Başvuruyu Onayla
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}

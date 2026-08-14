@@ -1,161 +1,104 @@
 @model IEnumerable<Ybt.Core.Entities.EventApplication>
 @{
-    ViewData["Title"] = "Genel Bakış";
+    ViewData["Title"] = "Etkinlik Başvuruları Yönetimi";
+    Layout = "_AdminLayout";
+    var currentFilter = ViewBag.CurrentFilter as string ?? "all";
 }
 
-<!-- Stats Overview Cards -->
-<div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3 mb-4">
-    <div class="col">
-        <div class="card stats-card members h-100">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-label">Toplam Üye</div>
-                    <div class="stat-value mt-1">@(ViewBag.UserCount ?? 0)</div>
-                </div>
-                <div class="stats-icon-badge members">
-                    <i class="bi bi-people"></i>
-                </div>
-            </div>
+<!-- Filter Tabs -->
+<div class="card p-3 mb-4">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div class="d-flex flex-wrap gap-2">
+            <a asp-action="Index" asp-route-status="all" class="btn btn-sm @(currentFilter == "all" ? "btn-primary" : "btn-outline-secondary") rounded-pill px-3">
+                Tümü <span class="badge bg-dark ms-1">@ViewBag.TotalCount</span>
+            </a>
+            <a asp-action="Index" asp-route-status="pending" class="btn btn-sm @(currentFilter == "pending" ? "btn-info text-white" : "btn-outline-info") rounded-pill px-3">
+                Yeni Başvuru <span class="badge bg-dark ms-1">@ViewBag.PendingCount</span>
+            </a>
+            <a asp-action="Index" asp-route-status="reviewing" class="btn btn-sm @(currentFilter == "reviewing" ? "btn-warning text-dark" : "btn-outline-warning") rounded-pill px-3">
+                Değerlendiriliyor <span class="badge bg-dark ms-1">@ViewBag.ReviewingCount</span>
+            </a>
+            <a asp-action="Index" asp-route-status="approved" class="btn btn-sm @(currentFilter == "approved" ? "btn-success" : "btn-outline-success") rounded-pill px-3">
+                Onaylandı <span class="badge bg-dark ms-1">@ViewBag.ApprovedCount</span>
+            </a>
+            <a asp-action="Index" asp-route-status="rejected" class="btn btn-sm @(currentFilter == "rejected" ? "btn-danger" : "btn-outline-danger") rounded-pill px-3">
+                Reddedildi <span class="badge bg-dark ms-1">@ViewBag.RejectedCount</span>
+            </a>
         </div>
-    </div>
-    <div class="col">
-        <div class="card stats-card events h-100">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-label">Etkinlikler</div>
-                    <div class="stat-value mt-1">@(ViewBag.EventCount ?? 0)</div>
-                </div>
-                <div class="stats-icon-badge events">
-                    <i class="bi bi-calendar-check"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card stats-card applications h-100">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-label">Aktif Projeler</div>
-                    <div class="stat-value mt-1">@(ViewBag.ProjectCount ?? 0)</div>
-                </div>
-                <div class="stats-icon-badge applications">
-                    <i class="bi bi-code-slash"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card stats-card blogs h-100">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-label">Blog Yazıları</div>
-                    <div class="stat-value mt-1">@(ViewBag.BlogCount ?? 0)</div>
-                </div>
-                <div class="stats-icon-badge blogs">
-                    <i class="bi bi-journal-text"></i>
-                </div>
-            </div>
-        </div>
+        <span class="text-secondary small font-monospace"><i class="bi bi-info-circle me-1"></i>Toplam @Model.Count() başvuru listeleniyor</span>
     </div>
 </div>
 
-<div class="row g-4">
-    <div class="col-lg-8">
-        <div class="card p-3 p-md-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h6 class="mb-0 fw-bold text-white"><i class="bi bi-clock-history me-2 text-info"></i>Son Etkinlik Başvuruları</h6>
-                    <span class="text-secondary small">Etkinliklere yapılan en güncel başvurular</span>
-                </div>
-                <a asp-controller="Applications" asp-action="Index" class="btn btn-sm btn-outline-info rounded-pill px-3">
-                    <i class="bi bi-inboxes me-1"></i>Tüm Başvurular
-                </a>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>Ad Soyad</th>
-                            <th>Etkinlik</th>
-                            <th>Tarih</th>
-                            <th>Durum</th>
-                            <th class="text-end">İşlem</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model == null || !Model.Any())
-                        {
-                            <tr>
-                                <td colspan="5" class="text-center py-4 text-secondary">
-                                    <i class="bi bi-info-circle me-1"></i> Henüz kayıtlı etkinlik başvurusu bulunmuyor.
-                                </td>
-                            </tr>
-                        }
-                        else
-                        {
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        <span class="fw-semibold text-white d-block">@(item.User?.FullName ?? (item.User?.FirstName + " " + item.User?.LastName))</span>
-                                        <span class="text-secondary small">@(item.User?.Email ?? "-")</span>
-                                    </td>
-                                    <td class="text-light">
-                                        @(item.Event?.Title ?? "Silinmiş Etkinlik")
-                                    </td>
-                                    <td class="text-secondary small font-monospace">@item.CreatedAt.ToString("dd.MM.yyyy")</td>
-                                    <td>
-                                        @if (item.Status == "Onaylandı" || item.Status == "Approved")
-                                        {
-                                            <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 px-2 py-1">Onaylandı</span>
-                                        }
-                                        else if (item.Status == "Değerlendiriliyor" || item.Status == "UnderReview")
-                                        {
-                                            <span class="badge bg-warning bg-opacity-25 text-warning border border-warning border-opacity-25 px-2 py-1">Değerlendiriliyor</span>
-                                        }
-                                        else if (item.Status == "Reddedildi" || item.Status == "Rejected")
-                                        {
-                                            <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25 px-2 py-1">Reddedildi</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25 px-2 py-1">Yeni Başvuru</span>
-                                        }
-                                    </td>
-                                    <td class="text-end">
-                                        <button type="button" class="btn btn-sm btn-outline-light-space btn-inspect" data-app-id="@item.Id">
-                                            <i class="bi bi-search me-1"></i>İncele
-                                        </button>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<!-- Applications Table Card -->
+<div class="card p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="mb-0 fw-bold text-white"><i class="bi bi-inboxes-fill text-info me-2"></i>Başvuru Listesi</h5>
     </div>
-    <div class="col-lg-4">
-        <div class="card p-3 p-md-4 h-100">
-            <h6 class="mb-3 fw-bold text-white"><i class="bi bi-lightning-charge me-2 text-warning"></i>Hızlı İşlemler</h6>
-            <div class="d-flex flex-column gap-2">
-                <a asp-controller="Applications" asp-action="Index" class="quick-action-btn">
-                    <i class="bi bi-inboxes text-info"></i> Başvuru Yönetimi
-                </a>
-                <a asp-controller="Events" asp-action="Create" class="quick-action-btn">
-                    <i class="bi bi-calendar-plus text-primary"></i> Yeni Etkinlik Ekle
-                </a>
-                <a asp-controller="Blogs" asp-action="Create" class="quick-action-btn">
-                    <i class="bi bi-file-earmark-plus text-warning"></i> Yeni Blog Ekle
-                </a>
-                <a asp-controller="Projects" asp-action="Create" class="quick-action-btn">
-                    <i class="bi bi-code-square text-success"></i> Yeni Proje Ekle
-                </a>
-                <a asp-controller="TeamMembers" asp-action="Create" class="quick-action-btn">
-                    <i class="bi bi-person-plus text-info"></i> Yeni Ekip Üyesi Ekle
-                </a>
-            </div>
-        </div>
+    <div class="table-responsive">
+        <table id="applicationsTable" class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Başvuran Üye</th>
+                    <th>Öğrenci No</th>
+                    <th>Fakülte / Bölüm</th>
+                    <th>Başvurulan Etkinlik</th>
+                    <th>Başvuru Tarihi</th>
+                    <th>Durum</th>
+                    <th class="text-end">İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="avatar bg-primary bg-opacity-20 text-info rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; font-weight: bold;">
+                                    @(item.User?.FirstName?.Substring(0, 1) ?? "U")
+                                </div>
+                                <div>
+                                    <span class="fw-bold text-white d-block">@(item.User?.FullName ?? (item.User?.FirstName + " " + item.User?.LastName))</span>
+                                    <span class="text-secondary small">@(item.User?.Email ?? "-")</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="font-monospace small text-info">@(item.User?.StudentNumber ?? "-")</td>
+                        <td>
+                            <span class="text-light small d-block">@(item.User?.Faculty ?? "Belirtilmemiş")</span>
+                            <span class="text-secondary small">@(item.User?.Department ?? "-")</span>
+                        </td>
+                        <td>
+                            <span class="fw-semibold text-white d-block">@(item.Event?.Title ?? "Silinmiş Etkinlik")</span>
+                            <span class="text-secondary small font-monospace"><i class="bi bi-calendar-event me-1"></i>@(item.Event?.EventDate.ToString("dd.MM.yyyy HH:mm") ?? "-")</span>
+                        </td>
+                        <td class="text-secondary small font-monospace">@item.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>
+                            @if (item.Status == "Onaylandı" || item.Status == "Approved")
+                            {
+                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 px-2 py-1">Onaylandı</span>
+                            }
+                            else if (item.Status == "Değerlendiriliyor" || item.Status == "UnderReview")
+                            {
+                                <span class="badge bg-warning bg-opacity-25 text-warning border border-warning border-opacity-25 px-2 py-1">Değerlendiriliyor</span>
+                            }
+                            else if (item.Status == "Reddedildi" || item.Status == "Rejected")
+                            {
+                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25 px-2 py-1">Reddedildi</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25 px-2 py-1">Yeni Başvuru</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <button type="button" class="btn btn-sm btn-outline-info rounded-pill px-3 btn-inspect" data-app-id="@item.Id">
+                                <i class="bi bi-search me-1"></i>İncele
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -169,7 +112,7 @@
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
             </div>
-            <form asp-controller="Applications" asp-action="UpdateStatus" method="post" id="statusUpdateForm">
+            <form asp-action="UpdateStatus" method="post" id="statusUpdateForm">
                 <input type="hidden" name="id" id="modalAppId" />
                 <input type="hidden" name="status" id="modalStatusInput" />
                 <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
@@ -258,6 +201,12 @@
 @section Scripts {
     <script>
         $(document).ready(function() {
+            $('#applicationsTable').DataTable({
+                "pageLength": 10,
+                "responsive": true,
+                "order": [[4, "desc"]]
+            });
+
             // Inspect Button click
             $('.btn-inspect').on('click', function() {
                 var appId = $(this).data('app-id');
@@ -310,4 +259,3 @@
         }
     </script>
 }
-

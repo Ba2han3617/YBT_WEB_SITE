@@ -1,0 +1,131 @@
+@model IEnumerable<Ybt.Core.Entities.EventApplication>
+@{
+    ViewData["Title"] = "Başvurularım";
+}
+
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 reveal">
+            <!-- Header Card -->
+            <div class="card p-4 p-md-5 border-0 shadow-lg glass-card mb-4">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 pb-3 border-bottom border-secondary border-opacity-25">
+                    <div>
+                        <span class="section-tag mb-2">Hesap Yönetimi</span>
+                        <h2 class="fw-bold text-white mb-1"><i class="bi bi-calendar-check text-info me-2"></i>Etkinlik Başvurularım</h2>
+                        <p class="text-secondary small mb-0">Katılmak için başvurduğunuz etkinlikleri ve güncel değerlendirme durumlarını buradan takip edebilirsiniz.</p>
+                    </div>
+                    <div>
+                        <a asp-controller="Events" asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
+                            <i class="bi bi-plus-circle me-2"></i>Etkinlikleri Keşfet
+                        </a>
+                    </div>
+                </div>
+
+                @if (!Model.Any())
+                {
+                    <!-- Empty State -->
+                    <div class="text-center py-5">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-info bg-opacity-10 text-info rounded-circle mb-3" style="width: 90px; height: 90px; font-size: 2.8rem;">
+                            <i class="bi bi-calendar-x"></i>
+                        </div>
+                        <h4 class="fw-bold text-white mb-2">Henüz bir etkinliğe başvurmadınız.</h4>
+                        <p class="text-secondary mb-4 mx-auto" style="max-width: 450px;">
+                            YBT tarafından düzenlenen hackathonlar, kodlama atölyeleri ve teknoloji seminerlerine katılarak kariyerinizi ileriye taşıyabilirsiniz.
+                        </p>
+                        <a asp-controller="Events" asp-action="Index" class="btn btn-primary rounded-pill px-5 py-3 fw-bold shadow-lg">
+                            <i class="bi bi-rocket-takeoff me-2"></i>Etkinlikleri İncele ve Başvur
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <!-- Applications Table -->
+                    <div class="table-responsive mt-4">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr class="text-secondary small">
+                                    <th>Etkinlik</th>
+                                    <th>Etkinlik Tarihi</th>
+                                    <th>Başvuru Tarihi</th>
+                                    <th>Durum</th>
+                                    <th class="text-end">İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                @if (!string.IsNullOrEmpty(item.Event?.ImageUrl))
+                                                {
+                                                    <img src="@item.Event.ImageUrl" alt="@item.Event.Title" class="rounded-3 shadow-sm" style="width: 55px; height: 55px; object-fit: cover;">
+                                                }
+                                                <div>
+                                                    <a asp-controller="Events" asp-action="Details" asp-route-slug="@item.Event?.Slug" class="fw-bold text-white text-decoration-none hover-cyan">
+                                                        @item.Event?.Title
+                                                    </a>
+                                                    <span class="text-info small d-block font-monospace">@(item.Event?.Category ?? "Etkinlik") &bull; @(item.Event?.Location ?? "Düzce Üniversitesi")</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="text-white small font-monospace d-block">
+                                                <i class="bi bi-calendar3 text-primary me-1"></i>@(item.Event?.EventDate.ToString("dd MMMM yyyy") ?? "-")
+                                            </span>
+                                            <span class="text-secondary small font-monospace">
+                                                <i class="bi bi-clock text-info me-1"></i>@(item.Event?.EventDate.ToString("HH:mm") ?? "-")
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-secondary small font-monospace">
+                                                @item.CreatedAt.ToString("dd.MM.yyyy HH:mm")
+                                            </span>
+                                        </td>
+                                        <td>
+                                            @if (item.Status == "Onaylandı" || item.Status == "Approved")
+                                            {
+                                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
+                                                    <i class="bi bi-check-circle-fill me-1"></i> Onaylandı
+                                                </span>
+                                            }
+                                            else if (item.Status == "Değerlendiriliyor" || item.Status == "UnderReview")
+                                            {
+                                                <span class="badge bg-warning bg-opacity-25 text-warning border border-warning border-opacity-25 px-3 py-2 rounded-pill">
+                                                    <i class="bi bi-hourglass-split me-1"></i> Değerlendiriliyor
+                                                </span>
+                                            }
+                                            else if (item.Status == "Reddedildi" || item.Status == "Rejected")
+                                            {
+                                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25 px-3 py-2 rounded-pill">
+                                                    <i class="bi bi-x-circle-fill me-1"></i> Reddedildi
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25 px-3 py-2 rounded-pill">
+                                                    <i class="bi bi-send-check me-1"></i> Yeni Başvuru
+                                                </span>
+                                            }
+                                        </td>
+                                        <td class="text-end">
+                                            <a asp-controller="Events" asp-action="Details" asp-route-slug="@item.Event?.Slug" class="btn btn-sm btn-outline-info rounded-pill px-3">
+                                                <i class="bi bi-eye me-1"></i>Detay
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+
+                <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top border-secondary border-opacity-25">
+                    <a asp-action="Profile" class="btn btn-outline-secondary rounded-pill px-4">
+                        <i class="bi bi-arrow-left me-2"></i>Profile Dön
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
