@@ -29,7 +29,7 @@ public class EventsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Title,Description,EventDate,Location,IsActive")] Event @event, IFormFile? imageFile)
+    public async Task<IActionResult> Create([Bind("Title,Description,EventDate,Location,Capacity,Category,Speaker,IsActive")] Event @event, IFormFile? imageFile)
     {
         @event.Slug = GenerateSlug(@event.Title);
         @event.EventDate = DateTime.SpecifyKind(@event.EventDate, DateTimeKind.Utc);
@@ -78,7 +78,7 @@ public class EventsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit([Bind("Id,Title,Description,EventDate,Location,ImageUrl,IsActive")] Event @event, IFormFile? imageFile)
+    public async Task<IActionResult> Edit([Bind("Id,Title,Description,EventDate,Location,Capacity,Category,Speaker,ImageUrl,IsActive")] Event @event, IFormFile? imageFile)
     {
         @event.Slug = GenerateSlug(@event.Title);
         @event.EventDate = DateTime.SpecifyKind(@event.EventDate, DateTimeKind.Utc);

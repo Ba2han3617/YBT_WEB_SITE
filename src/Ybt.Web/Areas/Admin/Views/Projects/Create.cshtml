@@ -4,55 +4,85 @@
     Layout = "_AdminLayout";
 }
 
-<div class="card p-4">
+<div class="card p-4 p-md-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+        <div>
+            <h4 class="fw-bold text-white mb-1"><i class="bi bi-code-square text-success me-2"></i>Yeni Proje Ekle</h4>
+            <span class="text-secondary small">Topluluk bünyesinde geliştirilen yeni bir açık kaynak veya kulüp projesini kaydedin.</span>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="bi bi-arrow-left me-1"></i>Listeye Dön
+        </a>
+    </div>
+
     <form asp-action="Create" method="post" enctype="multipart/form-data">
         <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
-        <div class="row">
-            <div class="col-md-8">
+        <div class="row g-4">
+            <div class="col-lg-8">
                 <div class="mb-3">
-                    <label asp-for="Name" class="form-label">Proje Adı</label>
-                    <input asp-for="Name" class="form-control" placeholder="Örn: YBT Web Portalı" required />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <label asp-for="Name" class="form-label text-secondary small">Proje Adı *</label>
+                    <input asp-for="Name" class="form-control rounded-pill px-3" placeholder="Örn: YBT Web Portalı & Üyelik Sistemi" required />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="TechTags" class="form-label text-secondary small">Kullanılan Teknolojiler (Virgülle ayırın)</label>
+                        <input asp-for="TechTags" class="form-control rounded-pill px-3" placeholder="Örn: .NET 9, PostgreSQL, Docker, Bootstrap" />
+                        <span asp-validation-for="TechTags" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="TeamMembers" class="form-label text-secondary small">Geliştirici Ekip / Katkıda Bulunanlar</label>
+                        <input asp-for="TeamMembers" class="form-control rounded-pill px-3" placeholder="Örn: Batuhan Yılmaz, Can Eren, Zeynep Kaya" />
+                        <span asp-validation-for="TeamMembers" class="text-danger small"></span>
+                    </div>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Description" class="form-label">Açıklama</label>
-                    <textarea asp-for="Description" class="form-control" rows="5" placeholder="Projenin amacı ve kapsamı..." required></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <label asp-for="Description" class="form-label text-secondary small">Proje Açıklaması *</label>
+                    <textarea asp-for="Description" class="form-control px-3 py-3" rows="7" style="border-radius: 16px;" placeholder="Projenin amacı, mimari yapısı ve topluluğa sağladığı faydalar..." required></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <label asp-for="TechTags" class="form-label">Teknoloji Etiketleri</label>
-                    <input asp-for="TechTags" class="form-control" placeholder="Örn: .NET 9, PostgreSQL, Docker" />
-                    <small class="text-secondary">Virgülle ayırarak yazınız.</small>
-                    <span asp-validation-for="TechTags" class="text-danger"></span>
-                </div>
 
-                <div class="mb-3">
-                    <label asp-for="GitHubUrl" class="form-label">GitHub Bağlantısı</label>
-                    <input asp-for="GitHubUrl" class="form-control" placeholder="https://github.com/..." />
-                    <span asp-validation-for="GitHubUrl" class="text-danger"></span>
-                </div>
+            <div class="col-lg-4">
+                <div class="p-3 rounded-4 bg-dark bg-opacity-50 border border-secondary border-opacity-25 mb-4">
+                    <h6 class="fw-bold text-white mb-3"><i class="bi bi-link-45deg text-info me-2"></i>Bağlantılar & Görsel</h6>
 
-                <div class="mb-3">
-                    <label class="form-label">Proje Görseli</label>
-                    <input type="file" name="imageFile" class="form-control" accept="image/*" />
-                </div>
+                    <div class="mb-3">
+                        <label asp-for="GitHubUrl" class="form-label text-secondary small">GitHub Depo Linki</label>
+                        <input asp-for="GitHubUrl" class="form-control rounded-pill px-3" placeholder="https://github.com/du-yazilim/..." />
+                        <span asp-validation-for="GitHubUrl" class="text-danger small"></span>
+                    </div>
 
-                <div class="mb-3">
-                    <div class="form-check form-switch">
-                        <input asp-for="IsActive" class="form-check-input" type="checkbox" checked />
-                        <label asp-for="IsActive" class="form-check-label">Aktif mi?</label>
+                    <div class="mb-3">
+                        <label asp-for="DemoUrl" class="form-label text-secondary small">Canlı Demo / Web Bağlantısı</label>
+                        <input asp-for="DemoUrl" class="form-control rounded-pill px-3" placeholder="https://proje.ybt.org veya demo linki" />
+                        <span asp-validation-for="DemoUrl" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small">Proje Görseli / Önizleme</label>
+                        <input type="file" name="imageFile" class="form-control rounded-pill px-3" accept="image/*" />
+                        <small class="text-secondary d-block mt-1">Önerilen: 800x500 piksel (Max 2MB)</small>
+                    </div>
+
+                    <div class="mb-2 pt-2 border-top border-secondary border-opacity-25">
+                        <div class="form-check form-switch">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" checked />
+                            <label asp-for="IsActive" class="form-check-label text-white">Yayında (Aktif)</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-4">
-            <button type="submit" class="btn btn-primary px-5">Kaydet</button>
-            <a asp-action="Index" class="btn btn-outline-secondary px-4">İptal</a>
+        <div class="d-flex gap-2 mt-4 pt-3 border-top border-secondary border-opacity-25">
+            <button type="submit" class="btn btn-primary rounded-pill px-5 shadow">
+                <i class="bi bi-check2 me-2"></i>Projeyi Kaydet
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">İptal</a>
         </div>
     </form>
 </div>

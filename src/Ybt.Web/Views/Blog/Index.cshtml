@@ -1,6 +1,6 @@
 @model IEnumerable<Ybt.Core.Entities.Blog>
 @{
-    ViewData["Title"] = "Blog";
+    ViewData["Title"] = "Blog & Makaleler";
 }
 
 <section class="py-5 mt-5">
@@ -12,40 +12,61 @@
         </div>
         <div class="row g-5">
             <div class="col-lg-8">
-                @foreach (var item in Model)
+                @if (Model == null || !Model.Any())
                 {
-                    <article class="mb-5 reveal">
-                        <div class="card border-0 overflow-hidden">
-                            <img src="@(item.ImageUrl ?? "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80")" class="card-img-top" alt="@item.Title" style="height: 320px; object-fit: cover;">
-                            <div class="card-body p-4 p-md-5">
-                                <div class="mb-3 d-flex align-items-center gap-3">
-                                    <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25 rounded-pill px-3 py-2">Yazılım & Teknoloji</span>
-                                    <span class="text-secondary small font-monospace"><i class="bi bi-clock me-1 text-primary"></i> @item.CreatedAt.ToString("dd MMMM yyyy")</span>
+                    <div class="card p-5 text-center border-0 glass-card">
+                        <i class="bi bi-journal-x display-4 text-secondary mb-3"></i>
+                        <h4 class="text-white">Henüz blog yazısı yayınlanmadı</h4>
+                        <p class="text-secondary mb-0">Yakında topluluk yazarlarımızdan yeni makaleler burada yer alacak.</p>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <article class="mb-5 reveal">
+                            <div class="card border-0 overflow-hidden glass-card">
+                                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                {
+                                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Title" style="height: 320px; object-fit: cover;">
+                                }
+                                <div class="card-body p-4 p-md-5">
+                                    <div class="mb-3 d-flex flex-wrap align-items-center gap-3">
+                                        <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25 rounded-pill px-3 py-2">
+                                            @(string.IsNullOrEmpty(item.Category) ? "Yazılım & Teknoloji" : item.Category)
+                                        </span>
+                                        <span class="text-secondary small font-monospace"><i class="bi bi-clock me-1 text-primary"></i> @item.CreatedAt.ToString("dd MMMM yyyy")</span>
+                                    </div>
+                                    <h2 class="fw-bold text-white mb-3 h3">@item.Title</h2>
+                                    <p class="text-secondary fs-5 mb-4" style="line-height: 1.7;">
+                                        @(string.IsNullOrEmpty(item.Summary) ? (item.Content?.Length > 200 ? item.Content.Substring(0, 200) + "..." : item.Content) : item.Summary)
+                                    </p>
+                                    @if (!string.IsNullOrEmpty(item.Tags))
+                                    {
+                                        <div class="d-flex flex-wrap gap-2 mb-4">
+                                            @foreach (var tag in item.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                                            {
+                                                <span class="badge bg-dark text-secondary border border-secondary border-opacity-25 font-monospace small px-2 py-1">#@tag.Trim()</span>
+                                            }
+                                        </div>
+                                    }
+                                    <a asp-action="Details" asp-route-slug="@item.Slug" class="btn btn-primary px-4 rounded-pill">Devamını Oku <i class="bi bi-arrow-right ms-1"></i></a>
                                 </div>
-                                <h2 class="fw-bold text-white mb-3 h3">@item.Title</h2>
-                                <p class="text-secondary fs-5 mb-4" style="line-height: 1.7;">@(item.Content?.Length > 200 ? item.Content.Substring(0, 200) + "..." : item.Content)</p>
-                                <a asp-action="Details" asp-route-slug="@item.Slug" class="btn btn-primary px-4 rounded-pill">Devamını Oku <i class="bi bi-arrow-right ms-1"></i></a>
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                    }
                 }
             </div>
             <div class="col-lg-4">
                 <div class="position-sticky" style="top: 100px;">
-                    <div class="card p-4 border-0 mb-4">
-                        <h5 class="fw-bold text-white mb-3"><i class="bi bi-search me-2 text-info"></i>Makalelerde Ara</h5>
-                        <div class="input-group">
-                            <input type="text" class="form-control rounded-start-pill px-3" placeholder="Konu veya başlık ara...">
-                            <button class="btn btn-primary rounded-end-pill px-4" type="button"><i class="bi bi-search"></i></button>
-                        </div>
-                    </div>
-                    <div class="card p-4 border-0">
+                    <div class="card p-4 border-0 mb-4 glass-card">
                         <h5 class="fw-bold text-white mb-3"><i class="bi bi-grid me-2 text-info"></i>Kategoriler</h5>
                         <ul class="list-unstyled mb-0 d-flex flex-column gap-3">
-                            <li><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Yazılım Geliştirme <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">12</span></a></li>
-                            <li><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Yapay Zeka & Veri <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">8</span></a></li>
-                            <li><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Açık Kaynak & DevOps <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">6</span></a></li>
-                            <li><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Etkinlikler & Hackathon <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">5</span></a></li>
+                            <li><a href="/Blog" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Tüm Yazılar <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">@Model?.Count()</span></a></li>
+                            <li><a href="/Blog" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Yazılım & Teknoloji <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">@Model?.Count(b => b.Category == "Yazılım & Teknoloji")</span></a></li>
+                            <li><a href="/Blog" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Kariyer & Rehber <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">@Model?.Count(b => b.Category == "Kariyer & Rehber")</span></a></li>
+                            <li><a href="/Blog" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Yapay Zeka <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">@Model?.Count(b => b.Category == "Yapay Zeka")</span></a></li>
+                            <li><a href="/Blog" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Topluluk & Etkinlik <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">@Model?.Count(b => b.Category == "Topluluk & Etkinlik")</span></a></li>
                         </ul>
                     </div>
                 </div>

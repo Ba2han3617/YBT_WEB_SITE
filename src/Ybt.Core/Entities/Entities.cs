@@ -18,7 +18,10 @@ public class Event : BaseEntity
 public class Blog : BaseEntity
 {
     public string Title { get; set; } = null!;
+    public string? Summary { get; set; }
     public string Content { get; set; } = null!;
+    public string? Category { get; set; }
+    public string? Tags { get; set; } // Comma separated tags
     public string? ImageUrl { get; set; }
     public string Slug { get; set; } = null!;
     public int AuthorId { get; set; }
@@ -30,7 +33,9 @@ public class Project : BaseEntity
     public string Name { get; set; } = null!;
     public string Description { get; set; } = null!;
     public string? GitHubUrl { get; set; }
+    public string? DemoUrl { get; set; }
     public string? TechTags { get; set; } // Comma separated tags
+    public string? TeamMembers { get; set; } // Comma separated or descriptive team list
     public string? ImageUrl { get; set; }
 }
 
@@ -49,6 +54,10 @@ public class TeamMember : BaseEntity
 {
     public string FullName { get; set; } = null!;
     public string Role { get; set; } = null!;
+    public string? Email { get; set; }
+    public string? LinkedInUrl { get; set; }
+    public string? GitHubUrl { get; set; }
+    public string? Bio { get; set; }
     public string? ImageUrl { get; set; }
     public int Order { get; set; } = 0;
 }

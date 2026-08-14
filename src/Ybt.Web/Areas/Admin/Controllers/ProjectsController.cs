@@ -28,7 +28,7 @@ public class ProjectsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Name,Description,GitHubUrl,TechTags,IsActive")] Project project, IFormFile? imageFile)
+    public async Task<IActionResult> Create([Bind("Name,Description,GitHubUrl,DemoUrl,TechTags,TeamMembers,IsActive")] Project project, IFormFile? imageFile)
     {
         if (ModelState.IsValid)
         {
@@ -61,7 +61,7 @@ public class ProjectsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit([Bind("Id,Name,Description,GitHubUrl,TechTags,ImageUrl,IsActive")] Project project, IFormFile? imageFile)
+    public async Task<IActionResult> Edit([Bind("Id,Name,Description,GitHubUrl,DemoUrl,TechTags,TeamMembers,ImageUrl,IsActive")] Project project, IFormFile? imageFile)
     {
         if (ModelState.IsValid)
         {

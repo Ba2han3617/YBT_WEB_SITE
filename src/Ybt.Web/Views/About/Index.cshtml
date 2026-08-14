@@ -52,12 +52,38 @@
                     @foreach (var member in Model)
                     {
                         <div class="col-md-3 col-sm-6">
-                            <div class="card team-card h-100">
-                                <div class="team-avatar-wrapper">
-                                    <img src="@(member.ImageUrl ?? "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80")" alt="@member.FullName" class="rounded-circle shadow" width="130" height="130" style="object-fit: cover;">
+                            <div class="card team-card h-100 p-4 text-center glass-card">
+                                <div class="team-avatar-wrapper mb-3">
+                                    <img src="@(member.ImageUrl ?? "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80")" alt="@member.FullName" class="rounded-circle shadow border border-secondary border-opacity-50" width="120" height="120" style="object-fit: cover;">
                                 </div>
                                 <h5 class="fw-bold text-white mb-1">@member.FullName</h5>
-                                <p class="text-info small mb-0 font-monospace">@member.Role</p>
+                                <p class="text-info small mb-2 font-monospace">@member.Role</p>
+                                
+                                @if (!string.IsNullOrEmpty(member.Bio))
+                                {
+                                    <p class="text-secondary small mb-3" style="line-height: 1.5; font-size: 0.85rem;">@member.Bio</p>
+                                }
+
+                                <div class="d-flex justify-content-center gap-2 mt-auto pt-2">
+                                    @if (!string.IsNullOrEmpty(member.LinkedInUrl))
+                                    {
+                                        <a href="@member.LinkedInUrl" target="_blank" class="btn btn-sm btn-outline-info rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="LinkedIn">
+                                            <i class="bi bi-linkedin"></i>
+                                        </a>
+                                    }
+                                    @if (!string.IsNullOrEmpty(member.GitHubUrl))
+                                    {
+                                        <a href="@member.GitHubUrl" target="_blank" class="btn btn-sm btn-outline-light rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="GitHub">
+                                            <i class="bi bi-github"></i>
+                                        </a>
+                                    }
+                                    @if (!string.IsNullOrEmpty(member.Email))
+                                    {
+                                        <a href="mailto:@member.Email" class="btn btn-sm btn-outline-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="E-posta Gönder">
+                                            <i class="bi bi-envelope"></i>
+                                        </a>
+                                    }
+                                </div>
                             </div>
                         </div>
                     }

@@ -4,58 +4,101 @@
     Layout = "_AdminLayout";
 }
 
-<div class="card p-4">
+<div class="card p-4 p-md-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+        <div>
+            <h4 class="fw-bold text-white mb-1"><i class="bi bi-pencil-square text-info me-2"></i>Ekip Üyesini Düzenle</h4>
+            <span class="text-secondary small">"@Model.FullName" adlı yönetim üyesinin bilgilerini güncelleyin.</span>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="bi bi-arrow-left me-1"></i>Listeye Dön
+        </a>
+    </div>
+
     <form asp-action="Edit" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="ImageUrl" />
         <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label asp-for="FullName" class="form-label">Ad Soyad</label>
-                    <input asp-for="FullName" class="form-control" />
-                    <span asp-validation-for="FullName" class="text-danger"></span>
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="FullName" class="form-label text-secondary small">Ad Soyad *</label>
+                        <input asp-for="FullName" class="form-control rounded-pill px-3" required />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Role" class="form-label text-secondary small">Rol / Görev *</label>
+                        <input asp-for="Role" class="form-control rounded-pill px-3" required />
+                        <span asp-validation-for="Role" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-4">
+                        <label asp-for="Email" class="form-label text-secondary small">E-posta Adresi</label>
+                        <input asp-for="Email" class="form-control rounded-pill px-3" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="LinkedInUrl" class="form-label text-secondary small">LinkedIn Linki</label>
+                        <input asp-for="LinkedInUrl" class="form-control rounded-pill px-3" />
+                        <span asp-validation-for="LinkedInUrl" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="GitHubUrl" class="form-label text-secondary small">GitHub Linki</label>
+                        <input asp-for="GitHubUrl" class="form-control rounded-pill px-3" />
+                        <span asp-validation-for="GitHubUrl" class="text-danger small"></span>
+                    </div>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Role" class="form-label">Görev</label>
-                    <input asp-for="Role" class="form-control" />
-                    <span asp-validation-for="Role" class="text-danger"></span>
+                    <label asp-for="Bio" class="form-label text-secondary small">Kısa Tanıtım / Biyografi</label>
+                    <textarea asp-for="Bio" class="form-control px-3 py-2" rows="4" style="border-radius: 14px;"></textarea>
+                    <span asp-validation-for="Bio" class="text-danger small"></span>
                 </div>
             </div>
-            <div class="col-md-6">
-                @if (!string.IsNullOrEmpty(Model.ImageUrl))
-                {
+
+            <div class="col-lg-4">
+                <div class="p-3 rounded-4 bg-dark bg-opacity-50 border border-secondary border-opacity-25 mb-4">
+                    <h6 class="fw-bold text-white mb-3"><i class="bi bi-person-badge text-info me-2"></i>Görsel & Sıralama</h6>
+
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <div class="mb-3 text-center">
+                            <label class="form-label text-secondary small d-block">Mevcut Fotoğraf</label>
+                            <img src="@Model.ImageUrl" alt="@Model.FullName" class="rounded-circle shadow-sm border border-secondary" width="90" height="90" style="object-fit: cover;" />
+                        </div>
+                    }
+
                     <div class="mb-3">
-                        <label class="form-label d-block">Mevcut Fotoğraf</label>
-                        <img src="@Model.ImageUrl" class="rounded-circle mb-2 shadow-sm" width="80" height="80" style="object-fit: cover;" />
+                        <label class="form-label text-secondary small">Fotoğrafı Değiştir</label>
+                        <input type="file" name="imageFile" class="form-control rounded-pill px-3" accept="image/*" />
+                        <small class="text-secondary d-block mt-1">Yeni fotoğraf seçilmezse mevcut görsel korunur.</small>
                     </div>
-                }
 
-                <div class="mb-3">
-                    <label class="form-label">Fotoğrafı Değiştir</label>
-                    <input type="file" name="imageFile" class="form-control" accept="image/*" />
-                </div>
+                    <div class="mb-3">
+                        <label asp-for="Order" class="form-label text-secondary small">Görüntülenme Sırası</label>
+                        <input asp-for="Order" class="form-control rounded-pill px-3" type="number" min="1" />
+                        <span asp-validation-for="Order" class="text-danger small"></span>
+                    </div>
 
-                <div class="mb-3">
-                    <label asp-for="Order" class="form-label">Görüntülenme Sırası</label>
-                    <input asp-for="Order" class="form-control" type="number" />
-                    <span asp-validation-for="Order" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <div class="form-check form-switch">
-                        <input asp-for="IsActive" class="form-check-input" type="checkbox" />
-                        <label asp-for="IsActive" class="form-check-label">Aktif mi?</label>
+                    <div class="mb-2 pt-2 border-top border-secondary border-opacity-25">
+                        <div class="form-check form-switch">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                            <label asp-for="IsActive" class="form-check-label text-white">Listelensin (Aktif)</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-4">
-            <button type="submit" class="btn btn-primary px-5">Güncelle</button>
-            <a asp-action="Index" class="btn btn-outline-secondary px-4">İptal</a>
+        <div class="d-flex gap-2 mt-4 pt-3 border-top border-secondary border-opacity-25">
+            <button type="submit" class="btn btn-primary rounded-pill px-5 shadow">
+                <i class="bi bi-check2 me-2"></i>Değişiklikleri Kaydet
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">İptal</a>
         </div>
     </form>
 </div>

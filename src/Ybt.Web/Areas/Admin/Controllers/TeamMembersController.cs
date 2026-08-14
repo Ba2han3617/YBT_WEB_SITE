@@ -28,7 +28,7 @@ public class TeamMembersController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("FullName,Role,Order,IsActive")] TeamMember member, IFormFile? imageFile)
+    public async Task<IActionResult> Create([Bind("FullName,Role,Email,LinkedInUrl,GitHubUrl,Bio,Order,IsActive")] TeamMember member, IFormFile? imageFile)
     {
         if (ModelState.IsValid)
         {
@@ -61,7 +61,7 @@ public class TeamMembersController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit([Bind("Id,FullName,Role,ImageUrl,Order,IsActive")] TeamMember member, IFormFile? imageFile)
+    public async Task<IActionResult> Edit([Bind("Id,FullName,Role,Email,LinkedInUrl,GitHubUrl,Bio,ImageUrl,Order,IsActive")] TeamMember member, IFormFile? imageFile)
     {
         if (ModelState.IsValid)
         {

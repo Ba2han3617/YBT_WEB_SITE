@@ -5,16 +5,24 @@
 }
 
 <div class="card p-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="mb-0">Blog Listesi</h5>
-        <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i> Yeni Blog</a>
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+        <div>
+            <h5 class="mb-1 fw-bold text-white"><i class="bi bi-journal-text text-warning me-2"></i>Blog Yazıları</h5>
+            <span class="text-secondary small">Topluluk makalelerini, haberlerini ve içeriklerini yönetin.</span>
+        </div>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow">
+            <i class="bi bi-plus-circle me-2"></i>Yeni Blog Ekle
+        </a>
     </div>
+
     <div class="table-responsive">
-        <table id="blogsTable" class="table table-hover">
+        <table id="blogsTable" class="table table-hover align-middle mb-0">
             <thead>
                 <tr>
-                    <th>Başlık</th>
-                    <th>Tarih</th>
+                    <th>Görsel & Başlık</th>
+                    <th>Kategori</th>
+                    <th>Etiketler</th>
+                    <th>Yayın Tarihi</th>
                     <th>Durum</th>
                     <th class="text-end">İşlemler</th>
                 </tr>
@@ -23,22 +31,64 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td class="fw-semibold text-white">@item.Title</td>
-                        <td>@item.CreatedAt.ToString("dd.MM.yyyy")</td>
                         <td>
-                            @if (item.IsActive)
+                            <div class="d-flex align-items-center gap-3">
+                                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                {
+                                    <img src="@item.ImageUrl" alt="@item.Title" class="rounded-3 shadow-sm" style="width: 55px; height: 45px; object-fit: cover;">
+                                }
+                                <div>
+                                    <span class="fw-semibold text-white d-block">@item.Title</span>
+                                    <span class="text-secondary small font-monospace">/@item.Slug</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25 px-2 py-1">
+                                @(string.IsNullOrEmpty(item.Category) ? "Genel" : item.Category)
+                            </span>
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.Tags))
                             {
-                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">Aktif</span>
+                                <div class="d-flex flex-wrap gap-1">
+                                    @foreach (var tag in item.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries).Take(2))
+                                    {
+                                        <span class="badge bg-dark text-secondary border border-secondary border-opacity-25 font-monospace small">@tag.Trim()</span>
+                                    }
+                                </div>
                             }
                             else
                             {
-                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25">Pasif</span>
+                                <span class="text-secondary small">-</span>
+                            }
+                        </td>
+                        <td class="text-secondary small font-monospace">@item.CreatedAt.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 px-2 py-1">Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25 px-2 py-1">Pasif</span>
                             }
                         </td>
                         <td class="text-end">
-                            <a href="/Blog/Details/@item.Slug" target="_blank" class="btn btn-sm btn-outline-info me-1" title="Önizle">
-                                <i class="bi bi-eye"></i>
-                            </a>
+                            <div class="d-inline-flex gap-1">
+                                <a href="/Blog/Details/@item.Slug" target="_blank" class="btn btn-sm btn-outline-info rounded-pill px-2" title="Önizle">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning rounded-pill px-2" title="Düzenle">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-2 btn-delete-confirm" 
+                                        data-delete-url="@Url.Action("Delete", "Blogs", new { id = item.Id })"
+                                        data-item-title="@item.Title"
+                                        title="Sil">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 }
@@ -52,7 +102,8 @@
         $(document).ready(function() {
             $('#blogsTable').DataTable({
                 "pageLength": 10,
-                "responsive": true
+                "responsive": true,
+                "order": [[3, "desc"]]
             });
         });
     </script>

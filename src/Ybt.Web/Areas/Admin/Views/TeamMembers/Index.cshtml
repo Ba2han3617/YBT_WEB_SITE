@@ -5,18 +5,24 @@
 }
 
 <div class="card p-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="mb-0">Yönetim Ekibi</h5>
-        <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i> Yeni Üye Ekle</a>
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+        <div>
+            <h5 class="mb-1 fw-bold text-white"><i class="bi bi-people text-info me-2"></i>Yönetim Ekibi</h5>
+            <span class="text-secondary small">Topluluk yönetim kurulu ve koordinatör üyelerini yönetin.</span>
+        </div>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow">
+            <i class="bi bi-plus-circle me-2"></i>Yeni Üye Ekle
+        </a>
     </div>
+
     <div class="table-responsive">
-        <table id="teamTable" class="table table-hover">
+        <table id="teamTable" class="table table-hover align-middle mb-0">
             <thead>
                 <tr>
-                    <th style="width: 60px;">Sıra</th>
-                    <th>Fotoğraf</th>
-                    <th>Ad Soyad</th>
+                    <th style="width: 50px;">Sıra</th>
+                    <th>Üye</th>
                     <th>Görev</th>
+                    <th>İletişim & Sosyal</th>
                     <th>Durum</th>
                     <th class="text-end">İşlemler</th>
                 </tr>
@@ -25,28 +31,58 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td><span class="badge bg-secondary bg-opacity-25 text-info font-monospace">@item.Order</span></td>
+                        <td><span class="badge bg-secondary bg-opacity-25 text-info font-monospace">#@item.Order</span></td>
                         <td>
-                            <img src="@(item.ImageUrl ?? "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80")" alt="@item.FullName" class="rounded-circle" width="36" height="36" style="object-fit: cover;" />
+                            <div class="d-flex align-items-center gap-3">
+                                <img src="@(item.ImageUrl ?? "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80")" alt="@item.FullName" class="rounded-circle shadow-sm border border-secondary border-opacity-25" width="42" height="42" style="object-fit: cover;" />
+                                <div>
+                                    <span class="fw-semibold text-white d-block">@item.FullName</span>
+                                    <span class="text-secondary small font-monospace">@(string.IsNullOrEmpty(item.Email) ? "-" : item.Email)</span>
+                                </div>
+                            </div>
                         </td>
-                        <td class="fw-semibold text-white">@item.FullName</td>
                         <td><span class="text-info font-monospace small">@item.Role</span></td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                @if (!string.IsNullOrEmpty(item.LinkedInUrl))
+                                {
+                                    <a href="@item.LinkedInUrl" target="_blank" class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25 text-decoration-none" title="LinkedIn">
+                                        <i class="bi bi-linkedin"></i>
+                                    </a>
+                                }
+                                @if (!string.IsNullOrEmpty(item.GitHubUrl))
+                                {
+                                    <a href="@item.GitHubUrl" target="_blank" class="badge bg-dark text-light border border-secondary border-opacity-25 text-decoration-none" title="GitHub">
+                                        <i class="bi bi-github"></i>
+                                    </a>
+                                }
+                                @if (string.IsNullOrEmpty(item.LinkedInUrl) && string.IsNullOrEmpty(item.GitHubUrl))
+                                {
+                                    <span class="text-secondary small">-</span>
+                                }
+                            </div>
+                        </td>
                         <td>
                             @if (item.IsActive)
                             {
-                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">Aktif</span>
+                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 px-2 py-1">Aktif</span>
                             }
                             else
                             {
-                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25">Pasif</span>
+                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25 px-2 py-1">Pasif</span>
                             }
                         </td>
                         <td class="text-end">
-                            <div class="btn-group">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white" title="Düzenle"><i class="bi bi-pencil"></i></a>
-                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Bu ekip üyesini silmek istediğinize emin misiniz?')" class="d-inline">
-                                    <button type="submit" class="btn btn-sm btn-danger rounded-0 rounded-end" title="Sil"><i class="bi bi-trash"></i></button>
-                                </form>
+                            <div class="d-inline-flex gap-1">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning rounded-pill px-2" title="Düzenle">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-2 btn-delete-confirm" 
+                                        data-delete-url="@Url.Action("Delete", "TeamMembers", new { id = item.Id })"
+                                        data-item-title="@item.FullName"
+                                        title="Sil">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>

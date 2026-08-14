@@ -96,6 +96,37 @@
         </div>
     </div>
 
+    <!-- Global Delete Confirmation Modal -->
+    <div class="modal fade" id="globalDeleteConfirmModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-card border-secondary text-white" style="background: rgba(15, 23, 42, 0.98);">
+                <div class="modal-header border-secondary border-opacity-25">
+                    <h5 class="modal-title fw-bold text-danger" id="deleteModalLabel">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>Silme Onayı
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <form id="globalDeleteForm" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body p-4">
+                        <p class="mb-2 text-light">Aşağıdaki kaydı silmek üzeresiniz. Bu işlem <strong>geri alınamaz</strong>:</p>
+                        <div class="p-3 rounded-3 bg-dark bg-opacity-75 border border-danger border-opacity-25 my-3">
+                            <span class="text-secondary small d-block mb-1">Silinecek Kayıt:</span>
+                            <h6 class="fw-bold text-white mb-0" id="globalDeleteItemTitle">-</h6>
+                        </div>
+                        <p class="text-secondary small mb-0">Devam etmek istediğinizden emin misiniz?</p>
+                    </div>
+                    <div class="modal-footer border-secondary border-opacity-25">
+                        <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Vazgeç</button>
+                        <button type="submit" class="btn btn-danger rounded-pill px-4 shadow">
+                            <i class="bi bi-trash3-fill me-1"></i>Evet, Sil
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     @if (TempData["Success"] != null)
     {
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -151,6 +182,17 @@
                 }
             });
         }
+
+        // Global Delete Confirmation Handler
+        $(document).on('click', '.btn-delete-confirm', function(e) {
+            e.preventDefault();
+            var deleteUrl = $(this).data('delete-url');
+            var itemTitle = $(this).data('item-title') || 'Seçili kayıt';
+            $('#globalDeleteForm').attr('action', deleteUrl);
+            $('#globalDeleteItemTitle').text(itemTitle);
+            var modal = new bootstrap.Modal(document.getElementById('globalDeleteConfirmModal'));
+            modal.show();
+        });
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

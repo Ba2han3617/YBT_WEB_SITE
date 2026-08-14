@@ -31,7 +31,7 @@ public class BlogsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Title,Content,IsActive")] Blog blog, IFormFile? imageFile)
+    public async Task<IActionResult> Create([Bind("Title,Summary,Category,Tags,Content,IsActive")] Blog blog, IFormFile? imageFile)
     {
         blog.Slug = GenerateSlug(blog.Title);
         ModelState.Remove("Slug");
@@ -63,6 +63,52 @@ public class BlogsController : Controller
             return RedirectToAction(nameof(Index));
         }
         return View(blog);
+    }
+
+    public async Task<IActionResult> Edit(int id)
+    {
+        var blog = await _blogService.GetByIdAsync(id);
+        if (blog == null) return NotFound();
+        return View(blog);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit([Bind("Id,Title,Summary,Category,Tags,Content,ImageUrl,AuthorId,IsActive")] Blog blog, IFormFile? imageFile)
+    {
+        blog.Slug = GenerateSlug(blog.Title);
+        ModelState.Remove("Slug");
+        ModelState.Remove("Author");
+
+        if (ModelState.IsValid)
+        {
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                try
+                {
+                    blog.ImageUrl = await SaveImage(imageFile);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    return View(blog);
+                }
+            }
+
+            await _blogService.UpdateAsync(blog);
+            TempData["Success"] = "Blog yazısı başarıyla güncellendi.";
+            return RedirectToAction(nameof(Index));
+        }
+        return View(blog);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _blogService.RemoveAsync(id);
+        TempData["Success"] = "Blog yazısı silindi.";
+        return RedirectToAction(nameof(Index));
     }
 
     private string GenerateSlug(string title)

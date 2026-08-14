@@ -2,32 +2,69 @@
 @{
     ViewData["Title"] = "Kullanıcı Yönetimi";
     Layout = "_AdminLayout";
+    var userRoles = ViewBag.UserRoles as Dictionary<int, IList<string>> ?? new Dictionary<int, IList<string>>();
 }
 
 <div class="card p-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="mb-0">Kullanıcı Listesi</h5>
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+        <div>
+            <h5 class="mb-1 fw-bold text-white"><i class="bi bi-people-fill text-primary me-2"></i>Kullanıcılar & Üyeler</h5>
+            <span class="text-secondary small">Kayıtlı topluluk üyelerini, iletişim bilgilerini ve yetkilerini yönetin.</span>
+        </div>
     </div>
+
     <div class="table-responsive">
-        <table id="usersTable" class="table table-hover">
+        <table id="usersTable" class="table table-hover align-middle mb-0">
             <thead>
                 <tr>
-                    <th>Kullanıcı Adı</th>
-                    <th>Ad Soyad</th>
+                    <th>Kullanıcı / Ad Soyad</th>
                     <th>E-posta</th>
+                    <th>Öğrenci No & Fakülte</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>Rol</th>
                     <th class="text-end">İşlemler</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var user in Model)
                 {
+                    var roles = userRoles.ContainsKey(user.Id) ? userRoles[user.Id] : new List<string>();
+                    var isAdmin = roles.Contains("Admin");
                     <tr>
-                        <td>@user.UserName</td>
-                        <td>@(string.IsNullOrWhiteSpace(user.FullName) ? "Belirtilmemiş" : user.FullName)</td>
-                        <td>@user.Email</td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold @(isAdmin ? "bg-warning bg-opacity-25 text-warning border border-warning" : "bg-primary bg-opacity-25 text-info border border-info")" style="width: 38px; height: 38px; font-size: 0.9rem;">
+                                    @(string.IsNullOrEmpty(user.FirstName) ? user.UserName?[0].ToString().ToUpper() : user.FirstName[0].ToString().ToUpper())
+                                </div>
+                                <div>
+                                    <span class="fw-semibold text-white d-block">@(string.IsNullOrWhiteSpace(user.FullName) ? user.UserName : user.FullName)</span>
+                                    <span class="text-secondary small font-monospace">@@@user.UserName</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-light small font-monospace">@user.Email</td>
+                        <td>
+                            <span class="text-white small font-monospace d-block">@(string.IsNullOrWhiteSpace(user.StudentNumber) ? "-" : user.StudentNumber)</span>
+                            <span class="text-secondary small">@(string.IsNullOrWhiteSpace(user.Faculty) ? "-" : user.Faculty)</span>
+                        </td>
+                        <td class="text-secondary small font-monospace">@user.CreatedAt.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            @if (isAdmin)
+                            {
+                                <span class="badge bg-warning bg-opacity-25 text-warning border border-warning border-opacity-25 px-2 py-1">
+                                    <i class="bi bi-shield-lock-fill me-1"></i>Admin
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-primary bg-opacity-25 text-info border border-primary border-opacity-25 px-2 py-1">
+                                    <i class="bi bi-person me-1"></i>Üye
+                                </span>
+                            }
+                        </td>
                         <td class="text-end">
-                            <a asp-action="Details" asp-route-id="@user.Id" class="btn btn-sm btn-outline-info">
-                                <i class="bi bi-eye me-1"></i>Detay
+                            <a asp-action="Details" asp-route-id="@user.Id" class="btn btn-sm btn-outline-info rounded-pill px-3">
+                                <i class="bi bi-eye me-1"></i>İncele
                             </a>
                         </td>
                     </tr>
@@ -42,7 +79,8 @@
         $(document).ready(function() {
             $('#usersTable').DataTable({
                 "pageLength": 10,
-                "responsive": true
+                "responsive": true,
+                "order": [[3, "desc"]]
             });
         });
     </script>

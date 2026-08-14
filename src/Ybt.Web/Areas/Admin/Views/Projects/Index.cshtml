@@ -5,17 +5,24 @@
 }
 
 <div class="card p-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="mb-0 fw-bold text-white">Proje Listesi</h5>
-        <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i> Yeni Proje Ekle</a>
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+        <div>
+            <h5 class="mb-1 fw-bold text-white"><i class="bi bi-code-slash text-success me-2"></i>Projeler</h5>
+            <span class="text-secondary small">Topluluk tarafından geliştirilen ve açık kaynak ekosistemine sunulan projeleri yönetin.</span>
+        </div>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow">
+            <i class="bi bi-plus-circle me-2"></i>Yeni Proje Ekle
+        </a>
     </div>
+
     <div class="table-responsive">
-        <table id="projectsTable" class="table table-hover">
+        <table id="projectsTable" class="table table-hover align-middle mb-0">
             <thead>
                 <tr>
-                    <th>Proje Adı</th>
+                    <th>Görsel & Proje Adı</th>
                     <th>Teknolojiler</th>
-                    <th>GitHub Bağlantısı</th>
+                    <th>Geliştirici Ekip</th>
+                    <th>Bağlantılar</th>
                     <th>Durum</th>
                     <th class="text-end">İşlemler</th>
                 </tr>
@@ -24,14 +31,27 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td class="fw-semibold text-white">@item.Name</td>
-                        <td><small class="text-info font-monospace">@item.TechTags</small></td>
                         <td>
-                            @if (!string.IsNullOrEmpty(item.GitHubUrl))
+                            <div class="d-flex align-items-center gap-3">
+                                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                {
+                                    <img src="@item.ImageUrl" alt="@item.Name" class="rounded-3 shadow-sm" style="width: 55px; height: 45px; object-fit: cover;">
+                                }
+                                <div>
+                                    <span class="fw-semibold text-white d-block">@item.Name</span>
+                                    <span class="text-secondary small">@(item.Description.Length > 40 ? item.Description.Substring(0, 40) + "..." : item.Description)</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.TechTags))
                             {
-                                <a href="@item.GitHubUrl" target="_blank" class="text-secondary text-decoration-none small">
-                                    <i class="bi bi-github me-1"></i>Kaynak Kod
-                                </a>
+                                <div class="d-flex flex-wrap gap-1">
+                                    @foreach (var tag in item.TechTags.Split(',', StringSplitOptions.RemoveEmptyEntries).Take(2))
+                                    {
+                                        <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 font-monospace small">@tag.Trim()</span>
+                                    }
+                                </div>
                             }
                             else
                             {
@@ -39,21 +59,48 @@
                             }
                         </td>
                         <td>
+                            <span class="text-light small">@(string.IsNullOrEmpty(item.TeamMembers) ? "YBT Ekibi" : item.TeamMembers)</span>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                @if (!string.IsNullOrEmpty(item.GitHubUrl))
+                                {
+                                    <a href="@item.GitHubUrl" target="_blank" class="badge bg-dark text-light border border-secondary border-opacity-25 text-decoration-none" title="GitHub Deposu">
+                                        <i class="bi bi-github me-1"></i>Kod
+                                    </a>
+                                }
+                                @if (!string.IsNullOrEmpty(item.DemoUrl))
+                                {
+                                    <a href="@item.DemoUrl" target="_blank" class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25 text-decoration-none" title="Canlı Demo">
+                                        <i class="bi bi-box-arrow-up-right me-1"></i>Demo
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                        <td>
                             @if (item.IsActive)
                             {
-                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">Aktif</span>
+                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 px-2 py-1">Aktif</span>
                             }
                             else
                             {
-                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25">Pasif</span>
+                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25 px-2 py-1">Pasif</span>
                             }
                         </td>
                         <td class="text-end">
-                            <div class="btn-group">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white" title="Düzenle"><i class="bi bi-pencil"></i></a>
-                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Bu projeyi silmek istediğinize emin misiniz?')" class="d-inline">
-                                    <button type="submit" class="btn btn-sm btn-danger rounded-0 rounded-end" title="Sil"><i class="bi bi-trash"></i></button>
-                                </form>
+                            <div class="d-inline-flex gap-1">
+                                <a href="/Projects" target="_blank" class="btn btn-sm btn-outline-info rounded-pill px-2" title="Önizle">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning rounded-pill px-2" title="Düzenle">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-2 btn-delete-confirm" 
+                                        data-delete-url="@Url.Action("Delete", "Projects", new { id = item.Id })"
+                                        data-item-title="@item.Name"
+                                        title="Sil">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>

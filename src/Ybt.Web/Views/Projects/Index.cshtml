@@ -20,27 +20,52 @@
             @foreach (var item in Model)
             {
                 <div class="col-md-6 col-lg-4 reveal">
-                    <div class="card h-100 border-0">
+                    <div class="card h-100 border-0 overflow-hidden glass-card">
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="height: 180px; object-fit: cover;">
+                        }
                         <div class="card-body p-4 d-flex flex-column justify-content-between">
                             <div>
                                 <div class="d-flex align-items-center mb-3">
-                                    <div class="feature-icon-box mb-0 me-3" style="width: 48px; height: 48px; font-size: 1.3rem;">
+                                    <div class="feature-icon-box mb-0 me-3" style="width: 44px; height: 44px; font-size: 1.2rem;">
                                         <i class="bi bi-code-slash"></i>
                                     </div>
-                                    <h4 class="fw-bold text-white mb-0">@item.Name</h4>
+                                    <h4 class="fw-bold text-white mb-0 fs-5">@item.Name</h4>
                                 </div>
-                                <p class="text-secondary mb-4 small">@item.Description</p>
+                                <p class="text-secondary mb-3 small" style="line-height: 1.6;">@item.Description</p>
+                                
+                                @if (!string.IsNullOrEmpty(item.TeamMembers))
+                                {
+                                    <div class="mb-3 small text-secondary">
+                                        <i class="bi bi-people me-1 text-info"></i><span class="text-light">@item.TeamMembers</span>
+                                    </div>
+                                }
+
                                 @if (!string.IsNullOrEmpty(item.TechTags))
                                 {
                                     <div class="mb-4">
-                                        @foreach (var tag in item.TechTags.Split(','))
+                                        @foreach (var tag in item.TechTags.Split(',', StringSplitOptions.RemoveEmptyEntries))
                                         {
-                                            <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 me-1 mb-1 font-monospace">@tag.Trim()</span>
+                                            <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 me-1 mb-1 font-monospace small">@tag.Trim()</span>
                                         }
                                     </div>
                                 }
                             </div>
-                            <a href="@item.GitHubUrl" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary w-100 rounded-pill"><i class="bi bi-github me-2"></i>GitHub'da İncele</a>
+                            <div class="d-flex gap-2">
+                                @if (!string.IsNullOrEmpty(item.GitHubUrl))
+                                {
+                                    <a href="@item.GitHubUrl" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary flex-fill rounded-pill py-2">
+                                        <i class="bi bi-github me-1"></i>GitHub
+                                    </a>
+                                }
+                                @if (!string.IsNullOrEmpty(item.DemoUrl))
+                                {
+                                    <a href="@item.DemoUrl" target="_blank" rel="noopener noreferrer" class="btn btn-primary flex-fill rounded-pill py-2 shadow">
+                                        <i class="bi bi-box-arrow-up-right me-1"></i>Canlı Demo
+                                    </a>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

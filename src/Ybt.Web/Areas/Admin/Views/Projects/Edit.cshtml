@@ -4,66 +4,96 @@
     Layout = "_AdminLayout";
 }
 
-<div class="card p-4">
+<div class="card p-4 p-md-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+        <div>
+            <h4 class="fw-bold text-white mb-1"><i class="bi bi-pencil-square text-success me-2"></i>Projeyi Düzenle</h4>
+            <span class="text-secondary small">"@Model.Name" projesinin bilgilerini güncelleyin.</span>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="bi bi-arrow-left me-1"></i>Listeye Dön
+        </a>
+    </div>
+
     <form asp-action="Edit" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="ImageUrl" />
         <input type="hidden" asp-for="CreatedAt" />
-        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
-        <div class="row">
-            <div class="col-md-8">
+        <div class="row g-4">
+            <div class="col-lg-8">
                 <div class="mb-3">
-                    <label asp-for="Name" class="form-label">Proje Adı</label>
-                    <input asp-for="Name" class="form-control" required />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <label asp-for="Name" class="form-label text-secondary small">Proje Adı *</label>
+                    <input asp-for="Name" class="form-control rounded-pill px-3" required />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="TechTags" class="form-label text-secondary small">Kullanılan Teknolojiler</label>
+                        <input asp-for="TechTags" class="form-control rounded-pill px-3" />
+                        <span asp-validation-for="TechTags" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="TeamMembers" class="form-label text-secondary small">Geliştirici Ekip</label>
+                        <input asp-for="TeamMembers" class="form-control rounded-pill px-3" />
+                        <span asp-validation-for="TeamMembers" class="text-danger small"></span>
+                    </div>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Description" class="form-label">Açıklama</label>
-                    <textarea asp-for="Description" class="form-control" rows="5" required></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <label asp-for="Description" class="form-label text-secondary small">Proje Açıklaması *</label>
+                    <textarea asp-for="Description" class="form-control px-3 py-3" rows="7" style="border-radius: 16px;" required></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <label asp-for="TechTags" class="form-label">Teknoloji Etiketleri</label>
-                    <input asp-for="TechTags" class="form-control" />
-                    <small class="text-secondary">Virgülle ayırarak yazınız.</small>
-                    <span asp-validation-for="TechTags" class="text-danger"></span>
-                </div>
 
-                <div class="mb-3">
-                    <label asp-for="GitHubUrl" class="form-label">GitHub Bağlantısı</label>
-                    <input asp-for="GitHubUrl" class="form-control" />
-                    <span asp-validation-for="GitHubUrl" class="text-danger"></span>
-                </div>
+            <div class="col-lg-4">
+                <div class="p-3 rounded-4 bg-dark bg-opacity-50 border border-secondary border-opacity-25 mb-4">
+                    <h6 class="fw-bold text-white mb-3"><i class="bi bi-link-45deg text-info me-2"></i>Bağlantılar & Görsel</h6>
 
-                @if (!string.IsNullOrEmpty(Model.ImageUrl))
-                {
                     <div class="mb-3">
-                        <label class="form-label d-block">Mevcut Görsel</label>
-                        <img src="@Model.ImageUrl" class="img-thumbnail rounded-3" style="max-height: 120px;" />
+                        <label asp-for="GitHubUrl" class="form-label text-secondary small">GitHub Bağlantısı</label>
+                        <input asp-for="GitHubUrl" class="form-control rounded-pill px-3" />
+                        <span asp-validation-for="GitHubUrl" class="text-danger small"></span>
                     </div>
-                }
 
-                <div class="mb-3">
-                    <label class="form-label">Görseli Değiştir</label>
-                    <input type="file" name="imageFile" class="form-control" accept="image/*" />
-                </div>
+                    <div class="mb-3">
+                        <label asp-for="DemoUrl" class="form-label text-secondary small">Canlı Demo / Web Bağlantısı</label>
+                        <input asp-for="DemoUrl" class="form-control rounded-pill px-3" />
+                        <span asp-validation-for="DemoUrl" class="text-danger small"></span>
+                    </div>
 
-                <div class="mb-3">
-                    <div class="form-check form-switch">
-                        <input asp-for="IsActive" class="form-check-input" type="checkbox" />
-                        <label asp-for="IsActive" class="form-check-label">Aktif mi?</label>
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <div class="mb-3">
+                            <label class="form-label text-secondary small d-block">Mevcut Görsel</label>
+                            <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded-3 mb-2" style="max-height: 120px; width: 100%; object-fit: cover;" />
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small">Görseli Değiştir</label>
+                        <input type="file" name="imageFile" class="form-control rounded-pill px-3" accept="image/*" />
+                        <small class="text-secondary d-block mt-1">Yeni görsel seçilmezse mevcut görsel korunur.</small>
+                    </div>
+
+                    <div class="mb-2 pt-2 border-top border-secondary border-opacity-25">
+                        <div class="form-check form-switch">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                            <label asp-for="IsActive" class="form-check-label text-white">Yayında (Aktif)</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-4">
-            <button type="submit" class="btn btn-primary px-5">Güncelle</button>
-            <a asp-action="Index" class="btn btn-outline-secondary px-4">İptal</a>
+        <div class="d-flex gap-2 mt-4 pt-3 border-top border-secondary border-opacity-25">
+            <button type="submit" class="btn btn-primary rounded-pill px-5 shadow">
+                <i class="bi bi-check2 me-2"></i>Değişiklikleri Kaydet
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">İptal</a>
         </div>
     </form>
 </div>

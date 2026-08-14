@@ -7,14 +7,16 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <article class="card border-0 overflow-hidden">
+                <article class="card border-0 overflow-hidden glass-card">
                     @if (!string.IsNullOrEmpty(Model?.ImageUrl))
                     {
-                        <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" style="max-height: 400px; object-fit: cover;">
+                        <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" style="max-height: 420px; object-fit: cover;">
                     }
                     <div class="card-body p-4 p-md-5">
-                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-                            <span class="badge bg-info bg-opacity-25 text-info px-3 py-2 border border-info border-opacity-25 rounded-pill">Teknoloji</span>
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                            <span class="badge bg-info bg-opacity-25 text-info px-3 py-2 border border-info border-opacity-25 rounded-pill">
+                                @(string.IsNullOrEmpty(Model?.Category) ? "Yazılım & Teknoloji" : Model.Category)
+                            </span>
                             @if (Model != null)
                             {
                                 <small class="text-secondary font-monospace">
@@ -23,7 +25,14 @@
                             }
                         </div>
 
-                        <h1 class="display-6 fw-bold text-white mb-4">@Model?.Title</h1>
+                        <h1 class="display-6 fw-bold text-white mb-3">@Model?.Title</h1>
+
+                        @if (!string.IsNullOrEmpty(Model?.Summary))
+                        {
+                            <p class="lead text-info bg-dark bg-opacity-50 p-3 rounded-3 border-start border-info border-3 mb-4">
+                                @Model.Summary
+                            </p>
+                        }
 
                         @if (Model?.Author != null && !string.IsNullOrEmpty(Model.Author.FullName))
                         {
@@ -37,9 +46,20 @@
 
                         <hr class="border-secondary border-opacity-25 my-4" />
 
-                        <div class="mb-5 lead text-secondary fs-5" style="white-space: pre-line;">
+                        <div class="mb-5 text-light fs-5" style="white-space: pre-line; line-height: 1.8;">
                             @Model?.Content
                         </div>
+
+                        @if (!string.IsNullOrEmpty(Model?.Tags))
+                        {
+                            <div class="d-flex flex-wrap align-items-center gap-2 pt-3 border-top border-secondary border-opacity-25 mb-4">
+                                <span class="text-secondary small me-2"><i class="bi bi-tags me-1"></i>Etiketler:</span>
+                                @foreach (var tag in Model.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                                {
+                                    <span class="badge bg-dark text-info border border-secondary border-opacity-25 font-monospace px-3 py-2">#@tag.Trim()</span>
+                                }
+                            </div>
+                        }
 
                         <div class="mt-4">
                             <a asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">

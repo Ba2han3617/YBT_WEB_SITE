@@ -182,8 +182,9 @@ public static class DbInitializer
             await context.SaveChangesAsync();
         }
 
-        // Sample Blogs
-        if (!await context.Blogs.AnyAsync())
+        // Seed / Update Blogs
+        var existingBlogs = await context.Blogs.ToListAsync();
+        if (!existingBlogs.Any())
         {
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser != null)
@@ -193,7 +194,10 @@ public static class DbInitializer
                     new Blog
                     {
                         Title = "2026'da Yazılım Dünyası: Trendler ve Kariyer Yol Haritası",
+                        Summary = "Yapay zeka asistanları, bulut yerel mimariler ve modern yazılım ekosisteminde öne çıkan kariyer fırsatları.",
                         Content = "Teknoloji ekosistemi her geçen gün daha dinamik bir yapıya evriliyor. Yapay zeka asistanlarının geliştirme süreçlerine entegrasyonu, bulut yerel (cloud-native) mimarilerin standartlaşması ve siber güvenlik odaklı yazılım geliştirme yaklaşımları bu yılın en kritik başlıkları arasında yer alıyor.\n\nÖğrencilik yıllarında açık kaynak projelere katkı sağlamak, takım çalışması pratiği kazanmak ve topluluk etkinliklerinde aktif rol almak kariyer yolculuğunuzun en sağlam temellerini oluşturur. YBT olarak her dönem güncel teknolojileri birlikte deneyimliyor ve projeler üretiyoruz.",
+                        Category = "Kariyer & Teknoloji",
+                        Tags = "Yapay Zeka, Bulut, Kariyer, .NET",
                         Slug = "2026da-yazilim-dunyasi-trendler",
                         AuthorId = adminUser.Id,
                         ImageUrl = "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
@@ -202,7 +206,10 @@ public static class DbInitializer
                     new Blog
                     {
                         Title = "Açık Kaynak Projelere Katkı Sağlama Rehberi",
+                        Summary = "GitHub üzerinde ilk pull request'inizi açmaktan temiz kod prensiplerine açık kaynak kültürü.",
                         Content = "Açık kaynak dünyası yalnızca kod yazmaktan ibaret değildir; dokümantasyon hazırlamak, hata raporlamak, topluluk tartışmalarına katılmak da bu kültürün vazgeçilmez bir parçasıdır.\n\nGitHub üzerinde ilk pull request'inizi (PR) oluştururken dikkat etmeniz gereken kurallar, temiz commit mesajları yazma alışkanlığı ve kod standartlarına uyum sağlamak sizi bir adım öne taşır. Topluluğumuz bünyesinde geliştirdiğimiz projelere katkıda bulunarak ilk adımı atabilirsiniz.",
+                        Category = "Açık Kaynak",
+                        Tags = "GitHub, Git, Open Source, Topluluk",
                         Slug = "acik-kaynak-projelere-katki-rehberi",
                         AuthorId = adminUser.Id,
                         ImageUrl = "https://images.unsplash.com/photo-1556075798-4825dfaaf498?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
@@ -211,7 +218,10 @@ public static class DbInitializer
                     new Blog
                     {
                         Title = "Yapay Zeka Destekli Modern Web Uygulamaları",
+                        Summary = "LLM modelleri ve vektör veritabanları ile akıllı web mimarilerinin inşa edilmesi.",
                         Content = "Büyük Dil Modelleri (LLM) ve üretken yapay zeka araçları web uygulamalarının çehresini tamamen değiştiriyor. Kullanıcı deneyimini kişiselleştiren akıllı arama sistemleri, anlık içerik analizi ve otomatik öneri mekanizmaları artık modern web projelerinin merkezinde yer alıyor.\n\nBu yazımızda modern web çatılarında yapay zeka servislerinin nasıl entegre edildiğini ve yüksek performanslı mimarilerin nasıl kurgulandığını inceliyoruz.",
+                        Category = "Yazılım Geliştirme",
+                        Tags = "Web, Yapay Zeka, Mimari, API",
                         Slug = "yapay-zeka-destekli-web-uygulamalari",
                         AuthorId = adminUser.Id,
                         ImageUrl = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
@@ -220,9 +230,19 @@ public static class DbInitializer
                 });
             }
         }
+        else
+        {
+            foreach (var b in existingBlogs)
+            {
+                if (string.IsNullOrEmpty(b.Category)) b.Category = "Yazılım & Teknoloji";
+                if (string.IsNullOrEmpty(b.Summary)) b.Summary = b.Content.Length > 150 ? b.Content.Substring(0, 150) + "..." : b.Content;
+                if (string.IsNullOrEmpty(b.Tags)) b.Tags = "Yazılım, Topluluk, Teknoloji";
+            }
+        }
 
-        // Sample Projects
-        if (!await context.Projects.AnyAsync())
+        // Seed / Update Projects
+        var existingProjects = await context.Projects.ToListAsync();
+        if (!existingProjects.Any())
         {
             context.Projects.AddRange(new List<Project>
             {
@@ -231,7 +251,9 @@ public static class DbInitializer
                     Name = "YBT Web Portalı & Üyelik Sistemi",
                     Description = "Topluluk üyelerinin etkinliklere başvurduğu, blog yazılarını takip ettiği ve açık kaynak ekosistemine katıldığı modern kurumsal web platformu.",
                     TechTags = ".NET 9, PostgreSQL, Entity Framework Core, Bootstrap 5, Razor Views",
+                    TeamMembers = "Batuhan Yılmaz, Can Eren, Zeynep Kaya",
                     GitHubUrl = "https://github.com/du-yazilim/ybt-web-portal",
+                    DemoUrl = "http://localhost:5261",
                     ImageUrl = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
                     IsActive = true
                 },
@@ -240,7 +262,9 @@ public static class DbInitializer
                     Name = "DÜ Kampüs Rehberi & Etkinlik Asistanı",
                     Description = "Üniversite yerleşkesindeki akademik birimleri, kütüphane doluluk durumunu ve kulüp etkinliklerini harita üzerinde anlık gösteren mobil/web rehber uygulaması.",
                     TechTags = "Flutter, REST API, Leaflet, ASP.NET Core, Docker",
+                    TeamMembers = "Batuhan Yılmaz, Merve Kaya, Emre Demir",
                     GitHubUrl = "https://github.com/du-yazilim/du-campus-guide",
+                    DemoUrl = "https://kampus.duzce.edu.tr",
                     ImageUrl = "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
                     IsActive = true
                 },
@@ -249,7 +273,9 @@ public static class DbInitializer
                     Name = "Açık Kaynak DevPath Yol Haritası",
                     Description = "Yazılıma yeni başlayan üniversite öğrencileri için Web, Mobil, Veri Bilimi ve Siber Güvenlik alanlarında hazırlanmış interaktif Türkçe kaynak ve eğitim rehberi.",
                     TechTags = "Markdown, Docsify, Open Source, Git, CI/CD",
+                    TeamMembers = "YBT Eğitim ve Yazılım Ekibi",
                     GitHubUrl = "https://github.com/du-yazilim/devpath-roadmap",
+                    DemoUrl = "https://devpath.ybt.org",
                     ImageUrl = "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
                     IsActive = true
                 },
@@ -258,23 +284,88 @@ public static class DbInitializer
                     Name = "YBT Discord Topluluk Otomasyon Botu",
                     Description = "Topluluğun 1000'den fazla üyeye sahip Discord sunucusunda rol yönetimi, teknik soru-cevap arşivi ve etkinlik duyurularını otomatikleştiren bot projesi.",
                     TechTags = "Node.js, Discord.js, TypeScript, Redis, Docker",
+                    TeamMembers = "Can Eren, Selin Aksoy",
                     GitHubUrl = "https://github.com/du-yazilim/ybt-discord-bot",
+                    DemoUrl = "https://discord.gg/ybt",
                     ImageUrl = "https://images.unsplash.com/photo-1614680376593-902f749f7ffc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
                     IsActive = true
                 }
             });
         }
+        else
+        {
+            foreach (var p in existingProjects)
+            {
+                if (string.IsNullOrEmpty(p.DemoUrl)) p.DemoUrl = p.GitHubUrl;
+                if (string.IsNullOrEmpty(p.TeamMembers)) p.TeamMembers = "YBT Proje Geliştirme Ekibi";
+            }
+        }
 
-        // Sample Team Members
-        if (!await context.TeamMembers.AnyAsync())
+        // Seed / Update Team Members
+        var existingTeam = await context.TeamMembers.ToListAsync();
+        if (!existingTeam.Any())
         {
             context.TeamMembers.AddRange(new List<TeamMember>
             {
-                new TeamMember { FullName = "Batuhan Yılmaz", Role = "Yönetim Kurulu Başkanı", ImageUrl = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80", Order = 1, IsActive = true },
-                new TeamMember { FullName = "Merve Kaya", Role = "Başkan Yardımcısı", ImageUrl = "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80", Order = 2, IsActive = true },
-                new TeamMember { FullName = "Can Eren", Role = "Yazılım ve Teknoloji Koordinatörü", ImageUrl = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80", Order = 3, IsActive = true },
-                new TeamMember { FullName = "Elif Şahin", Role = "Organizasyon ve Etkinlik Koordinatörü", ImageUrl = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80", Order = 4, IsActive = true }
+                new TeamMember
+                {
+                    FullName = "Batuhan Yılmaz",
+                    Role = "Yönetim Kurulu Başkanı",
+                    Email = "batu@ybt.com",
+                    LinkedInUrl = "https://linkedin.com/in/batuhanyilmaz",
+                    GitHubUrl = "https://github.com/batuhanyilmaz",
+                    Bio = "Bilgisayar Mühendisliği öğrencisi. Açık kaynak ve bulut mimarileri üzerine çalışıyor.",
+                    ImageUrl = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+                    Order = 1,
+                    IsActive = true
+                },
+                new TeamMember
+                {
+                    FullName = "Merve Kaya",
+                    Role = "Başkan Yardımcısı",
+                    Email = "merve@ybt.com",
+                    LinkedInUrl = "https://linkedin.com/in/mervekaya",
+                    GitHubUrl = "https://github.com/mervekaya",
+                    Bio = "Yazılım geliştirme ve topluluk yönetimi odaklı çalışıyor.",
+                    ImageUrl = "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80",
+                    Order = 2,
+                    IsActive = true
+                },
+                new TeamMember
+                {
+                    FullName = "Can Eren",
+                    Role = "Yazılım ve Teknoloji Koordinatörü",
+                    Email = "can@ybt.com",
+                    LinkedInUrl = "https://linkedin.com/in/caneren",
+                    GitHubUrl = "https://github.com/caneren",
+                    Bio = ".NET, Python ve yapay zeka alanlarında projeler geliştiriyor.",
+                    ImageUrl = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+                    Order = 3,
+                    IsActive = true
+                },
+                new TeamMember
+                {
+                    FullName = "Elif Şahin",
+                    Role = "Organizasyon ve Etkinlik Koordinatörü",
+                    Email = "elif@ybt.com",
+                    LinkedInUrl = "https://linkedin.com/in/elifsahin",
+                    GitHubUrl = "https://github.com/elifsahin",
+                    Bio = "Hackathon, atölye ve seminer organizasyonlarını koordine ediyor.",
+                    ImageUrl = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80",
+                    Order = 4,
+                    IsActive = true
+                }
             });
+        }
+        else
+        {
+            foreach (var t in existingTeam)
+            {
+                if (string.IsNullOrEmpty(t.Email)) t.Email = "iletisim@ybt.com";
+                if (string.IsNullOrEmpty(t.LinkedInUrl)) t.LinkedInUrl = "https://linkedin.com";
+                if (string.IsNullOrEmpty(t.GitHubUrl)) t.GitHubUrl = "https://github.com";
+                if (string.IsNullOrEmpty(t.Bio)) t.Bio = "Yazılım ve Bilişim Topluluğu yönetim ekibi üyesi.";
+            }
         }
 
         await context.SaveChangesAsync();

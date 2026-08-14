@@ -1,40 +1,43 @@
 @model Ybt.Core.Entities.Blog
 @{
-    ViewData["Title"] = "Yeni Blog Yazısı Ekle";
+    ViewData["Title"] = "Blog Yazısını Düzenle";
     Layout = "_AdminLayout";
 }
 
 <div class="card p-4 p-md-5">
     <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-25">
         <div>
-            <h4 class="fw-bold text-white mb-1"><i class="bi bi-file-earmark-plus text-warning me-2"></i>Yeni Blog Yazısı</h4>
-            <span class="text-secondary small">Topluluk blogunda yayınlanacak yeni bir makale veya haber oluşturun.</span>
+            <h4 class="fw-bold text-white mb-1"><i class="bi bi-pencil-square text-warning me-2"></i>Blog Yazısını Düzenle</h4>
+            <span class="text-secondary small">"@Model.Title" başlıklı makaleyi güncelleyin.</span>
         </div>
         <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
             <i class="bi bi-arrow-left me-1"></i>Listeye Dön
         </a>
     </div>
 
-    <form asp-action="Create" method="post" enctype="multipart/form-data">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="AuthorId" />
+        <input type="hidden" asp-for="ImageUrl" />
         <div asp-validation-summary="All" class="text-danger mb-3"></div>
         
         <div class="row g-4">
             <div class="col-lg-8">
                 <div class="mb-3">
                     <label asp-for="Title" class="form-label text-secondary small">Blog Başlığı *</label>
-                    <input asp-for="Title" class="form-control rounded-pill px-3" placeholder="Örn: 2026'da Yazılım Dünyası ve Kariyer Trendleri" required />
+                    <input asp-for="Title" class="form-control rounded-pill px-3" required />
                     <span asp-validation-for="Title" class="text-danger small"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Summary" class="form-label text-secondary small">Kısa Özet / Spot Metin</label>
-                    <textarea asp-for="Summary" class="form-control px-3 py-2" rows="2" style="border-radius: 14px;" placeholder="Kart görünümünde ve sosyal paylaşımlarda görünecek 1-2 cümlelik özet..."></textarea>
+                    <textarea asp-for="Summary" class="form-control px-3 py-2" rows="2" style="border-radius: 14px;"></textarea>
                     <span asp-validation-for="Summary" class="text-danger small"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Content" class="form-label text-secondary small">Makale İçeriği *</label>
-                    <textarea asp-for="Content" class="form-control px-3 py-3" rows="10" style="border-radius: 16px;" placeholder="Blog yazısının detaylı içeriği..." required></textarea>
+                    <textarea asp-for="Content" class="form-control px-3 py-3" rows="10" style="border-radius: 16px;" required></textarea>
                     <span asp-validation-for="Content" class="text-danger small"></span>
                 </div>
             </div>
@@ -57,18 +60,26 @@
 
                     <div class="mb-3">
                         <label asp-for="Tags" class="form-label text-secondary small">Etiketler (Virgülle ayırın)</label>
-                        <input asp-for="Tags" class="form-control rounded-pill px-3" placeholder="Örn: AI, .NET, Docker, Kariyer" />
+                        <input asp-for="Tags" class="form-control rounded-pill px-3" />
                     </div>
 
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <div class="mb-3">
+                            <label class="form-label text-secondary small d-block">Mevcut Görsel</label>
+                            <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid rounded-3 mb-2" style="max-height: 140px; width: 100%; object-fit: cover;" />
+                        </div>
+                    }
+
                     <div class="mb-3">
-                        <label class="form-label text-secondary small">Kapak Görseli</label>
+                        <label class="form-label text-secondary small">Görseli Değiştir</label>
                         <input type="file" name="imageFile" class="form-control rounded-pill px-3" accept="image/*" />
-                        <small class="text-secondary d-block mt-1">Önerilen: 1200x630 piksel (Max 2MB)</small>
+                        <small class="text-secondary d-block mt-1">Yeni görsel seçilmezse mevcut görsel korunur.</small>
                     </div>
 
                     <div class="mb-2 pt-2 border-top border-secondary border-opacity-25">
                         <div class="form-check form-switch">
-                            <input asp-for="IsActive" class="form-check-input" type="checkbox" checked />
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" />
                             <label asp-for="IsActive" class="form-check-label text-white">Yayınlansın (Aktif)</label>
                         </div>
                     </div>
@@ -78,7 +89,7 @@
 
         <div class="d-flex gap-2 mt-4 pt-3 border-top border-secondary border-opacity-25">
             <button type="submit" class="btn btn-primary rounded-pill px-5 shadow">
-                <i class="bi bi-check2 me-2"></i>Blog Yazısını Kaydet
+                <i class="bi bi-check2 me-2"></i>Değişiklikleri Kaydet
             </button>
             <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">İptal</a>
         </div>
