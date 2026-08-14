@@ -52,6 +52,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRXZlbnRzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Batuhan/OneDrive/Masaüstü/2025-2026 projeler/YBT WEB SİTESİ/src/Ybt.Web/Areas/Admin/Views/Projects/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvamVjdHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Batuhan/OneDrive/Masaüstü/2025-2026 projeler/YBT WEB SİTESİ/src/Ybt.Web/Areas/Admin/Views/Projects/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvamVjdHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Batuhan/OneDrive/Masaüstü/2025-2026 projeler/YBT WEB SİTESİ/src/Ybt.Web/Areas/Admin/Views/Projects/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvamVjdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Batuhan/OneDrive/Masaüstü/2025-2026 projeler/YBT WEB SİTESİ/src/Ybt.Web/Areas/Admin/Views/Shared/_AdminLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

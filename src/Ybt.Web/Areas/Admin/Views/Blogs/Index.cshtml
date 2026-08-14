@@ -16,23 +16,29 @@
                     <th>Başlık</th>
                     <th>Tarih</th>
                     <th>Durum</th>
+                    <th class="text-end">İşlemler</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.Title</td>
+                        <td class="fw-semibold text-white">@item.Title</td>
                         <td>@item.CreatedAt.ToString("dd.MM.yyyy")</td>
                         <td>
                             @if (item.IsActive)
                             {
-                                <span class="badge bg-success">Aktif</span>
+                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">Aktif</span>
                             }
                             else
                             {
-                                <span class="badge bg-danger">Pasif</span>
+                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25">Pasif</span>
                             }
+                        </td>
+                        <td class="text-end">
+                            <a href="/Blog/Details/@item.Slug" target="_blank" class="btn btn-sm btn-outline-info me-1" title="Önizle">
+                                <i class="bi bi-eye"></i>
+                            </a>
                         </td>
                     </tr>
                 }
@@ -45,9 +51,8 @@
     <script>
         $(document).ready(function() {
             $('#blogsTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json"
-                }
+                "pageLength": 10,
+                "responsive": true
             });
         });
     </script>

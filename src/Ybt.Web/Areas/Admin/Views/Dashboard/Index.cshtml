@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Genel Bakış";
 }
 
 <!-- Stats Overview Cards -->
@@ -9,7 +9,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <div class="stat-label">Toplam Üye</div>
-                    <div class="stat-value mt-1">1,234</div>
+                    <div class="stat-value mt-1">540+</div>
                 </div>
                 <div class="stats-icon-badge members">
                     <i class="bi bi-people"></i>
@@ -22,7 +22,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <div class="stat-label">Etkinlikler</div>
-                    <div class="stat-value mt-1">12</div>
+                    <div class="stat-value mt-1">16</div>
                 </div>
                 <div class="stats-icon-badge events">
                     <i class="bi bi-calendar-check"></i>
@@ -34,11 +34,11 @@
         <div class="card stats-card applications h-100">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <div class="stat-label">Yeni Başvurular</div>
-                    <div class="stat-value mt-1">45</div>
+                    <div class="stat-label">Aktif Projeler</div>
+                    <div class="stat-value mt-1">8</div>
                 </div>
                 <div class="stats-icon-badge applications">
-                    <i class="bi bi-person-plus"></i>
+                    <i class="bi bi-code-slash"></i>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <div class="stat-label">Blog Yazıları</div>
-                    <div class="stat-value mt-1">28</div>
+                    <div class="stat-value mt-1">24</div>
                 </div>
                 <div class="stats-icon-badge blogs">
                     <i class="bi bi-journal-text"></i>
@@ -63,7 +63,7 @@
         <div class="card p-3 p-md-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h6 class="mb-0 fw-bold text-white"><i class="bi bi-clock-history me-2 text-info"></i>Son Etkinlik Başvuruları</h6>
-                <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25 font-monospace small">Son 5 Başvuru</span>
+                <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25 font-monospace small">Güncel Başvurular</span>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -78,18 +78,32 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="fw-semibold text-white">Ali Yılmaz</td>
-                            <td class="text-light">Hackathon 2026</td>
-                            <td class="text-secondary small font-monospace">12.05.2026</td>
-                            <td><span class="badge bg-warning bg-opacity-25 text-warning px-2 py-1 border border-warning border-opacity-25">Beklemede</span></td>
-                            <td class="text-end"><button type="button" class="btn btn-sm btn-outline-light-space">Detay</button></td>
+                            <td class="fw-semibold text-white">Batuhan Yılmaz</td>
+                            <td class="text-light">YBT Hackathon 2026</td>
+                            <td class="text-secondary small font-monospace">14.08.2026</td>
+                            <td><span class="badge bg-success bg-opacity-25 text-success px-2 py-1 border border-success border-opacity-25">Onaylandı</span></td>
+                            <td class="text-end"><button type="button" class="btn btn-sm btn-outline-light-space">İncele</button></td>
                         </tr>
                         <tr>
-                            <td class="fw-semibold text-white">Ayşe Demir</td>
-                            <td class="text-light">AI Workshop</td>
-                            <td class="text-secondary small font-monospace">11.05.2026</td>
+                            <td class="fw-semibold text-white">Zeynep Kaya</td>
+                            <td class="text-light">Modern Web & Bulut Atölyesi</td>
+                            <td class="text-secondary small font-monospace">13.08.2026</td>
+                            <td><span class="badge bg-warning bg-opacity-25 text-warning px-2 py-1 border border-warning border-opacity-25">Değerlendiriliyor</span></td>
+                            <td class="text-end"><button type="button" class="btn btn-sm btn-outline-light-space">İncele</button></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-semibold text-white">Emre Demir</td>
+                            <td class="text-light">Siber Güvenlik & CTF Maratonu</td>
+                            <td class="text-secondary small font-monospace">12.08.2026</td>
                             <td><span class="badge bg-success bg-opacity-25 text-success px-2 py-1 border border-success border-opacity-25">Onaylandı</span></td>
-                            <td class="text-end"><button type="button" class="btn btn-sm btn-outline-light-space">Detay</button></td>
+                            <td class="text-end"><button type="button" class="btn btn-sm btn-outline-light-space">İncele</button></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-semibold text-white">Selin Aksoy</td>
+                            <td class="text-light">YBT Hackathon 2026</td>
+                            <td class="text-secondary small font-monospace">11.08.2026</td>
+                            <td><span class="badge bg-info bg-opacity-25 text-info px-2 py-1 border border-info border-opacity-25">Yeni Başvuru</span></td>
+                            <td class="text-end"><button type="button" class="btn btn-sm btn-outline-light-space">İncele</button></td>
                         </tr>
                     </tbody>
                 </table>

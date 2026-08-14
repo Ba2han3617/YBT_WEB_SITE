@@ -9,11 +9,12 @@
             <div class="col-lg-6">
                 <span class="section-tag">YBT Ekosistemi</span>
                 <h1 class="display-3 fw-extrabold mb-4 gradient-text">Biz Kimiz?</h1>
-                <p class="fs-4 text-secondary">Yazılım ve Bilişim Topluluğu, teknolojiye, yazılıma ve bilime gönül vermiş üniversite öğrencilerinin geleceği şekillendirmek için kurduğu güçlü bir inovasyon platformudur.</p>
+                <p class="fs-5 text-secondary" style="line-height: 1.8;">Düzce Üniversitesi Yazılım ve Bilişim Topluluğu (YBT); yazılıma, yapay zekaya, siber güvenliğe ve yenilikçi teknolojilere ilgi duyan üniversite öğrencilerini bir araya getiren bağımsız ve üretken bir inovasyon ekosistemidir.</p>
+                <p class="fs-5 text-secondary" style="line-height: 1.8;">Akademik bilginin ötesine geçerek gerçek hayat senaryolarında projeler geliştiriyor, açık kaynak kültürünü yaygınlaştırıyor ve üyelerimizi küresel teknoloji standartlarına hazırlıyoruz.</p>
             </div>
             <div class="col-lg-6">
                 <div class="hero-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Team" class="img-fluid rounded-4 shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="YBT Ekip Çalışması" class="img-fluid rounded-4 shadow-lg">
                 </div>
             </div>
         </div>
@@ -25,7 +26,7 @@
                         <i class="bi bi-compass"></i>
                     </div>
                     <h2 class="fw-bold mb-3 text-white">Misyonumuz</h2>
-                    <p class="fs-5 text-secondary">Öğrencilere teorik bilginin ötesinde pratik proje deneyimi, takım çalışması ve staj/iş fırsatları sunarak onları uzay çağı teknolojilerine hazırlamak.</p>
+                    <p class="fs-5 text-secondary" style="line-height: 1.8;">Üyelerimize takım çalışması, açık kaynak geliştirme ve liderlik deneyimleri kazandırarak onları ulusal ve uluslararası yazılım ekosistemine donanımlı mühendisler olarak hazırlamak.</p>
                 </div>
             </div>
             <div class="col-md-6 reveal">
@@ -34,7 +35,7 @@
                         <i class="bi bi-eye"></i>
                     </div>
                     <h2 class="fw-bold mb-3 text-white">Vizyonumuz</h2>
-                    <p class="fs-5 text-secondary">Türkiye'nin en üretken, teknoloji odaklı ve ilham veren öğrenci topluluklarından biri olarak ulusal ve uluslararası platformlarda iz bırakmak.</p>
+                    <p class="fs-5 text-secondary" style="line-height: 1.8;">Türkiye'nin en üretken, inovatif ve ilham veren üniversite teknoloji topluluklarından biri olarak açık kaynak dünyasında ve hackathon maratonlarında kalıcı izler bırakmak.</p>
                 </div>
             </div>
         </div>
@@ -42,7 +43,8 @@
         <div class="py-5 reveal">
             <div class="text-center mb-5">
                 <span class="section-tag">Topluluk Liderleri</span>
-                <h2 class="display-5 fw-bold gradient-text">Yönetim Ekibimiz</h2>
+                <h2 class="display-5 fw-bold gradient-text">Yönetim Kurulumuz</h2>
+                <p class="text-secondary fs-5">YBT'nin vizyonunu ileriye taşıyan ve etkinlikleri koordine eden yönetim ekibi.</p>
             </div>
             <div class="row g-4">
                 @if (Model != null && Model.Any())
@@ -52,7 +54,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="card team-card h-100">
                                 <div class="team-avatar-wrapper">
-                                    <img src="@(member.ImageUrl ?? "https://i.pravatar.cc/300")" class="rounded-circle shadow" width="130" height="130" style="object-fit: cover;">
+                                    <img src="@(member.ImageUrl ?? "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80")" alt="@member.FullName" class="rounded-circle shadow" width="130" height="130" style="object-fit: cover;">
                                 </div>
                                 <h5 class="fw-bold text-white mb-1">@member.FullName</h5>
                                 <p class="text-info small mb-0 font-monospace">@member.Role</p>

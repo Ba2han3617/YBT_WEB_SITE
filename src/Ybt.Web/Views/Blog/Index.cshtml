@@ -19,11 +19,11 @@
                             <img src="@(item.ImageUrl ?? "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80")" class="card-img-top" alt="@item.Title" style="height: 320px; object-fit: cover;">
                             <div class="card-body p-4 p-md-5">
                                 <div class="mb-3 d-flex align-items-center gap-3">
-                                    <span class="badge bg-purple bg-opacity-25 text-info border border-info border-opacity-25 rounded-pill px-3 py-2">Teknoloji</span>
-                                    <span class="text-secondary small font-monospace"><i class="bi bi-clock me-1 text-primary"></i> @item.CreatedAt.ToString("dd MMM yyyy")</span>
+                                    <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25 rounded-pill px-3 py-2">Yazılım & Teknoloji</span>
+                                    <span class="text-secondary small font-monospace"><i class="bi bi-clock me-1 text-primary"></i> @item.CreatedAt.ToString("dd MMMM yyyy")</span>
                                 </div>
-                                <h2 class="fw-bold text-white mb-3">@item.Title</h2>
-                                <p class="text-secondary fs-5 mb-4">@(item.Content?.Length > 200 ? item.Content.Substring(0, 200) + "..." : item.Content)</p>
+                                <h2 class="fw-bold text-white mb-3 h3">@item.Title</h2>
+                                <p class="text-secondary fs-5 mb-4" style="line-height: 1.7;">@(item.Content?.Length > 200 ? item.Content.Substring(0, 200) + "..." : item.Content)</p>
                                 <a asp-action="Details" asp-route-slug="@item.Slug" class="btn btn-primary px-4 rounded-pill">Devamını Oku <i class="bi bi-arrow-right ms-1"></i></a>
                             </div>
                         </div>
@@ -33,18 +33,19 @@
             <div class="col-lg-4">
                 <div class="position-sticky" style="top: 100px;">
                     <div class="card p-4 border-0 mb-4">
-                        <h5 class="fw-bold text-white mb-3"><i class="bi bi-search me-2 text-info"></i>Arama</h5>
+                        <h5 class="fw-bold text-white mb-3"><i class="bi bi-search me-2 text-info"></i>Makalelerde Ara</h5>
                         <div class="input-group">
-                            <input type="text" class="form-control rounded-start-pill px-3" placeholder="Blogda ara...">
-                            <button class="btn btn-primary rounded-end-pill px-4"><i class="bi bi-search"></i></button>
+                            <input type="text" class="form-control rounded-start-pill px-3" placeholder="Konu veya başlık ara...">
+                            <button class="btn btn-primary rounded-end-pill px-4" type="button"><i class="bi bi-search"></i></button>
                         </div>
                     </div>
                     <div class="card p-4 border-0">
                         <h5 class="fw-bold text-white mb-3"><i class="bi bi-grid me-2 text-info"></i>Kategoriler</h5>
-                        <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
-                            <li><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between">Yazılım <span class="badge bg-secondary bg-opacity-25 text-info">12</span></a></li>
-                            <li><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between">Yapay Zeka <span class="badge bg-secondary bg-opacity-25 text-info">8</span></a></li>
-                            <li><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between">Etkinlikler <span class="badge bg-secondary bg-opacity-25 text-info">5</span></a></li>
+                        <ul class="list-unstyled mb-0 d-flex flex-column gap-3">
+                            <li><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Yazılım Geliştirme <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">12</span></a></li>
+                            <li><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Yapay Zeka & Veri <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">8</span></a></li>
+                            <li><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Açık Kaynak & DevOps <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">6</span></a></li>
+                            <li><a href="#" class="text-secondary text-decoration-none d-flex justify-content-between align-items-center hover-cyan">Etkinlikler & Hackathon <span class="badge bg-secondary bg-opacity-25 text-info font-monospace">5</span></a></li>
                         </ul>
                     </div>
                 </div>

@@ -69,6 +69,7 @@ public class AccountController : Controller
 
             if (result.Succeeded)
             {
+                TempData["Success"] = "Giriş başarılı! Hoş geldiniz.";
                 if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                     return Redirect(returnUrl);
                 return RedirectToAction("Index", "Home");
@@ -80,7 +81,7 @@ public class AccountController : Controller
                 return View(model);
             }
 
-            ModelState.AddModelError(string.Empty, "Geçersiz giriş denemesi.");
+            ModelState.AddModelError(string.Empty, "E-posta veya şifre hatalı.");
         }
         return View(model);
     }
@@ -123,6 +124,7 @@ public class AccountController : Controller
             {
                 await _userManager.AddToRoleAsync(user, "User");
                 await _signInManager.SignInAsync(user, isPersistent: false);
+                TempData["Success"] = "Yazılım ve Bilişim Topluluğu'na kaydınız başarıyla tamamlandı! Aramıza hoş geldiniz.";
                 return RedirectToAction("Index", "Home");
             }
             foreach (var error in result.Errors)
@@ -138,6 +140,7 @@ public class AccountController : Controller
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
+        TempData["Success"] = "Başarıyla çıkış yaptınız.";
         return RedirectToAction("Index", "Home");
     }
 

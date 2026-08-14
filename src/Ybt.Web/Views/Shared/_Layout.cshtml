@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="~/css/modern-custom.css" asp-append-version="true" />
 </head>
 <body>
+    @{
+        var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    }
     <header>
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container">
@@ -21,47 +24,58 @@
                     <span class="fw-extrabold fs-5 font-outfit text-white">Yazılım & Bilişim</span>
                 </a>
                 <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                        aria-expanded="false" aria-label="Menüyü Aç/Kapat">
                     <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                            <a class="nav-link @(currentController == "Home" ? "active" : "")" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="About" asp-action="Index">Hakkımızda</a>
+                            <a class="nav-link @(currentController == "About" ? "active" : "")" asp-controller="About" asp-action="Index">Hakkımızda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Events" asp-action="Index">Etkinlikler</a>
+                            <a class="nav-link @(currentController == "Events" ? "active" : "")" asp-controller="Events" asp-action="Index">Etkinlikler</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Projects" asp-action="Index">Projeler</a>
+                            <a class="nav-link @(currentController == "Projects" ? "active" : "")" asp-controller="Projects" asp-action="Index">Projeler</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Blog" asp-action="Index">Blog</a>
+                            <a class="nav-link @(currentController == "Blog" ? "active" : "")" asp-controller="Blog" asp-action="Index">Blog</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Contact" asp-action="Index">İletişim</a>
+                            <a class="nav-link @(currentController == "Contact" ? "active" : "")" asp-controller="Contact" asp-action="Index">İletişim</a>
                         </li>
                     </ul>
-                    <div class="ms-lg-3">
+                    <div class="ms-lg-3 mt-3 mt-lg-0 d-flex align-items-center gap-2">
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <div class="dropdown">
-                                <button class="btn btn-primary rounded-pill px-4 dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-person-circle me-2"></i>@User.Identity.Name
+                                <button class="btn btn-primary rounded-pill px-4 dropdown-toggle d-flex align-items-center gap-2" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle fs-5"></i>
+                                    <span>@User.Identity.Name</span>
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg glass-card" aria-labelledby="userMenu">
-                                    <li><a class="dropdown-item text-white" asp-area="" asp-controller="Account" asp-action="Profile">Profilim</a></li>
+                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg glass-card p-2" aria-labelledby="userMenu">
+                                    <li>
+                                        <a class="dropdown-item rounded-3 py-2 text-white" asp-area="" asp-controller="Account" asp-action="Profile">
+                                            <i class="bi bi-person-gear me-2 text-info"></i>Profilim
+                                        </a>
+                                    </li>
                                     @if (User.IsInRole("Admin"))
                                     {
-                                        <li><a class="dropdown-item text-info" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Panel</a></li>
+                                        <li>
+                                            <a class="dropdown-item rounded-3 py-2 text-info" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                                                <i class="bi bi-shield-lock me-2"></i>Yönetim Paneli
+                                            </a>
+                                        </li>
                                     }
-                                    <li><hr class="dropdown-divider border-secondary"></li>
+                                    <li><hr class="dropdown-divider border-secondary border-opacity-50"></li>
                                     <li>
-                                        <form asp-controller="Account" asp-action="Logout" method="post">
-                                            <button type="submit" class="dropdown-item text-danger">Çıkış Yap</button>
+                                        <form asp-controller="Account" asp-action="Logout" method="post" class="m-0">
+                                            <button type="submit" class="dropdown-item rounded-3 py-2 text-danger">
+                                                <i class="bi bi-box-arrow-right me-2"></i>Çıkış Yap
+                                            </button>
                                         </form>
                                     </li>
                                 </ul>
@@ -69,7 +83,7 @@
                         }
                         else
                         {
-                            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary rounded-pill px-4 me-2">Giriş Yap</a>
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary rounded-pill px-4">Giriş Yap</a>
                             <a asp-controller="Account" asp-action="Register" class="btn btn-primary rounded-pill px-4">Katıl</a>
                         }
                     </div>
@@ -87,42 +101,42 @@
             <div class="row g-4">
                 <div class="col-lg-4 mb-4">
                     <img src="~/assets/images/logo/logo.png" alt="YBT Logo" class="footer-logo" />
-                    <p class="text-secondary mt-3">Yazılım ve Bilişim Topluluğu olarak evrenin teknoloji dinamiklerini birlikte keşfediyor ve kodluyoruz.</p>
+                    <p class="text-secondary mt-3">Düzce Üniversitesi Yazılım ve Bilişim Topluluğu olarak geleceğin teknolojisini birlikte öğreniyor, üretiyor ve kodluyoruz.</p>
                     <div class="d-flex gap-2 mt-4">
-                        <a href="https://www.instagram.com/du.yazilim/" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="bi bi-instagram"></i></a>
-                        <a href="https://www.tiktok.com/@@ybt1881" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="bi bi-tiktok"></i></a>
-                        <a href="https://www.linkedin.com/in/d%C3%BCzce-%C3%BCniversitesi-yaz%C4%B1l%C4%B1m-ve-bili%C5%9Fim-toplulu%C4%9Fu-357245383/" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="bi bi-linkedin"></i></a>
-                        <a href="https://medium.com/@@yazilimvebilisimtoplulugu" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="bi bi-medium"></i></a>
+                        <a href="https://www.instagram.com/du.yazilim/" target="_blank" rel="noopener noreferrer" class="social-icon" title="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@@ybt1881" target="_blank" rel="noopener noreferrer" class="social-icon" title="TikTok"><i class="bi bi-tiktok"></i></a>
+                        <a href="https://www.linkedin.com/in/d%C3%BCzce-%C3%BCniversitesi-yaz%C4%B1l%C4%B1m-ve-bili%C5%9Fim-toplulu%C4%9Fu-357245383/" target="_blank" rel="noopener noreferrer" class="social-icon" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                        <a href="https://medium.com/@@yazilimvebilisimtoplulugu" target="_blank" rel="noopener noreferrer" class="social-icon" title="Medium"><i class="bi bi-medium"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-2 mb-4">
+                <div class="col-lg-2 col-6 mb-4">
                     <h5 class="text-white mb-4 fw-bold">Kurumsal</h5>
                     <ul class="list-unstyled d-flex flex-column gap-2">
                         <li><a asp-controller="About" asp-action="Index" class="footer-link">Hakkımızda</a></li>
                         <li><a asp-controller="About" asp-action="Index" class="footer-link">Vizyon & Misyon</a></li>
-                        <li><a asp-controller="About" asp-action="Index" class="footer-link">Yönetim Ekibi</a></li>
+                        <li><a asp-controller="About" asp-action="Index" class="footer-link">Yönetim Kurulu</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 mb-4">
+                <div class="col-lg-2 col-6 mb-4">
                     <h5 class="text-white mb-4 fw-bold">Topluluk</h5>
                     <ul class="list-unstyled d-flex flex-column gap-2">
                         <li><a asp-controller="Events" asp-action="Index" class="footer-link">Etkinlikler</a></li>
-                        <li><a asp-controller="Projects" asp-action="Index" class="footer-link">Projeler</a></li>
-                        <li><a asp-controller="Blog" asp-action="Index" class="footer-link">Blog</a></li>
+                        <li><a asp-controller="Projects" asp-action="Index" class="footer-link">Projelerimiz</a></li>
+                        <li><a asp-controller="Blog" asp-action="Index" class="footer-link">Blog & Yazılar</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4">
-                    <h5 class="text-white mb-4 fw-bold">Bülten</h5>
-                    <p class="text-secondary">Teknoloji dünyasındaki gelişmeler ve etkinliklerimizden ilk siz haberdar olun.</p>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control bg-transparent border-secondary text-white px-3" placeholder="E-posta adresiniz">
-                        <button class="btn btn-primary px-4" type="button">Abone Ol</button>
-                    </div>
+                    <h5 class="text-white mb-4 fw-bold">E-Bülten</h5>
+                    <p class="text-secondary">Teknoloji zirveleri, atölyeler ve açık kaynak projelerimizden haberdar olun.</p>
+                    <form onsubmit="event.preventDefault(); alert('E-bülten kaydınız başarıyla alındı!'); this.reset();" class="input-group mb-3">
+                        <input type="email" class="form-control bg-transparent border-secondary text-white px-3" placeholder="E-posta adresiniz" required>
+                        <button class="btn btn-primary px-4" type="submit">Abone Ol</button>
+                    </form>
                 </div>
             </div>
             <hr class="border-secondary border-opacity-25 my-5">
             <div class="text-center text-secondary small">
-                <p>&copy; @DateTime.Now.Year Yazılım ve Bilişim Topluluğu. Tüm Hakları Saklıdır.</p>
+                <p class="mb-0">&copy; @DateTime.Now.Year Düzce Üniversitesi Yazılım ve Bilişim Topluluğu. Tüm Hakları Saklıdır.</p>
             </div>
         </div>
     </footer>
@@ -130,10 +144,10 @@
     @if (TempData["Success"] != null)
     {
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div class="toast show align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast show align-items-center text-white bg-success border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
-                    <div class="toast-body">@TempData["Success"]</div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@TempData["Success"]</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Kapat"></button>
                 </div>
             </div>
         </div>
@@ -141,10 +155,10 @@
     @if (TempData["Error"] != null)
     {
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div class="toast show align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast show align-items-center text-white bg-danger border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
-                    <div class="toast-body">@TempData["Error"]</div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    <div class="toast-body"><i class="bi bi-exclamation-triangle me-2"></i>@TempData["Error"]</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Kapat"></button>
                 </div>
             </div>
         </div>

@@ -23,22 +23,22 @@
                     <h3 class="fw-bold text-white mb-4"><i class="bi bi-send me-2 text-info"></i>Mesaj Gönderin</h3>
                     <form asp-action="SendMessage" method="post" asp-antiforgery="true">
                         <div class="mb-3">
-                            <label class="form-label text-secondary small">Adınız</label>
-                            <input type="text" class="form-control rounded-pill px-4" required>
+                            <label class="form-label text-secondary small">Adınız ve Soyadınız *</label>
+                            <input type="text" name="name" class="form-control rounded-pill px-4" placeholder="Örn: Ahmet Yılmaz" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label text-secondary small">E-posta</label>
-                            <input type="email" class="form-control rounded-pill px-4" required>
+                            <label class="form-label text-secondary small">E-posta Adresiniz *</label>
+                            <input type="email" name="email" class="form-control rounded-pill px-4" placeholder="ornek@ogr.duzce.edu.tr" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label text-secondary small">Konu</label>
-                            <input type="text" class="form-control rounded-pill px-4" required>
+                            <label class="form-label text-secondary small">Konu *</label>
+                            <input type="text" name="subject" class="form-control rounded-pill px-4" placeholder="Örn: Sponsorluk / Proje İş Birliği" required>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label text-secondary small">Mesajınız</label>
-                            <textarea class="form-control p-4" style="border-radius: 20px;" rows="4" required></textarea>
+                            <label class="form-label text-secondary small">Mesajınız *</label>
+                            <textarea name="message" class="form-control p-4" style="border-radius: 20px;" rows="4" placeholder="Topluluğumuza iletmek istediğiniz mesajınızı buraya yazınız..." required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100 py-3 rounded-pill fw-bold"><i class="bi bi-paperplane me-2"></i>Gönder</button>
+                        <button type="submit" class="btn btn-primary w-100 py-3 rounded-pill fw-bold shadow-lg"><i class="bi bi-paperplane me-2"></i>Mesajı Gönder</button>
                     </form>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                         </div>
                         <div>
                             <span class="text-secondary small d-block">Adres</span>
-                            <span class="fs-6 text-white font-monospace">Düzce Üniversitesi Mühendislik Fakültesi / YBT Odası</span>
+                            <span class="fs-6 text-white">Düzce Üniversitesi Konuralp Yerleşkesi, Mühendislik Fakültesi / YBT Kulüp Odası</span>
                         </div>
                     </div>
                     <div class="d-flex align-items-center mb-4">
@@ -59,7 +59,7 @@
                             <i class="bi bi-envelope-fill"></i>
                         </div>
                         <div>
-                            <span class="text-secondary small d-block">E-posta</span>
+                            <span class="text-secondary small d-block">Resmi E-posta</span>
                             <span class="fs-6 text-white font-monospace">yazilimvebilisimtoplulugu@gmail.com</span>
                         </div>
                     </div>
@@ -68,8 +68,8 @@
                             <i class="bi bi-chat-dots-fill"></i>
                         </div>
                         <div>
-                            <span class="text-secondary small d-block">Sosyal Medya</span>
-                            <span class="fs-6 text-white font-monospace">@@du.yazilim & @@ybt1881</span>
+                            <span class="text-secondary small d-block">Resmi Sosyal Medya Hesapları</span>
+                            <span class="fs-6 text-white font-monospace">@@du.yazilim &bull; @@ybt1881</span>
                         </div>
                     </div>
                 </div>

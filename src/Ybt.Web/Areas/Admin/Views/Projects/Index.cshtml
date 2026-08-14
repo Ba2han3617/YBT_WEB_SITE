@@ -1,22 +1,21 @@
-@model IEnumerable<Ybt.Core.Entities.TeamMember>
+@model IEnumerable<Ybt.Core.Entities.Project>
 @{
-    ViewData["Title"] = "Yönetim Ekibi Yönetimi";
+    ViewData["Title"] = "Proje Yönetimi";
     Layout = "_AdminLayout";
 }
 
 <div class="card p-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="mb-0">Yönetim Ekibi</h5>
-        <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i> Yeni Üye Ekle</a>
+        <h5 class="mb-0 fw-bold text-white">Proje Listesi</h5>
+        <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i> Yeni Proje Ekle</a>
     </div>
     <div class="table-responsive">
-        <table id="teamTable" class="table table-hover">
+        <table id="projectsTable" class="table table-hover">
             <thead>
                 <tr>
-                    <th style="width: 60px;">Sıra</th>
-                    <th>Fotoğraf</th>
-                    <th>Ad Soyad</th>
-                    <th>Görev</th>
+                    <th>Proje Adı</th>
+                    <th>Teknolojiler</th>
+                    <th>GitHub Bağlantısı</th>
                     <th>Durum</th>
                     <th class="text-end">İşlemler</th>
                 </tr>
@@ -25,12 +24,20 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td><span class="badge bg-secondary bg-opacity-25 text-info font-monospace">@item.Order</span></td>
+                        <td class="fw-semibold text-white">@item.Name</td>
+                        <td><small class="text-info font-monospace">@item.TechTags</small></td>
                         <td>
-                            <img src="@(item.ImageUrl ?? "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80")" alt="@item.FullName" class="rounded-circle" width="36" height="36" style="object-fit: cover;" />
+                            @if (!string.IsNullOrEmpty(item.GitHubUrl))
+                            {
+                                <a href="@item.GitHubUrl" target="_blank" class="text-secondary text-decoration-none small">
+                                    <i class="bi bi-github me-1"></i>Kaynak Kod
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-secondary small">-</span>
+                            }
                         </td>
-                        <td class="fw-semibold text-white">@item.FullName</td>
-                        <td><span class="text-info font-monospace small">@item.Role</span></td>
                         <td>
                             @if (item.IsActive)
                             {
@@ -44,7 +51,7 @@
                         <td class="text-end">
                             <div class="btn-group">
                                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white" title="Düzenle"><i class="bi bi-pencil"></i></a>
-                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Bu ekip üyesini silmek istediğinize emin misiniz?')" class="d-inline">
+                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Bu projeyi silmek istediğinize emin misiniz?')" class="d-inline">
                                     <button type="submit" class="btn btn-sm btn-danger rounded-0 rounded-end" title="Sil"><i class="bi bi-trash"></i></button>
                                 </form>
                             </div>
@@ -59,10 +66,9 @@
 @section Scripts {
     <script>
         $(document).ready(function() {
-            $('#teamTable').DataTable({
+            $('#projectsTable').DataTable({
                 "pageLength": 10,
-                "responsive": true,
-                "order": [[0, "asc"]]
+                "responsive": true
             });
         });
     </script>

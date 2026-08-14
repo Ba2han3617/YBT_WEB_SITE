@@ -23,24 +23,25 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.Title</td>
-                        <td>@item.EventDate.ToString("dd.MM.yyyy")</td>
-                        <td>@item.Location</td>
+                        <td class="fw-semibold text-white">@item.Title</td>
+                        <td><span class="font-monospace">@item.EventDate.ToString("dd.MM.yyyy HH:mm")</span></td>
+                        <td><small class="text-secondary"><i class="bi bi-geo-alt me-1 text-info"></i>@item.Location</small></td>
                         <td>
                             @if (item.IsActive)
                             {
-                                <span class="badge bg-success">Aktif</span>
+                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">Aktif</span>
                             }
                             else
                             {
-                                <span class="badge bg-danger">Pasif</span>
+                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25">Pasif</span>
                             }
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white"><i class="bi bi-pencil"></i></a>
-                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Silmek istediğinize emin misiniz?')">
-                                    <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white" title="Düzenle"><i class="bi bi-pencil"></i></a>
+                                <a href="/Events/Details/@item.Slug" target="_blank" class="btn btn-sm btn-outline-info" title="Görüntüle"><i class="bi bi-eye"></i></a>
+                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Bu etkinliği silmek istediğinize emin misiniz?')" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger rounded-0 rounded-end" title="Sil"><i class="bi bi-trash"></i></button>
                                 </form>
                             </div>
                         </td>
@@ -55,9 +56,8 @@
     <script>
         $(document).ready(function() {
             $('#eventsTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json"
-                }
+                "pageLength": 10,
+                "responsive": true
             });
         });
     </script>

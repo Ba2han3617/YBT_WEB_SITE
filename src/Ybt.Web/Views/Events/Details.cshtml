@@ -38,10 +38,22 @@
                             @Model?.Description
                         </div>
 
-                        <div class="mt-4">
+                        <div class="d-flex flex-wrap gap-3 mt-4">
                             <a asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
                                 <i class="bi bi-arrow-left me-2"></i>Etkinliklere Geri Dön
                             </a>
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <button type="button" class="btn btn-primary rounded-pill px-4 shadow-lg" onclick="alert('Etkinlik kaydınız başarıyla alındı! Katılım detayları e-posta adresinize iletilecektir.');">
+                                    <i class="bi bi-ticket-perforated me-2"></i>Etkinliğe Katıl
+                                </button>
+                            }
+                            else
+                            {
+                                <a asp-controller="Account" asp-action="Register" class="btn btn-primary rounded-pill px-4 shadow-lg">
+                                    <i class="bi bi-person-plus me-2"></i>Katılmak İçin Kayıt Ol
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>

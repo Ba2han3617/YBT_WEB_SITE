@@ -43,7 +43,7 @@
                     <ul class="nav flex-column px-2 mt-2">
                         <li class="nav-item">
                             <a class="nav-link @(currentController == "Dashboard" ? "active" : "")" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
-                                <i class="bi bi-grid-1x2"></i> Dashboard
+                                <i class="bi bi-grid-1x2"></i> Genel Bakış
                             </a>
                         </li>
                         <li class="nav-item">
@@ -82,7 +82,6 @@
                         <span class="text-secondary small"><i class="bi bi-clock me-1 text-info"></i> @DateTime.Now.ToString("dd MMMM yyyy") &bull; YBT Yönetim Paneli</span>
                     </div>
                     <div class="btn-toolbar mt-2 mt-md-0 gap-2">
-                        <button type="button" class="btn btn-sm btn-outline-light-space"><i class="bi bi-download me-1"></i> Dışa Aktar</button>
                         <a href="/" class="btn btn-sm btn-action-primary"><i class="bi bi-box-arrow-up-right me-1"></i> Siteye Dön</a>
                     </div>
                 </div>
@@ -97,8 +96,8 @@
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div class="toast show align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
-                    <div class="toast-body">@TempData["Success"]</div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@TempData["Success"]</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Kapat"></button>
                 </div>
             </div>
         </div>
@@ -108,17 +107,46 @@
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div class="toast show align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
-                    <div class="toast-body">@TempData["Error"]</div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    <div class="toast-body"><i class="bi bi-exclamation-triangle me-2"></i>@TempData["Error"]</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Kapat"></button>
                 </div>
             </div>
         </div>
     }
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        // DataTables Global Turkish Configuration
+        if (window.jQuery && $.fn.dataTable) {
+            $.extend(true, $.fn.dataTable.defaults, {
+                language: {
+                    emptyTable: "Tabloda herhangi bir veri bulunmuyor",
+                    info: "_TOTAL_ kayıttan _START_ - _END_ arası gösteriliyor",
+                    infoEmpty: "Kayıt bulunamadı",
+                    infoFiltered: "(_MAX_ kayıt içerisinden filtrelendi)",
+                    infoThousands: ".",
+                    lengthMenu: "Sayfada _MENU_ kayıt göster",
+                    loadingRecords: "Yükleniyor...",
+                    processing: "İşleniyor...",
+                    search: "Tabloda Ara:",
+                    searchPlaceholder: "Aramak için yazın...",
+                    zeroRecords: "Eşleşen kayıt bulunamadı",
+                    paginate: {
+                        first: "İlk",
+                        last: "Son",
+                        next: "Sonraki",
+                        previous: "Önceki"
+                    },
+                    aria: {
+                        sortAscending: ": artan sütun sıralamasını aktifleştir",
+                        sortDescending: ": azalan sütun sıralamasını aktifleştir"
+                    }
+                }
+            });
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -205,3 +205,49 @@ footer {
 .footer-link:hover {
     color: #38bdf8;
 }
+
+/* Utilities */
+.hover-cyan {
+    transition: var(--transition);
+}
+
+.hover-cyan:hover {
+    color: #38bdf8 !important;
+    transform: translateX(4px);
+}
+
+/* Dropdown Menu Glass Styling */
+.dropdown-menu.glass-card {
+    background: rgba(15, 23, 42, 0.95) !important;
+    border: 1px solid rgba(56, 189, 248, 0.25) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.15) !important;
+}
+
+.dropdown-item {
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.dropdown-item:hover {
+    background: rgba(56, 189, 248, 0.12) !important;
+    color: #38bdf8 !important;
+}
+
+.dropdown-item.text-danger:hover {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #f87171 !important;
+}
+
+/* Form Check Inputs */
+.form-check-input {
+    background-color: rgba(7, 11, 20, 0.8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: #38bdf8;
+    border-color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}

@@ -12,12 +12,23 @@
                     <p class="text-secondary">Teknoloji dünyasındaki yerinizi almak için formu eksiksiz doldurun.</p>
                 </div>
                 <form asp-action="Register" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger bg-danger bg-opacity-10 border border-danger border-opacity-25 text-danger small mb-4 rounded-3"></div>
+
+                    <!-- KVKK & Öğrenci Bilgilendirme Notu -->
+                    <div class="p-3 mb-4 rounded-3 border border-info border-opacity-25" style="background: rgba(56, 189, 248, 0.08);">
+                        <div class="d-flex align-items-start gap-2">
+                            <i class="bi bi-shield-lock-fill text-info fs-5 mt-1"></i>
+                            <div class="small text-secondary">
+                                <strong class="text-white d-block mb-1">Kulüp Üyelik ve Güvenlik Bilgilendirmesi</strong>
+                                TC Kimlik ve Öğrenci Numarası, üniversite tüzüğü gereği resmi üye kütüğü ve etkinlik akreditasyonları için gereklidir. Verileriniz 6698 sayılı KVKK kapsamında korunur ve üçüncü taraflarla paylaşılmaz.
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input asp-for="FirstName" class="form-control rounded-pill px-4" placeholder="Ad">
+                                <input asp-for="FirstName" class="form-control rounded-pill px-4" placeholder="Adınız">
                                 <label asp-for="FirstName" class="ms-3">Ad *</label>
                                 <span asp-validation-for="FirstName" class="text-danger small ms-3"></span>
                             </div>
@@ -25,7 +36,7 @@
 
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input asp-for="LastName" class="form-control rounded-pill px-4" placeholder="Soyad">
+                                <input asp-for="LastName" class="form-control rounded-pill px-4" placeholder="Soyadınız">
                                 <label asp-for="LastName" class="ms-3">Soyad *</label>
                                 <span asp-validation-for="LastName" class="text-danger small ms-3"></span>
                             </div>
@@ -33,7 +44,7 @@
 
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input asp-for="Email" class="form-control rounded-pill px-4" placeholder="name@example.com">
+                                <input asp-for="Email" class="form-control rounded-pill px-4" placeholder="ad.soyad@ogr.duzce.edu.tr">
                                 <label asp-for="Email" class="ms-3">E-posta Adresi *</label>
                                 <span asp-validation-for="Email" class="text-danger small ms-3"></span>
                             </div>
@@ -49,7 +60,7 @@
 
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input asp-for="TcNo" class="form-control rounded-pill px-4" maxlength="11" placeholder="TC Numarası">
+                                <input asp-for="TcNo" class="form-control rounded-pill px-4" maxlength="11" placeholder="11 Haneli TC No">
                                 <label asp-for="TcNo" class="ms-3">TC Kimlik Numarası (11 Hane) *</label>
                                 <span asp-validation-for="TcNo" class="text-danger small ms-3"></span>
                             </div>
@@ -57,7 +68,7 @@
 
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input asp-for="StudentNumber" class="form-control rounded-pill px-4" placeholder="Öğrenci Numarası">
+                                <input asp-for="StudentNumber" class="form-control rounded-pill px-4" placeholder="Öğrenci No">
                                 <label asp-for="StudentNumber" class="ms-3">Öğrenci Numarası *</label>
                                 <span asp-validation-for="StudentNumber" class="text-danger small ms-3"></span>
                             </div>
@@ -66,7 +77,7 @@
                         <div class="col-12">
                             <div class="form-floating">
                                 <select asp-for="Faculty" class="form-select rounded-pill px-4 pt-3 pb-2" style="height: 58px;">
-                                    <option value="">-- Seçiniz --</option>
+                                    <option value="">-- Fakülte / MYO Seçiniz --</option>
                                     <option value="Mühendislik Fakültesi">Mühendislik Fakültesi</option>
                                     <option value="Teknoloji Fakültesi">Teknoloji Fakültesi</option>
                                     <option value="Fen Edebiyat Fakültesi">Fen Edebiyat Fakültesi</option>
@@ -83,34 +94,71 @@
 
                         <div class="col-12">
                             <div class="form-floating">
-                                <textarea asp-for="Address" class="form-control px-4 pt-4" style="height: 100px; border-radius: 25px;" placeholder="Adres"></textarea>
-                                <label asp-for="Address" class="ms-3">Adres *</label>
+                                <textarea asp-for="Address" class="form-control px-4 pt-4" style="height: 90px; border-radius: 20px;" placeholder="İkametgah / Yurt Adresi"></textarea>
+                                <label asp-for="Address" class="ms-3">Adres (İkametgah / Yurt) *</label>
                                 <span asp-validation-for="Address" class="text-danger small ms-3"></span>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input asp-for="Password" class="form-control rounded-pill px-4" placeholder="Şifre">
-                                <label asp-for="Password" class="ms-3">Şifre *</label>
+                                <input asp-for="Password" class="form-control rounded-pill px-4" placeholder="Şifreniz">
+                                <label asp-for="Password" class="ms-3">Şifre (En az 6 karakter) *</label>
                                 <span asp-validation-for="Password" class="text-danger small ms-3"></span>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input asp-for="ConfirmPassword" class="form-control rounded-pill px-4" placeholder="Şifre Tekrar">
+                                <input asp-for="ConfirmPassword" class="form-control rounded-pill px-4" placeholder="Şifre Tekrarı">
                                 <label asp-for="ConfirmPassword" class="ms-3">Şifre Tekrar *</label>
                                 <span asp-validation-for="ConfirmPassword" class="text-danger small ms-3"></span>
                             </div>
                         </div>
+
+                        <!-- KVKK Onay Kutusu -->
+                        <div class="col-12 mt-3">
+                            <div class="form-check ms-2">
+                                <input asp-for="KvkkConsent" class="form-check-input" id="kvkkCheck">
+                                <label class="form-check-label text-secondary small" for="kvkkCheck">
+                                    <span class="text-white">Topluluk Tüzüğü ve KVKK Aydınlatma Metnini</span> okudum, onaylıyorum. *
+                                    <a href="#" class="text-info text-decoration-underline ms-1" data-bs-toggle="modal" data-bs-target="#kvkkModal">Metni İncele</a>
+                                </label>
+                                <span asp-validation-for="KvkkConsent" class="text-danger small d-block"></span>
+                            </div>
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100 py-3 rounded-pill fw-bold mt-4">Kaydol</button>
+                    <button type="submit" class="btn btn-primary w-100 py-3 rounded-pill fw-bold mt-4 shadow-lg">
+                        <i class="bi bi-person-check me-2"></i>Kayıt Ol ve Topluluğa Katıl
+                    </button>
                 </form>
                 <div class="text-center mt-4">
-                    <p class="text-secondary">Zaten üye misiniz? <a asp-action="Login" class="text-primary text-decoration-none fw-bold">Giriş Yapın</a></p>
+                    <p class="text-secondary">Zaten topluluk üyesi misiniz? <a asp-action="Login" class="text-primary text-decoration-none fw-bold">Giriş Yapın</a></p>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- KVKK Bilgilendirme Modalı -->
+<div class="modal fade" id="kvkkModal" tabindex="-1" aria-labelledby="kvkkModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content glass-card border-secondary text-white" style="background: rgba(15, 23, 42, 0.95);">
+            <div class="modal-header border-secondary border-opacity-25">
+                <h5 class="modal-title fw-bold" id="kvkkModalLabel"><i class="bi bi-shield-check text-info me-2"></i>KVKK ve Topluluk Tüzüğü Aydınlatma Metni</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body text-secondary small" style="line-height: 1.7;">
+                <h6 class="text-white fw-bold mb-2">1. Veri Sorumlusu</h6>
+                <p>Düzce Üniversitesi Yazılım ve Bilişim Topluluğu (YBT) olarak kişisel verilerinizin güvenliğine azami özen göstermekteyiz.</p>
+                <h6 class="text-white fw-bold mb-2">2. Kişisel Verilerin İşlenme Amacı</h6>
+                <p>Toplanan Ad, Soyad, E-posta, Telefon, TC Kimlik No, Öğrenci No ve Fakülte bilgileriniz; üniversite öğrenci kulüpleri mevzuatı uyarınca resmi üye kayıtlarının tutulması, kulüp etkinliklerine katılım kontrolü, akreditasyon işlemleri ve topluluk duyurularının iletilmesi amacıyla işlenmektedir.</p>
+                <h6 class="text-white fw-bold mb-2">3. Veri Güvenliği ve Paylaşım</h6>
+                <p>Verileriniz hiçbir surette ticari amaçlarla üçüncü şahıslarla paylaşılmaz; yasal zorunluluklar hariç yalnızca yetkili üniversite birimlerine bildirilir.</p>
+            </div>
+            <div class="modal-footer border-secondary border-opacity-25">
+                <button type="button" class="btn btn-primary rounded-pill px-4" data-bs-dismiss="modal">Anladım</button>
             </div>
         </div>
     </div>
