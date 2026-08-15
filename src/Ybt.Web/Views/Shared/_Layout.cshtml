@@ -16,91 +16,124 @@
     @{
         var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
     }
-    <header>
-        <nav class="navbar navbar-expand-lg fixed-top">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center gap-2" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/assets/images/logo/logo.png" alt="YBT Logo" class="img-fluid" style="height: 42px; filter: drop-shadow(0 0 8px rgba(56,189,248,0.5));" />
-                    <span class="fw-extrabold fs-5 font-outfit text-white">Yazılım & Bilişim</span>
+    <header id="site-header">
+        <!-- ── Floating Pill Navigation ───────────────────────── -->
+        <div class="fh-bar" id="floatingHeader">
+            <div class="fh-inner">
+
+                <!-- Sol: Logo pill -->
+                <a class="fh-logo-pill" asp-area="" asp-controller="Home" asp-action="Index" aria-label="YBT Ana Sayfa">
+                    <img src="~/assets/images/logo/logo.png" alt="YBT" class="fh-logo-img" />
                 </a>
-                <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Menüyü Aç/Kapat">
-                    <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link @(currentController == "Home" ? "active" : "")" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @(currentController == "About" ? "active" : "")" asp-controller="About" asp-action="Index">Hakkımızda</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @(currentController == "Events" ? "active" : "")" asp-controller="Events" asp-action="Index">Etkinlikler</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @(currentController == "Projects" ? "active" : "")" asp-controller="Projects" asp-action="Index">Projeler</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @(currentController == "Blog" ? "active" : "")" asp-controller="Blog" asp-action="Index">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @(currentController == "Contact" ? "active" : "")" asp-controller="Contact" asp-action="Index">İletişim</a>
-                        </li>
-                    </ul>
-                    <div class="ms-lg-3 mt-3 mt-lg-0 d-flex align-items-center gap-2">
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                            <div class="dropdown">
-                                <button class="btn btn-primary rounded-pill px-4 dropdown-toggle d-flex align-items-center gap-2 shadow" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-person-circle fs-5"></i>
-                                    <span>Hesabım</span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg glass-card p-2" style="min-width: 200px;" aria-labelledby="userMenu">
+
+                <!-- Orta: Beyaz pill nav (desktop) -->
+                <nav class="fh-pill-nav d-none d-lg-flex" aria-label="Ana navigasyon">
+                    <a class="fh-link @(currentController == "Home" ? "fh-link--active" : "")"
+                       asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                    <a class="fh-link @(currentController == "About" ? "fh-link--active" : "")"
+                       asp-controller="About" asp-action="Index">Hakkımızda</a>
+                    <a class="fh-link @(currentController == "Events" ? "fh-link--active" : "")"
+                       asp-controller="Events" asp-action="Index">Etkinlikler</a>
+                    <a class="fh-link @(currentController == "Projects" ? "fh-link--active" : "")"
+                       asp-controller="Projects" asp-action="Index">Projeler</a>
+                    <a class="fh-link @(currentController == "Blog" ? "fh-link--active" : "")"
+                       asp-controller="Blog" asp-action="Index">Blog</a>
+                    <a class="fh-link @(currentController == "Contact" ? "fh-link--active" : "")"
+                       asp-controller="Contact" asp-action="Index">İletişim</a>
+                </nav>
+
+                <!-- Sağ: Action bölümü -->
+                <div class="fh-actions">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <div class="dropdown">
+                            <button class="fh-action-btn dropdown-toggle" type="button"
+                                    id="fhUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle me-1"></i>
+                                <span class="d-none d-md-inline">Hesabım</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end fh-dropdown p-2"
+                                style="min-width:200px;" aria-labelledby="fhUserMenu">
+                                <li>
+                                    <div class="px-3 py-2 border-bottom border-white border-opacity-10 mb-1">
+                                        <span class="text-white fw-bold d-block" style="font-size:0.85rem;">@User.Identity.Name</span>
+                                        <span style="font-size:0.72rem;color:#64748b;">YBT Üyesi</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item fh-dd-item" asp-area="" asp-controller="Account" asp-action="Profile">
+                                        <i class="bi bi-person-gear me-2"></i>Profilim
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item fh-dd-item" asp-area="" asp-controller="Account" asp-action="Applications">
+                                        <i class="bi bi-calendar-check me-2"></i>Başvurularım
+                                    </a>
+                                </li>
+                                @if (User.IsInRole("Admin"))
+                                {
                                     <li>
-                                        <div class="px-3 py-2 text-secondary small border-bottom border-secondary border-opacity-25 mb-1">
-                                            <span class="text-white fw-bold d-block">@User.Identity.Name</span>
-                                            <span class="text-muted" style="font-size: 0.75rem;">YBT Üyesi</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item rounded-3 py-2 text-white" asp-area="" asp-controller="Account" asp-action="Profile">
-                                            <i class="bi bi-person-gear me-2 text-info"></i>Profilim
+                                        <a class="dropdown-item fh-dd-item fh-dd-item--accent" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                                            <i class="bi bi-shield-lock me-2"></i>Yönetim Paneli
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item rounded-3 py-2 text-white" asp-area="" asp-controller="Account" asp-action="Applications">
-                                            <i class="bi bi-calendar-check me-2 text-info"></i>Başvurularım
-                                        </a>
-                                    </li>
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <li>
-                                            <a class="dropdown-item rounded-3 py-2 text-info" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
-                                                <i class="bi bi-shield-lock me-2"></i>Yönetim Paneli
-                                            </a>
-                                        </li>
-                                    }
-                                    <li><hr class="dropdown-divider border-secondary border-opacity-50"></li>
-                                    <li>
-                                        <form asp-controller="Account" asp-action="Logout" method="post" class="m-0">
-                                            <button type="submit" class="dropdown-item rounded-3 py-2 text-danger">
-                                                <i class="bi bi-box-arrow-right me-2"></i>Çıkış Yap
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        }
-                        else
-                        {
-                            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary rounded-pill px-4">Giriş Yap</a>
-                            <a asp-controller="Account" asp-action="Register" class="btn btn-primary rounded-pill px-4 shadow">Katıl</a>
-                        }
-                    </div>
+                                }
+                                <li><hr class="dropdown-divider" style="border-color:rgba(255,255,255,0.08);"></li>
+                                <li>
+                                    <form asp-controller="Account" asp-action="Logout" method="post" class="m-0">
+                                        <button type="submit" class="dropdown-item fh-dd-item fh-dd-item--danger">
+                                            <i class="bi bi-box-arrow-right me-2"></i>Çıkış Yap
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="fh-action-btn">
+                            Giriş Yap
+                        </a>
+                    }
+
+                    <!-- Mobil hamburger -->
+                    <button class="fh-burger d-lg-none" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#mobileMenu"
+                            aria-expanded="false" aria-label="Menü">
+                        <span class="fh-burger-line"></span>
+                        <span class="fh-burger-line"></span>
+                        <span class="fh-burger-line"></span>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Mobil dropdown menü -->
+            <div class="collapse fh-mobile-menu" id="mobileMenu">
+                <div class="fh-mobile-links">
+                    <a class="fh-mobile-link @(currentController == "Home" ? "fh-mobile-link--active" : "")"
+                       asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                    <a class="fh-mobile-link @(currentController == "About" ? "fh-mobile-link--active" : "")"
+                       asp-controller="About" asp-action="Index">Hakkımızda</a>
+                    <a class="fh-mobile-link @(currentController == "Events" ? "fh-mobile-link--active" : "")"
+                       asp-controller="Events" asp-action="Index">Etkinlikler</a>
+                    <a class="fh-mobile-link @(currentController == "Projects" ? "fh-mobile-link--active" : "")"
+                       asp-controller="Projects" asp-action="Index">Projeler</a>
+                    <a class="fh-mobile-link @(currentController == "Blog" ? "fh-mobile-link--active" : "")"
+                       asp-controller="Blog" asp-action="Index">Blog</a>
+                    <a class="fh-mobile-link @(currentController == "Contact" ? "fh-mobile-link--active" : "")"
+                       asp-controller="Contact" asp-action="Index">İletişim</a>
+                    @if (User.Identity?.IsAuthenticated != true)
+                    {
+                        <div class="fh-mobile-actions">
+                            <a asp-controller="Account" asp-action="Register" class="fh-mobile-cta">
+                                Üye Ol
+                            </a>
+                        </div>
+                    }
                 </div>
             </div>
-        </nav>
+        </div>
     </header>
 
     <main role="main">

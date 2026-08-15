@@ -65,45 +65,11 @@ h6 {
     -webkit-text-fill-color: transparent !important;
 }
 
-/* Navbar */
+/* Navbar Overrides for Floating Header */
 .navbar {
-    background: rgba(7, 11, 20, 0.85) !important;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(56, 189, 248, 0.15) !important;
-    padding: 1rem 0;
-    transition: var(--transition);
-}
-
-.nav-link {
-    font-weight: 600;
-    color: #cbd5e1 !important;
-    margin: 0 0.8rem;
-    position: relative;
-    transition: var(--transition);
-}
-
-.nav-link:hover,
-.nav-link.active {
-    color: #38bdf8 !important;
-    text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #38bdf8, #a855f7);
-    transition: var(--transition);
-    border-radius: 2px;
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-    width: 100%;
+    background: transparent !important;
+    border-bottom: none !important;
+    padding: 0;
 }
 
 /* Glassmorphism Cards */

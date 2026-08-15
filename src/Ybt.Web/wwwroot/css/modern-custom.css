@@ -46,6 +46,235 @@
 }
 
 /* ───────────────────────────────────────────────────────── */
+/*  FLOATING PILL NAVIGATION SYSTEM                          */
+/* ───────────────────────────────────────────────────────── */
+#site-header {
+    position: fixed;
+    top: 20px;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    pointer-events: none;
+}
+
+.fh-bar {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 16px;
+    pointer-events: auto;
+}
+
+.fh-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* Sol: Soft White Logo Pill Button */
+.fh-logo-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(244, 247, 251, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    height: 44px;
+    padding: 0 18px;
+    border-radius: 999px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    flex-shrink: 0;
+}
+.fh-logo-pill:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+.fh-logo-img {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Ortada Soft White Round-Corner Pill Navigation */
+.fh-pill-nav {
+    display: flex;
+    align-items: center;
+    background: rgba(244, 247, 251, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    height: 44px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    gap: 4px;
+}
+
+.fh-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.fh-link:hover {
+    color: #0f172a;
+    background-color: rgba(15, 23, 42, 0.05);
+}
+
+/* Aktif link indicator (sade koyu text + minimal alt nokta indicator) */
+.fh-link--active {
+    color: #0f172a !important;
+    font-weight: 700;
+    background-color: rgba(15, 23, 42, 0.06);
+}
+.fh-link--active::after {
+    content: '';
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: #0f172a;
+    border-radius: 50%;
+}
+
+/* Sağ: Koyu renkli Pill Action Butonu */
+.fh-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.fh-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 20px;
+    border-radius: 999px;
+    background: #0f172a;
+    color: #ffffff !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.fh-action-btn:hover {
+    background: #1e293b;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* Mobil Hamburger Butonu */
+.fh-burger {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(244, 247, 251, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    padding: 0;
+}
+.fh-burger-line {
+    width: 18px;
+    height: 2px;
+    background: #0f172a;
+    border-radius: 2px;
+}
+
+/* Mobil Dropdown Menü */
+.fh-mobile-menu {
+    margin-top: 10px;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+.fh-mobile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.fh-mobile-link {
+    padding: 10px 16px;
+    border-radius: 12px;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.fh-mobile-link:hover, .fh-mobile-link--active {
+    color: #ffffff;
+    background: rgba(56, 189, 248, 0.12);
+    font-weight: 600;
+}
+.fh-mobile-actions {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.fh-mobile-cta {
+    display: block;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* Account dropdown override */
+.fh-dropdown {
+    background: #0f172a !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+.fh-dd-item {
+    color: #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    font-size: 0.85rem !important;
+    transition: all 0.2s ease !important;
+}
+.fh-dd-item:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+}
+.fh-dd-item--accent { color: #38bdf8 !important; }
+.fh-dd-item--danger { color: #f87171 !important; }
+
+/* ───────────────────────────────────────────────────────── */
 /*  HERO V2 — developer-tools layout                        */
 /* ───────────────────────────────────────────────────────── */
 .hero-v2 {
