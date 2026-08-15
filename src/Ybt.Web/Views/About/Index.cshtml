@@ -1,4 +1,4 @@
-@model IEnumerable<Ybt.Core.Entities.TeamMember>
+@model Ybt.Web.Models.AboutViewModel
 @{
     ViewData["Title"] = "Hakkımızda";
     ViewData["Description"] = "Düzce Üniversitesi Yazılım ve Bilişim Topluluğu (YBT) hakkında bilgi, misyon, vizyon, faaliyet alanlarımız ve yönetim ekibimiz.";
@@ -110,7 +110,7 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════
-     FAALİYET ALANLARIMIZ (6 Pillar)
+     FAALİYET ALANLARIMIZ (DB Sourced Cards)
      ═══════════════════════════════════════════════ -->
 <section class="section-block" aria-label="Faaliyet Alanlarımız">
     <div class="container">
@@ -120,103 +120,47 @@
             <p class="section-desc">YBT çatısı altında yürüttüğümüz temel çalışma ve üretim alanları.</p>
         </div>
 
-        <div class="row g-4 mt-2">
-            <!-- 1. Eğitimler -->
-            <div class="col-lg-4 col-md-6 reveal">
-                <div class="feature-card h-100">
-                    <div class="feature-icon-wrap icon-cyan">
-                        <i class="bi bi-code-slash"></i>
-                    </div>
-                    <h3 class="feature-title">Yazılım Eğitimleri</h3>
-                    <p class="feature-desc">Sıfırdan ileri seviyeye Web geliştirme, Python, C#, Mobil uygulama ve Yapay zeka eğitim serileri düzenliyoruz.</p>
-                    <div class="feature-tags">
-                        <span class="ftag">Web Dev</span>
-                        <span class="ftag">Python</span>
-                        <span class="ftag">.NET</span>
-                    </div>
-                </div>
-            </div>
+        @if (Model.AboutFeatures != null && Model.AboutFeatures.Any())
+        {
+            <div class="row g-4 mt-2">
+                @foreach (var feature in Model.AboutFeatures)
+                {
+                    var iconClass = string.IsNullOrWhiteSpace(feature.Icon) ? "bi-code-slash" : feature.Icon;
+                    var accentClass = feature.AccentType?.ToLower() switch
+                    {
+                        "purple" => "icon-purple",
+                        "teal" => "icon-teal",
+                        _ => "icon-cyan"
+                    };
 
-            <!-- 2. Hackathonlar -->
-            <div class="col-lg-4 col-md-6 reveal">
-                <div class="feature-card h-100">
-                    <div class="feature-icon-wrap icon-purple">
-                        <i class="bi bi-trophy"></i>
+                    <div class="col-lg-4 col-md-6 reveal">
+                        <div class="feature-card h-100">
+                            <div class="feature-icon-wrap @accentClass">
+                                <i class="bi @iconClass"></i>
+                            </div>
+                            <h3 class="feature-title">@feature.Title</h3>
+                            <p class="feature-desc">@feature.Description</p>
+                            @if (!string.IsNullOrEmpty(feature.Tags))
+                            {
+                                <div class="feature-tags">
+                                    @foreach (var tag in feature.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                                    {
+                                        <span class="ftag">@tag.Trim()</span>
+                                    }
+                                </div>
+                            }
+                        </div>
                     </div>
-                    <h3 class="feature-title">Hackathon &amp; Yarışmalar</h3>
-                    <p class="feature-desc">Teknofest, bölgesel maratonlar ve küresel kodlama yarışmalarında takımlarımızla fikirlerimizi prototipe dönüştürüyoruz.</p>
-                    <div class="feature-tags">
-                        <span class="ftag">Teknofest</span>
-                        <span class="ftag">Hackathon</span>
-                        <span class="ftag">Yarışma</span>
-                    </div>
-                </div>
+                }
             </div>
-
-            <!-- 3. Proje Geliştirme -->
-            <div class="col-lg-4 col-md-6 reveal">
-                <div class="feature-card h-100">
-                    <div class="feature-icon-wrap icon-teal">
-                        <i class="bi bi-box-seam"></i>
-                    </div>
-                    <h3 class="feature-title">Açık Kaynak Projeler</h3>
-                    <p class="feature-desc">GitHub üzerinde topluluk projeleri üretiyor, açık kaynak projelere katkı vererek gerçek dünya deneyimi kazanıyoruz.</p>
-                    <div class="feature-tags">
-                        <span class="ftag">GitHub</span>
-                        <span class="ftag">Open Source</span>
-                        <span class="ftag">DevOps</span>
-                    </div>
-                </div>
+        }
+        else
+        {
+            <div class="empty-state reveal">
+                <div class="empty-icon"><i class="bi bi-info-square"></i></div>
+                <p class="empty-text">Henüz yönetilebilir içerik eklenmemiş. Yakında eklenecek!</p>
             </div>
-
-            <!-- 4. Teknik Atölyeler -->
-            <div class="col-lg-4 col-md-6 reveal">
-                <div class="feature-card h-100">
-                    <div class="feature-icon-wrap icon-teal">
-                        <i class="bi bi-cpu"></i>
-                    </div>
-                    <h3 class="feature-title">Teknik Atölyeler</h3>
-                    <p class="feature-desc">Docker, Git/GitHub, Cloud architecture ve CI/CD süreçleri gibi sektörün talep ettiği araçları pratik olarak çalışıyoruz.</p>
-                    <div class="feature-tags">
-                        <span class="ftag">Docker</span>
-                        <span class="ftag">Git</span>
-                        <span class="ftag">CI/CD</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. Mentörlük & Kariyer -->
-            <div class="col-lg-4 col-md-6 reveal">
-                <div class="feature-card h-100">
-                    <div class="feature-icon-wrap icon-cyan">
-                        <i class="bi bi-mortarboard"></i>
-                    </div>
-                    <h3 class="feature-title">Mentörlük &amp; Kariyer</h3>
-                    <p class="feature-desc">Sektördeki mezunlarımız ve kıdemli mühendislerle birebir mentörlük oturumları, CV incelemeleri ve staj rehberliği sunuyoruz.</p>
-                    <div class="feature-tags">
-                        <span class="ftag">Mentörlük</span>
-                        <span class="ftag">Staj</span>
-                        <span class="ftag">Kariyer</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 6. Blog & İçerik -->
-            <div class="col-lg-4 col-md-6 reveal">
-                <div class="feature-card h-100">
-                    <div class="feature-icon-wrap icon-purple">
-                        <i class="bi bi-journal-code"></i>
-                    </div>
-                    <h3 class="feature-title">Blog &amp; Teknik Yayın</h3>
-                    <p class="feature-desc">Öğrencilerimizin öğrendiği teknolojileri ve ürettiği çözümleri teknik makaleler ile topluluğa aktarmasını sağlıyoruz.</p>
-                    <div class="feature-tags">
-                        <span class="ftag">Teknik Makale</span>
-                        <span class="ftag">Medium</span>
-                        <span class="ftag">Blog</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 </section>
 
@@ -267,7 +211,7 @@
 <!-- ═══════════════════════════════════════════════
      YÖNETİM EKİBİ
      ═══════════════════════════════════════════════ -->
-@if (Model != null && Model.Any())
+@if (Model.TeamMembers != null && Model.TeamMembers.Any())
 {
     <section class="section-block" aria-label="Yönetim Kurulu">
         <div class="container">
@@ -277,7 +221,7 @@
                 <p class="section-desc">YBT'nin vizyonunu ileriye taşıyan ve operasyonları yöneten ekibimiz.</p>
             </div>
             <div class="row g-4 mt-2 justify-content-center">
-                @foreach (var member in Model)
+                @foreach (var member in Model.TeamMembers)
                 {
                     <div class="col-xl-3 col-lg-4 col-md-6 reveal">
                         <div class="team-card-v2 h-100" id="member-@member.Id">

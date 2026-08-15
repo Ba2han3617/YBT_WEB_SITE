@@ -1,0 +1,110 @@
+@model IEnumerable<Ybt.Core.Entities.AboutFeature>
+@{
+    ViewData["Title"] = "Neler Yapıyoruz Kartları";
+    Layout = "_AdminLayout";
+}
+
+<div class="card p-4">
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+        <div>
+            <h5 class="mb-1 fw-bold text-white"><i class="bi bi-grid-3x3-gap text-info me-2"></i>Neler Yapıyoruz Kartları</h5>
+            <span class="text-secondary small">Hakkımızda sayfasındaki faaliyet alanları kartlarını yönetin ve sıralayın.</span>
+        </div>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow">
+            <i class="bi bi-plus-circle me-2"></i>Yeni Kart Ekle
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table id="featuresTable" class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th style="width: 50px;">Sıra</th>
+                    <th>İkon</th>
+                    <th>Başlık &amp; Açıklama</th>
+                    <th>Etiketler</th>
+                    <th>Vurgu</th>
+                    <th>Durum</th>
+                    <th class="text-end">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var accentBadge = item.AccentType?.ToLower() switch
+                    {
+                        "purple" => "bg-purple text-purple border-purple",
+                        "teal" => "bg-info text-info border-info",
+                        _ => "bg-primary text-primary border-primary"
+                    };
+
+                    <tr>
+                        <td><span class="badge bg-secondary bg-opacity-25 text-info font-monospace">#@item.Order</span></td>
+                        <td>
+                            <div class="avatar-icon-box bg-dark border border-secondary border-opacity-25 text-info p-2 rounded-3 text-center" style="width:40px;height:40px;">
+                                <i class="bi @(string.IsNullOrWhiteSpace(item.Icon) ? "bi-code-slash" : item.Icon) fs-5"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="fw-bold text-white d-block mb-1">@item.Title</span>
+                            <span class="text-secondary small line-clamp-2">@(item.Description.Length > 80 ? item.Description[..80] + "…" : item.Description)</span>
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.Tags))
+                            {
+                                <div class="d-flex flex-wrap gap-1">
+                                    @foreach (var tag in item.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                                    {
+                                        <span class="badge bg-secondary bg-opacity-25 text-light border border-secondary border-opacity-25" style="font-size:0.7rem;">@tag.Trim()</span>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-secondary small">-</span>
+                            }
+                        </td>
+                        <td>
+                            <span class="badge bg-opacity-25 border px-2 py-1 text-uppercase @accentBadge" style="font-size:0.7rem;">@item.AccentType</span>
+                        </td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 px-2 py-1">Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25 px-2 py-1">Pasif</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <div class="d-inline-flex gap-1">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning rounded-pill px-2" title="Düzenle">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-2 btn-delete-confirm" 
+                                        data-delete-url="@Url.Action("Delete", "AboutFeatures", new { id = item.Id })"
+                                        data-item-title="@item.Title"
+                                        title="Sil">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#featuresTable').DataTable({
+                "pageLength": 10,
+                "responsive": true,
+                "order": [[0, "asc"]]
+            });
+        });
+    </script>
+}

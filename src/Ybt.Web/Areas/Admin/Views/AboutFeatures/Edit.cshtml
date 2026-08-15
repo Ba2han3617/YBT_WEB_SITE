@@ -1,0 +1,98 @@
+@model Ybt.Core.Entities.AboutFeature
+@{
+    ViewData["Title"] = "Kartı Düzenle";
+    Layout = "_AdminLayout";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card p-4 p-md-5">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+                <div>
+                    <h5 class="mb-1 fw-bold text-white"><i class="bi bi-pencil-square text-warning me-2"></i>Kartı Düzenle</h5>
+                    <span class="text-secondary small">"@Model.Title" kartının bilgilerini güncelleyin.</span>
+                </div>
+                <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-3">
+                    <i class="bi bi-arrow-left me-1"></i>Listeye Dön
+                </a>
+            </div>
+
+            <form asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3" role="alert"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label text-light fw-semibold">Kart Başlığı <span class="text-danger">*</span></label>
+                    <input asp-for="Title" class="form-control bg-dark border-secondary text-white" required />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label text-light fw-semibold">Kart Açıklaması <span class="text-danger">*</span></label>
+                    <textarea asp-for="Description" class="form-control bg-dark border-secondary text-white" rows="3" required></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Icon" class="form-label text-light fw-semibold">İkon Sınıfı (Bootstrap Icon)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-info" id="iconPreview">
+                                <i class="bi @(string.IsNullOrWhiteSpace(Model?.Icon) ? "bi-code-slash" : Model.Icon)"></i>
+                            </span>
+                            <input asp-for="Icon" id="iconInput" class="form-control bg-dark border-secondary text-white" />
+                        </div>
+                        <span class="text-secondary small">Örn: <code>bi-code-slash</code>, <code>bi-trophy</code>, <code>bi-box-seam</code></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="AccentType" class="form-label text-light fw-semibold">Vurgu Rengi</label>
+                        <select asp-for="AccentType" class="form-select bg-dark border-secondary text-white">
+                            <option value="cyan">Cyan / Mavi Vurgu</option>
+                            <option value="purple">Purple / Mor Vurgu</option>
+                            <option value="teal">Teal / Yeşil Vurgu</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Tags" class="form-label text-light fw-semibold">Etiketler (Virgülle Ayrılmış)</label>
+                    <input asp-for="Tags" class="form-control bg-dark border-secondary text-white" />
+                    <span class="text-secondary small">Kartın altında küçük badge olarak listelenir.</span>
+                </div>
+
+                <div class="row g-3 mb-4 align-items-center">
+                    <div class="col-md-6">
+                        <label asp-for="Order" class="form-label text-light fw-semibold">Görüntülenme Sırası</label>
+                        <input asp-for="Order" type="number" class="form-control bg-dark border-secondary text-white" />
+                    </div>
+
+                    <div class="col-md-6 pt-md-4">
+                        <div class="form-check form-switch">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" id="isActiveSwitch" />
+                            <label class="form-check-label text-light fw-semibold" for="isActiveSwitch">Aktif (Sitede Gösterilsin)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 pt-3 border-top border-secondary border-opacity-25">
+                    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">Vazgeç</a>
+                    <button type="submit" class="btn btn-warning rounded-pill px-4 shadow">
+                        <i class="bi bi-save me-1"></i>Güncelle
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $('#iconInput').on('input', function() {
+            var iconClass = $(this).val().trim() || 'bi-code-slash';
+            $('#iconPreview i').attr('class', 'bi ' + iconClass);
+        });
+    </script>
+}

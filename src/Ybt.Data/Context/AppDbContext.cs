@@ -15,6 +15,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<Project> Projects { get; set; }
     public DbSet<EventApplication> EventApplications { get; set; }
     public DbSet<TeamMember> TeamMembers { get; set; }
+    public DbSet<AboutFeature> AboutFeatures { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

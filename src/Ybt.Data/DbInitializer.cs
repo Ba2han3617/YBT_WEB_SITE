@@ -368,6 +368,75 @@ public static class DbInitializer
             }
         }
 
+        // Seed About Features (Neler Yapıyoruz)
+        var existingFeatures = await context.AboutFeatures.ToListAsync();
+        if (!existingFeatures.Any())
+        {
+            context.AboutFeatures.AddRange(new List<AboutFeature>
+            {
+                new AboutFeature
+                {
+                    Title = "Yazılım Eğitimleri",
+                    Description = "Sıfırdan ileri seviyeye Web geliştirme, Python, C#, Mobil uygulama ve Yapay zeka eğitim serileri düzenliyoruz.",
+                    Icon = "bi-code-slash",
+                    Tags = "Web Dev, Python, .NET",
+                    AccentType = "cyan",
+                    Order = 1,
+                    IsActive = true
+                },
+                new AboutFeature
+                {
+                    Title = "Hackathon & Yarışmalar",
+                    Description = "Teknofest, bölgesel maratonlar ve küresel kodlama yarışmalarında takımlarımızla fikirlerimizi prototipe dönüştürüyoruz.",
+                    Icon = "bi-trophy",
+                    Tags = "Teknofest, Hackathon, Yarışma",
+                    AccentType = "purple",
+                    Order = 2,
+                    IsActive = true
+                },
+                new AboutFeature
+                {
+                    Title = "Açık Kaynak Projeler",
+                    Description = "GitHub üzerinde topluluk projeleri üretiyor, açık kaynak projelere katkı vererek gerçek dünya deneyimi kazanıyoruz.",
+                    Icon = "bi-box-seam",
+                    Tags = "GitHub, Open Source, DevOps",
+                    AccentType = "teal",
+                    Order = 3,
+                    IsActive = true
+                },
+                new AboutFeature
+                {
+                    Title = "Teknik Atölyeler",
+                    Description = "Docker, Git/GitHub, Cloud architecture ve CI/CD süreçleri gibi sektörün talep ettiği araçları pratik olarak çalışıyoruz.",
+                    Icon = "bi-cpu",
+                    Tags = "Docker, Git, CI/CD",
+                    AccentType = "teal",
+                    Order = 4,
+                    IsActive = true
+                },
+                new AboutFeature
+                {
+                    Title = "Mentörlük & Kariyer",
+                    Description = "Sektördeki mezunlarımız ve kıdemli mühendislerle birebir mentörlük oturumları, CV incelemeleri ve staj rehberliği sunuyoruz.",
+                    Icon = "bi-mortarboard",
+                    Tags = "Mentörlük, Staj, Kariyer",
+                    AccentType = "cyan",
+                    Order = 5,
+                    IsActive = true
+                },
+                new AboutFeature
+                {
+                    Title = "Blog & Teknik Yayın",
+                    Description = "Öğrencilerimizin öğrendiği teknolojileri ve ürettiği çözümleri teknik makaleler ile topluluğa aktarmasını sağlıyoruz.",
+                    Icon = "bi-journal-code",
+                    Tags = "Teknik Makale, Medium, Blog",
+                    AccentType = "purple",
+                    Order = 6,
+                    IsActive = true
+                }
+            });
+        }
+
         await context.SaveChangesAsync();
     }
 }

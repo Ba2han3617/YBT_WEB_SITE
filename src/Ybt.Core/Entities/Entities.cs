@@ -61,3 +61,13 @@ public class TeamMember : BaseEntity
     public string? ImageUrl { get; set; }
     public int Order { get; set; } = 0;
 }
+
+public class AboutFeature : BaseEntity
+{
+    public string Title { get; set; } = null!;
+    public string Description { get; set; } = null!;
+    public string Icon { get; set; } = "bi-code-slash";
+    public string? Tags { get; set; }
+    public string AccentType { get; set; } = "cyan"; // cyan, purple, teal
+    public int Order { get; set; } = 0;
+}
