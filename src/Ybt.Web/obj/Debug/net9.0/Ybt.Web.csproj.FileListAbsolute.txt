@@ -1146,4 +1146,4 @@ C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\ve1k5il125-k96jfq066z.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\1qtj0b5hmx-1f4rkd2oy8.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\fl7jkc0mn5-gv9z4ixp17.gz
-C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\uto8i4gp62-cys8x173vz.gz
+C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\uto8i4gp62-iijd5654b3.gz

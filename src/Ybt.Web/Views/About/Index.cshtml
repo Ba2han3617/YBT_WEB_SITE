@@ -1,93 +1,353 @@
 @model IEnumerable<Ybt.Core.Entities.TeamMember>
 @{
     ViewData["Title"] = "Hakkımızda";
+    ViewData["Description"] = "Düzce Üniversitesi Yazılım ve Bilişim Topluluğu (YBT) hakkında bilgi, misyon, vizyon, faaliyet alanlarımız ve yönetim ekibimiz.";
 }
 
-<section class="py-5 mt-5">
-    <div class="container">
-        <div class="row align-items-center mb-5 g-5 reveal">
-            <div class="col-lg-6">
-                <span class="section-tag">YBT Ekosistemi</span>
-                <h1 class="display-3 fw-extrabold mb-4 gradient-text">Biz Kimiz?</h1>
-                <p class="fs-5 text-secondary" style="line-height: 1.8;">Düzce Üniversitesi Yazılım ve Bilişim Topluluğu (YBT); yazılıma, yapay zekaya, siber güvenliğe ve yenilikçi teknolojilere ilgi duyan üniversite öğrencilerini bir araya getiren bağımsız ve üretken bir inovasyon ekosistemidir.</p>
-                <p class="fs-5 text-secondary" style="line-height: 1.8;">Akademik bilginin ötesine geçerek gerçek hayat senaryolarında projeler geliştiriyor, açık kaynak kültürünü yaygınlaştırıyor ve üyelerimizi küresel teknoloji standartlarına hazırlıyoruz.</p>
+<!-- ═══════════════════════════════════════════════
+     HERO & BİZ KİMİZ?
+     ═══════════════════════════════════════════════ -->
+<section class="about-hero-section" aria-label="Hakkımızda Giriş">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="container position-relative z-2">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7 reveal">
+                <div class="hero-top-badge mb-3">
+                    <span class="htb-dot"></span>
+                    <span>Düzce Üniversitesi &nbsp;·&nbsp; YBT Ekosistemi</span>
+                </div>
+                <h1 class="hero-h1 mb-3">
+                    Yazılım, İnovasyon ve<br>
+                    <span class="hero-h1-accent">Birlikte Üretim</span> Ekosistemi
+                </h1>
+                <p class="hero-sub mb-3">
+                    Geleceğin teknoloji liderlerini ve yazılımcılarını bir araya getiren bağımsız topluluk.
+                </p>
+                <p class="hero-desc mb-4">
+                    Düzce Üniversitesi Yazılım ve Bilişim Topluluğu (YBT); öğrencilerin teorik bilgilerini gerçek dünya projelerine dönüştürdüğü, açık kaynak kültürünün benimsendiği ve teknik yetkinliklerin geliştirildiği dinamik bir üniversite teknoloji platformudur.
+                </p>
+
+                <!-- Metrik Rozetleri -->
+                <div class="about-stats-strip">
+                    <div class="astat-item">
+                        <span class="astat-val">500+</span>
+                        <span class="astat-lbl">Aktif Üye</span>
+                    </div>
+                    <div class="astat-sep"></div>
+                    <div class="astat-item">
+                        <span class="astat-val">100+</span>
+                        <span class="astat-lbl">Etkinlik &amp; Atölye</span>
+                    </div>
+                    <div class="astat-sep"></div>
+                    <div class="astat-item">
+                        <span class="astat-val">20+</span>
+                        <span class="astat-lbl">Açık Kaynak Proje</span>
+                    </div>
+                    <div class="astat-sep"></div>
+                    <div class="astat-item">
+                        <span class="astat-val">10+</span>
+                        <span class="astat-lbl">Hackathon Derecesi</span>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-6">
-                <div class="hero-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="YBT Ekip Çalışması" class="img-fluid rounded-4 shadow-lg">
+            
+            <div class="col-lg-5 reveal d-none d-lg-block">
+                <div class="about-hero-card">
+                    <div class="ahc-header">
+                        <span class="ahc-dot red"></span>
+                        <span class="ahc-dot yellow"></span>
+                        <span class="ahc-dot green"></span>
+                        <span class="ahc-title">about-ybt.json</span>
+                    </div>
+                    <div class="ahc-body font-monospace">
+                        <div class="ahc-line"><span class="ahc-k">"name"</span>: <span class="ahc-v">"Yazılım ve Bilişim Topluluğu"</span>,</div>
+                        <div class="ahc-line"><span class="ahc-k">"shortName"</span>: <span class="ahc-v">"YBT"</span>,</div>
+                        <div class="ahc-line"><span class="ahc-k">"university"</span>: <span class="ahc-v">"Düzce Üniversitesi"</span>,</div>
+                        <div class="ahc-line"><span class="ahc-k">"focusAreas"</span>: [</div>
+                        <div class="ahc-line indent"><span class="ahc-v">"Web &amp; Mobile Dev"</span>,</div>
+                        <div class="ahc-line indent"><span class="ahc-v">"AI &amp; Data Science"</span>,</div>
+                        <div class="ahc-line indent"><span class="ahc-v">"Open Source Culture"</span>,</div>
+                        <div class="ahc-line indent"><span class="ahc-v">"Hackathons &amp; Competitions"</span></div>
+                        <div class="ahc-line">],</div>
+                        <div class="ahc-line"><span class="ahc-k">"status"</span>: <span class="ahc-s">"ACTIVE_PRODUCING"</span></div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</section>
 
-        <div class="row g-4 mb-5">
+<!-- ═══════════════════════════════════════════════
+     MİSYON & VİZYON
+     ═══════════════════════════════════════════════ -->
+<section class="section-block section-alt" aria-label="Misyon ve Vizyon">
+    <div class="container">
+        <div class="row g-4">
             <div class="col-md-6 reveal">
-                <div class="card p-4 p-md-5 h-100">
-                    <div class="feature-icon-box mb-3">
+                <div class="mv-card h-100">
+                    <div class="mv-icon-wrap icon-cyan">
                         <i class="bi bi-compass"></i>
                     </div>
-                    <h2 class="fw-bold mb-3 text-white">Misyonumuz</h2>
-                    <p class="fs-5 text-secondary" style="line-height: 1.8;">Üyelerimize takım çalışması, açık kaynak geliştirme ve liderlik deneyimleri kazandırarak onları ulusal ve uluslararası yazılım ekosistemine donanımlı mühendisler olarak hazırlamak.</p>
+                    <h2 class="mv-title">Misyonumuz</h2>
+                    <p class="mv-desc">
+                        Üyelerimize pratik proje geliştirme deneyimi, açık kaynak kültürü ve takım çalışması disiplini kazandırarak; akademiden sektöre geçişte ulusal ve uluslararası standartlarda donanımlı yazılımcılar ve mühendisler yetiştirmek.
+                    </p>
                 </div>
             </div>
             <div class="col-md-6 reveal">
-                <div class="card p-4 p-md-5 h-100">
-                    <div class="feature-icon-box mb-3">
+                <div class="mv-card h-100">
+                    <div class="mv-icon-wrap icon-purple">
                         <i class="bi bi-eye"></i>
                     </div>
-                    <h2 class="fw-bold mb-3 text-white">Vizyonumuz</h2>
-                    <p class="fs-5 text-secondary" style="line-height: 1.8;">Türkiye'nin en üretken, inovatif ve ilham veren üniversite teknoloji topluluklarından biri olarak açık kaynak dünyasında ve hackathon maratonlarında kalıcı izler bırakmak.</p>
+                    <h2 class="mv-title">Vizyonumuz</h2>
+                    <p class="mv-desc">
+                        Türkiye’nin en üretken, inovatif ve ilham veren üniversite teknoloji topluluklarından biri olarak; açık kaynak ekosisteminde, hackathon maratonlarında ve yazılım dünyasında kalıcı, sürdürülebilir izler bırakmak.
+                    </p>
                 </div>
             </div>
         </div>
+    </div>
+</section>
 
-        <div class="py-5 reveal">
-            <div class="text-center mb-5">
-                <span class="section-tag">Topluluk Liderleri</span>
-                <h2 class="display-5 fw-bold gradient-text">Yönetim Kurulumuz</h2>
-                <p class="text-secondary fs-5">YBT'nin vizyonunu ileriye taşıyan ve etkinlikleri koordine eden yönetim ekibi.</p>
+<!-- ═══════════════════════════════════════════════
+     FAALİYET ALANLARIMIZ (6 Pillar)
+     ═══════════════════════════════════════════════ -->
+<section class="section-block" aria-label="Faaliyet Alanlarımız">
+    <div class="container">
+        <div class="section-header text-center reveal">
+            <span class="section-tag">Ne Yapıyoruz?</span>
+            <h2 class="section-title gradient-text">Faaliyet Alanlarımız</h2>
+            <p class="section-desc">YBT çatısı altında yürüttüğümüz temel çalışma ve üretim alanları.</p>
+        </div>
+
+        <div class="row g-4 mt-2">
+            <!-- 1. Eğitimler -->
+            <div class="col-lg-4 col-md-6 reveal">
+                <div class="feature-card h-100">
+                    <div class="feature-icon-wrap icon-cyan">
+                        <i class="bi bi-code-slash"></i>
+                    </div>
+                    <h3 class="feature-title">Yazılım Eğitimleri</h3>
+                    <p class="feature-desc">Sıfırdan ileri seviyeye Web geliştirme, Python, C#, Mobil uygulama ve Yapay zeka eğitim serileri düzenliyoruz.</p>
+                    <div class="feature-tags">
+                        <span class="ftag">Web Dev</span>
+                        <span class="ftag">Python</span>
+                        <span class="ftag">.NET</span>
+                    </div>
+                </div>
             </div>
-            <div class="row g-4">
-                @if (Model != null && Model.Any())
+
+            <!-- 2. Hackathonlar -->
+            <div class="col-lg-4 col-md-6 reveal">
+                <div class="feature-card h-100">
+                    <div class="feature-icon-wrap icon-purple">
+                        <i class="bi bi-trophy"></i>
+                    </div>
+                    <h3 class="feature-title">Hackathon &amp; Yarışmalar</h3>
+                    <p class="feature-desc">Teknofest, bölgesel maratonlar ve küresel kodlama yarışmalarında takımlarımızla fikirlerimizi prototipe dönüştürüyoruz.</p>
+                    <div class="feature-tags">
+                        <span class="ftag">Teknofest</span>
+                        <span class="ftag">Hackathon</span>
+                        <span class="ftag">Yarışma</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Proje Geliştirme -->
+            <div class="col-lg-4 col-md-6 reveal">
+                <div class="feature-card h-100">
+                    <div class="feature-icon-wrap icon-teal">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                    <h3 class="feature-title">Açık Kaynak Projeler</h3>
+                    <p class="feature-desc">GitHub üzerinde topluluk projeleri üretiyor, açık kaynak projelere katkı vererek gerçek dünya deneyimi kazanıyoruz.</p>
+                    <div class="feature-tags">
+                        <span class="ftag">GitHub</span>
+                        <span class="ftag">Open Source</span>
+                        <span class="ftag">DevOps</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Teknik Atölyeler -->
+            <div class="col-lg-4 col-md-6 reveal">
+                <div class="feature-card h-100">
+                    <div class="feature-icon-wrap icon-teal">
+                        <i class="bi bi-cpu"></i>
+                    </div>
+                    <h3 class="feature-title">Teknik Atölyeler</h3>
+                    <p class="feature-desc">Docker, Git/GitHub, Cloud architecture ve CI/CD süreçleri gibi sektörün talep ettiği araçları pratik olarak çalışıyoruz.</p>
+                    <div class="feature-tags">
+                        <span class="ftag">Docker</span>
+                        <span class="ftag">Git</span>
+                        <span class="ftag">CI/CD</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Mentörlük & Kariyer -->
+            <div class="col-lg-4 col-md-6 reveal">
+                <div class="feature-card h-100">
+                    <div class="feature-icon-wrap icon-cyan">
+                        <i class="bi bi-mortarboard"></i>
+                    </div>
+                    <h3 class="feature-title">Mentörlük &amp; Kariyer</h3>
+                    <p class="feature-desc">Sektördeki mezunlarımız ve kıdemli mühendislerle birebir mentörlük oturumları, CV incelemeleri ve staj rehberliği sunuyoruz.</p>
+                    <div class="feature-tags">
+                        <span class="ftag">Mentörlük</span>
+                        <span class="ftag">Staj</span>
+                        <span class="ftag">Kariyer</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Blog & İçerik -->
+            <div class="col-lg-4 col-md-6 reveal">
+                <div class="feature-card h-100">
+                    <div class="feature-icon-wrap icon-purple">
+                        <i class="bi bi-journal-code"></i>
+                    </div>
+                    <h3 class="feature-title">Blog &amp; Teknik Yayın</h3>
+                    <p class="feature-desc">Öğrencilerimizin öğrendiği teknolojileri ve ürettiği çözümleri teknik makaleler ile topluluğa aktarmasını sağlıyoruz.</p>
+                    <div class="feature-tags">
+                        <span class="ftag">Teknik Makale</span>
+                        <span class="ftag">Medium</span>
+                        <span class="ftag">Blog</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     TOPLULUK DEĞERLERİMİZ / NASIL ÇALIŞIYORUZ?
+     ═══════════════════════════════════════════════ -->
+<section class="section-block section-alt" aria-label="Topluluk Değerleri">
+    <div class="container">
+        <div class="section-header text-center reveal">
+            <span class="section-tag">Kültürümüz</span>
+            <h2 class="section-title gradient-text">Topluluk Değerlerimiz</h2>
+            <p class="section-desc">Bizi bir arada tutan ve üretimimizi şekillendiren temel ilkelerimiz.</p>
+        </div>
+
+        <div class="row g-4 mt-2">
+            <div class="col-lg-3 col-md-6 reveal">
+                <div class="value-card">
+                    <span class="value-num">01</span>
+                    <h4 class="value-title">Birlikte Üretim</h4>
+                    <p class="value-desc">Tek başımıza değil, bir araya gelerek büyük projeler ve sistemler inşa ederiz.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 reveal">
+                <div class="value-card">
+                    <span class="value-num">02</span>
+                    <h4 class="value-title">Açık Kaynak</h4>
+                    <p class="value-desc">Ürettiğimiz kodu ve bilgiyi toplulukla paylaşarak kolektif gelişimi destekleriz.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 reveal">
+                <div class="value-card">
+                    <span class="value-num">03</span>
+                    <h4 class="value-title">Sürekli Öğrenme</h4>
+                    <p class="value-desc">Teknolojideki hızlı değişime ayak uydurur, yeni araç ve yaklaşımları deneriz.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 reveal">
+                <div class="value-card">
+                    <span class="value-num">04</span>
+                    <h4 class="value-title">Sektör Odaklılık</h4>
+                    <p class="value-desc">Öğrendiklerimizi gerçek dünya problemleri ve sektör ihtiyaçlarıyla hizalarız.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     YÖNETİM EKİBİ
+     ═══════════════════════════════════════════════ -->
+@if (Model != null && Model.Any())
+{
+    <section class="section-block" aria-label="Yönetim Kurulu">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <span class="section-tag">Liderlik</span>
+                <h2 class="section-title gradient-text">Yönetim Kurulumuz</h2>
+                <p class="section-desc">YBT'nin vizyonunu ileriye taşıyan ve operasyonları yöneten ekibimiz.</p>
+            </div>
+            <div class="row g-4 mt-2 justify-content-center">
+                @foreach (var member in Model)
                 {
-                    @foreach (var member in Model)
-                    {
-                        <div class="col-md-3 col-sm-6">
-                            <div class="card team-card h-100 p-4 text-center glass-card">
-                                <div class="team-avatar-wrapper mb-3">
-                                    <img src="@(member.ImageUrl ?? "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80")" alt="@member.FullName" class="rounded-circle shadow border border-secondary border-opacity-50" width="120" height="120" style="object-fit: cover;">
-                                </div>
-                                <h5 class="fw-bold text-white mb-1">@member.FullName</h5>
-                                <p class="text-info small mb-2 font-monospace">@member.Role</p>
-                                
+                    <div class="col-xl-3 col-lg-4 col-md-6 reveal">
+                        <div class="team-card-v2 h-100" id="member-@member.Id">
+                            <div class="team-avatar-v2">
+                                @if (!string.IsNullOrEmpty(member.ImageUrl))
+                                {
+                                    <img src="@member.ImageUrl" alt="@member.FullName" loading="lazy" />
+                                }
+                                else
+                                {
+                                    <div class="team-avatar-placeholder">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+                                }
+                            </div>
+                            <div class="team-info-v2">
+                                <h4 class="team-name-v2">@member.FullName</h4>
+                                <p class="team-role-v2 font-monospace">@member.Role</p>
                                 @if (!string.IsNullOrEmpty(member.Bio))
                                 {
-                                    <p class="text-secondary small mb-3" style="line-height: 1.5; font-size: 0.85rem;">@member.Bio</p>
+                                    <p class="team-bio-v2 mb-3">@member.Bio</p>
                                 }
-
-                                <div class="d-flex justify-content-center gap-2 mt-auto pt-2">
+                                <div class="team-socials-v2 mt-auto">
                                     @if (!string.IsNullOrEmpty(member.LinkedInUrl))
                                     {
-                                        <a href="@member.LinkedInUrl" target="_blank" class="btn btn-sm btn-outline-info rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="LinkedIn">
+                                        <a href="@member.LinkedInUrl" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="team-social-link">
                                             <i class="bi bi-linkedin"></i>
                                         </a>
                                     }
                                     @if (!string.IsNullOrEmpty(member.GitHubUrl))
                                     {
-                                        <a href="@member.GitHubUrl" target="_blank" class="btn btn-sm btn-outline-light rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="GitHub">
+                                        <a href="@member.GitHubUrl" target="_blank" rel="noopener noreferrer" title="GitHub" class="team-social-link">
                                             <i class="bi bi-github"></i>
                                         </a>
                                     }
                                     @if (!string.IsNullOrEmpty(member.Email))
                                     {
-                                        <a href="mailto:@member.Email" class="btn btn-sm btn-outline-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="E-posta Gönder">
+                                        <a href="mailto:@member.Email" title="E-posta" class="team-social-link">
                                             <i class="bi bi-envelope"></i>
                                         </a>
                                     }
                                 </div>
                             </div>
                         </div>
-                    }
+                    </div>
                 }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- ═══════════════════════════════════════════════
+     CTA BANNER
+     ═══════════════════════════════════════════════ -->
+<section class="cta-section" aria-label="Topluluğa katılım çağrısı">
+    <div class="cta-bg-glow" aria-hidden="true"></div>
+    <div class="container position-relative">
+        <div class="cta-inner text-center reveal">
+            <div class="cta-badge mb-3">
+                <i class="bi bi-rocket-takeoff-fill me-1"></i> Bize Katılın
+            </div>
+            <h2 class="cta-title">Geleceğin Teknolojisini<br class="d-none d-md-block"> Birlikte Kodlayalım</h2>
+            <p class="cta-desc">Projeler geliştirmek, etkinliklere katılmak ve sektörle buluşmak için hemen YBT üyesi ol.</p>
+            <div class="d-flex flex-wrap gap-3 justify-content-center mt-4">
+                <a asp-controller="Account" asp-action="Register" class="btn btn-cta-primary">
+                    <i class="bi bi-person-plus-fill me-2"></i>Topluluğa Katıl
+                </a>
+                <a asp-controller="Contact" asp-action="Index" class="btn btn-cta-outline">
+                    <i class="bi bi-envelope me-2"></i>İletişime Geç
+                </a>
             </div>
         </div>
     </div>
