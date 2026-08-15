@@ -18,7 +18,7 @@ body {
     color: #f8fafc !important;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: 0.9rem;
-    background-image: 
+    background-image:
         radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.12) 0%, transparent 45%),
         radial-gradient(circle at 85% 65%, rgba(56, 189, 248, 0.1) 0%, transparent 45%);
 }
@@ -49,6 +49,7 @@ body {
     font-size: 0.95rem;
     font-weight: 800;
     background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -106,7 +107,8 @@ body {
 }
 
 /* Cards & Containers */
-.card, .glass-card {
+.card,
+.glass-card {
     background: var(--card-bg) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
@@ -143,10 +145,29 @@ body {
     border: 1px solid transparent;
 }
 
-.stats-icon-badge.members { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border-color: rgba(59, 130, 246, 0.3); }
-.stats-icon-badge.events { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
-.stats-icon-badge.applications { background: rgba(6, 182, 212, 0.15); color: #22d3ee; border-color: rgba(6, 182, 212, 0.3); }
-.stats-icon-badge.blogs { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3); }
+.stats-icon-badge.members {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.stats-icon-badge.events {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.stats-icon-badge.applications {
+    background: rgba(6, 182, 212, 0.15);
+    color: #22d3ee;
+    border-color: rgba(6, 182, 212, 0.3);
+}
+
+.stats-icon-badge.blogs {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border-color: rgba(245, 158, 11, 0.3);
+}
 
 .stats-card .stat-label {
     font-size: 0.78rem;
@@ -179,7 +200,7 @@ body {
     border-color: var(--border-color) !important;
 }
 
-.table > :not(caption) > * > * {
+.table> :not(caption)>*>* {
     background-color: transparent !important;
     color: #f8fafc !important;
     border-bottom-color: var(--border-color) !important;
@@ -312,7 +333,8 @@ body {
 }
 
 /* Form Controls in Admin */
-.form-control, .form-select {
+.form-control,
+.form-select {
     background-color: rgba(7, 11, 20, 0.85) !important;
     border: 1px solid var(--border-color) !important;
     color: #f8fafc !important;
@@ -320,7 +342,8 @@ body {
     font-size: 0.875rem;
 }
 
-.form-control:focus, .form-select:focus {
+.form-control:focus,
+.form-select:focus {
     background-color: rgba(7, 11, 20, 0.95) !important;
     border-color: #38bdf8 !important;
     color: #ffffff !important;

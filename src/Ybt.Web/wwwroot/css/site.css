@@ -18,31 +18,51 @@ body {
     color: #f8fafc !important;
     line-height: 1.6;
     overflow-x: hidden;
-    background-image: 
+    background-image:
         radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
         radial-gradient(circle at 85% 65%, rgba(56, 189, 248, 0.12) 0%, transparent 45%),
-        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 50px 90px, rgba(255,255,255,0.7), rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 130px 40px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 180px 140px, rgba(255,255,255,0.9), rgba(0,0,0,0));
+        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 50px 90px, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 130px 40px, #ffffff, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 180px 140px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0));
     background-size: 100% 100%, 100% 100%, 250px 250px, 300px 300px, 200px 200px, 350px 350px;
 }
 
 /* Global Overrides for Dark Space Theme */
-.text-dark { color: #f8fafc !important; }
-.text-secondary { color: #94a3b8 !important; }
-.text-muted { color: #64748b !important; }
-.bg-light, .bg-white { background-color: rgba(15, 23, 42, 0.6) !important; border: 1px solid var(--glass-border); }
+.text-dark {
+    color: #f8fafc !important;
+}
+
+.text-secondary {
+    color: #94a3b8 !important;
+}
+
+.text-muted {
+    color: #64748b !important;
+}
+
+.bg-light,
+.bg-white {
+    background-color: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid var(--glass-border);
+}
 
 /* Headings */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 800;
     letter-spacing: -0.025em;
     color: #ffffff;
 }
 
-.gradient-text, .hero-title {
+.gradient-text,
+.hero-title {
     background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #c084fc 100%) !important;
+    background-clip: text !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
 }
@@ -65,7 +85,8 @@ h1, h2, h3, h4, h5, h6 {
     transition: var(--transition);
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover,
+.nav-link.active {
     color: #38bdf8 !important;
     text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
 }
@@ -82,12 +103,14 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 2px;
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after,
+.nav-link.active::after {
     width: 100%;
 }
 
 /* Glassmorphism Cards */
-.card, .glass-card {
+.card,
+.glass-card {
     background: rgba(15, 23, 42, 0.75) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
@@ -98,7 +121,8 @@ h1, h2, h3, h4, h5, h6 {
     transition: var(--transition) !important;
 }
 
-.card:hover, .glass-card:hover {
+.card:hover,
+.glass-card:hover {
     transform: translateY(-6px);
     border-color: rgba(56, 189, 248, 0.45) !important;
     box-shadow: 0 15px 35px rgba(56, 189, 248, 0.15), 0 0 25px rgba(139, 92, 246, 0.12) !important;
@@ -114,6 +138,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 3rem;
     font-weight: 800;
     background: linear-gradient(135deg, #38bdf8, #a855f7);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: block;
@@ -128,14 +153,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Form inputs in Space Theme */
-.form-control, .form-select {
+.form-control,
+.form-select {
     background-color: rgba(7, 11, 20, 0.8) !important;
     border: 1px solid rgba(56, 189, 248, 0.25) !important;
     color: #f8fafc !important;
     border-radius: 12px;
 }
 
-.form-control:focus, .form-select:focus {
+.form-control:focus,
+.form-select:focus {
     background-color: rgba(7, 11, 20, 0.9) !important;
     border-color: #38bdf8 !important;
     color: #ffffff !important;
