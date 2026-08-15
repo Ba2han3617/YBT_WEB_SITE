@@ -93,9 +93,15 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 .fh-logo-img {
-    height: 28px;
+    height: 26px;
     width: auto;
     object-fit: contain;
+}
+.fh-logo-text {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.01em;
 }
 
 /* Ortada Soft White Round-Corner Pill Navigation */
@@ -162,7 +168,7 @@
     align-items: center;
     justify-content: center;
     height: 44px;
-    padding: 0 20px;
+    padding: 0 18px;
     border-radius: 999px;
     background: #0f172a;
     color: #ffffff !important;
@@ -179,6 +185,16 @@
     color: #ffffff !important;
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+}
+.fh-action-btn--ghost {
+    background: rgba(244, 247, 251, 0.94);
+    color: #0f172a !important;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+.fh-action-btn--ghost:hover {
+    background: #ffffff;
+    color: #0f172a !important;
 }
 
 /* Mobil Hamburger Butonu */
@@ -240,6 +256,17 @@
     margin-top: 12px;
     padding-top: 12px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.fh-mobile-btn-login {
+    display: block;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
 }
 .fh-mobile-cta {
     display: block;
@@ -1140,14 +1167,109 @@
     z-index: 0; filter: blur(4px); opacity: 0.6;
 }
 .team-avatar-wrapper img { position: relative; z-index: 1; border: 2px solid #080d1a; }
-.section-tag {
-    color: #38bdf8;
+/* ───────────────────────────────────────────────────────── */
+/*  SITE FOOTER — Modern SaaS Dark Platform                  */
+/* ───────────────────────────────────────────────────────── */
+.site-footer {
+    background: #060a14;
+    border-top: 1px solid rgba(56, 189, 248, 0.12);
+    padding: 4.5rem 0 2rem;
+    position: relative;
+}
+
+.footer-logo-img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-brand-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+}
+
+.footer-desc {
+    color: #64748b;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.footer-heading {
+    color: #f8fafc;
+    font-size: 0.82rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.footer-links a {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
     display: inline-block;
-    margin-bottom: 0.4rem;
+}
+
+.footer-links a:hover {
+    color: #38bdf8;
+    transform: translateX(3px);
+}
+
+.footer-newsletter .footer-input {
+    background: rgba(13, 20, 38, 0.8) !important;
+    border: 1px solid rgba(56, 189, 248, 0.18) !important;
+    color: #ffffff !important;
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px 0 0 8px !important;
+}
+
+.footer-newsletter .footer-input:focus {
+    border-color: rgba(56, 189, 248, 0.4) !important;
+    box-shadow: none !important;
+}
+
+.footer-newsletter .footer-btn {
+    background: linear-gradient(135deg, #1d4ed8, #6d28d9) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 0 8px 8px 0 !important;
+    padding: 0.6rem 1.2rem;
+    transition: all 0.2s ease;
+}
+
+.footer-newsletter .footer-btn:hover {
+    background: linear-gradient(135deg, #2563eb, #7c3aed) !important;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.footer-copy {
+    color: #475569;
+    font-size: 0.8rem;
+}
+
+.footer-tagline {
+    color: #38bdf8;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 /* ───────────────────────────────────────────────────────── */

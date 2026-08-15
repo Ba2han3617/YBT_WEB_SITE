@@ -21,12 +21,13 @@
         <div class="fh-bar" id="floatingHeader">
             <div class="fh-inner">
 
-                <!-- Sol: Logo pill -->
+                <!-- Sol: Logo pill + Yazılım & Bilişim -->
                 <a class="fh-logo-pill" asp-area="" asp-controller="Home" asp-action="Index" aria-label="YBT Ana Sayfa">
                     <img src="~/assets/images/logo/logo.png" alt="YBT" class="fh-logo-img" />
+                    <span class="fh-logo-text d-none d-sm-inline ms-2">Yazılım &amp; Bilişim</span>
                 </a>
 
-                <!-- Orta: Beyaz pill nav (desktop) -->
+                <!-- Orta: Soft White pill nav (desktop) -->
                 <nav class="fh-pill-nav d-none d-lg-flex" aria-label="Ana navigasyon">
                     <a class="fh-link @(currentController == "Home" ? "fh-link--active" : "")"
                        asp-controller="Home" asp-action="Index">Ana Sayfa</a>
@@ -42,7 +43,7 @@
                        asp-controller="Contact" asp-action="Index">İletişim</a>
                 </nav>
 
-                <!-- Sağ: Action bölümü -->
+                <!-- Sağ: Action bölümü (Giriş Yap & Katıl / Hesabım) -->
                 <div class="fh-actions">
                     @if (User.Identity?.IsAuthenticated == true)
                     {
@@ -50,7 +51,7 @@
                             <button class="fh-action-btn dropdown-toggle" type="button"
                                     id="fhUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-person-circle me-1"></i>
-                                <span class="d-none d-md-inline">Hesabım</span>
+                                <span>Hesabım</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end fh-dropdown p-2"
                                 style="min-width:200px;" aria-labelledby="fhUserMenu">
@@ -91,8 +92,11 @@
                     }
                     else
                     {
-                        <a asp-controller="Account" asp-action="Login" class="fh-action-btn">
+                        <a asp-controller="Account" asp-action="Login" class="fh-action-btn fh-action-btn--ghost d-none d-sm-inline-flex">
                             Giriş Yap
+                        </a>
+                        <a asp-controller="Account" asp-action="Register" class="fh-action-btn">
+                            Katıl
                         </a>
                     }
 
@@ -125,9 +129,12 @@
                        asp-controller="Contact" asp-action="Index">İletişim</a>
                     @if (User.Identity?.IsAuthenticated != true)
                     {
-                        <div class="fh-mobile-actions">
-                            <a asp-controller="Account" asp-action="Register" class="fh-mobile-cta">
-                                Üye Ol
+                        <div class="fh-mobile-actions d-flex gap-2">
+                            <a asp-controller="Account" asp-action="Login" class="fh-mobile-btn-login flex-fill text-center">
+                                Giriş Yap
+                            </a>
+                            <a asp-controller="Account" asp-action="Register" class="fh-mobile-cta flex-fill text-center">
+                                Üye Ol / Katıl
                             </a>
                         </div>
                     }
@@ -140,47 +147,67 @@
         @RenderBody()
     </main>
 
-    <footer class="mt-5">
+    <!-- ── Modern SaaS Dark Platform Footer ───────────────────── -->
+    <footer class="site-footer">
         <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-4 mb-4">
-                    <img src="~/assets/images/logo/logo.png" alt="YBT Logo" class="footer-logo" />
-                    <p class="text-secondary mt-3">Düzce Üniversitesi Yazılım ve Bilişim Topluluğu olarak geleceğin teknolojisini birlikte öğreniyor, üretiyor ve kodluyoruz.</p>
-                    <div class="d-flex gap-2 mt-4">
+            <div class="row g-4 justify-content-between">
+
+                <!-- Marka & Sosyal Medya -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-brand d-flex align-items-center gap-2 mb-3">
+                        <img src="~/assets/images/logo/logo.png" alt="YBT" class="footer-logo-img" />
+                        <span class="footer-brand-name">Yazılım &amp; Bilişim</span>
+                    </div>
+                    <p class="footer-desc mb-4">
+                        Düzce Üniversitesi Yazılım ve Bilişim Topluluğu — Geleceğin teknolojisini birlikte öğreniyor, açık kaynak projeler geliştiriyor ve sektöre hazırlanıyoruz.
+                    </p>
+                    <div class="footer-socials d-flex gap-2">
                         <a href="https://www.instagram.com/du.yazilim/" target="_blank" rel="noopener noreferrer" class="social-icon" title="Instagram"><i class="bi bi-instagram"></i></a>
                         <a href="https://www.tiktok.com/@@ybt1881" target="_blank" rel="noopener noreferrer" class="social-icon" title="TikTok"><i class="bi bi-tiktok"></i></a>
                         <a href="https://www.linkedin.com/in/d%C3%BCzce-%C3%BCniversitesi-yaz%C4%B1l%C4%B1m-ve-bili%C5%9Fim-toplulu%C4%9Fu-357245383/" target="_blank" rel="noopener noreferrer" class="social-icon" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
                         <a href="https://medium.com/@@yazilimvebilisimtoplulugu" target="_blank" rel="noopener noreferrer" class="social-icon" title="Medium"><i class="bi bi-medium"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-2 col-6 mb-4">
-                    <h5 class="text-white mb-4 fw-bold">Kurumsal</h5>
-                    <ul class="list-unstyled d-flex flex-column gap-2">
-                        <li><a asp-controller="About" asp-action="Index" class="footer-link">Hakkımızda</a></li>
-                        <li><a asp-controller="About" asp-action="Index" class="footer-link">Vizyon & Misyon</a></li>
-                        <li><a asp-controller="About" asp-action="Index" class="footer-link">Yönetim Kurulu</a></li>
+
+                <!-- Hızlı Bağlantılar -->
+                <div class="col-lg-2 col-6">
+                    <h6 class="footer-heading mb-3">Kurumsal</h6>
+                    <ul class="footer-links">
+                        <li><a asp-controller="About" asp-action="Index">Hakkımızda</a></li>
+                        <li><a asp-controller="About" asp-action="Index">Vizyon &amp; Misyon</a></li>
+                        <li><a asp-controller="About" asp-action="Index">Ekibimiz</a></li>
+                        <li><a asp-controller="Contact" asp-action="Index">İletişim</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-6 mb-4">
-                    <h5 class="text-white mb-4 fw-bold">Topluluk</h5>
-                    <ul class="list-unstyled d-flex flex-column gap-2">
-                        <li><a asp-controller="Events" asp-action="Index" class="footer-link">Etkinlikler</a></li>
-                        <li><a asp-controller="Projects" asp-action="Index" class="footer-link">Projelerimiz</a></li>
-                        <li><a asp-controller="Blog" asp-action="Index" class="footer-link">Blog & Yazılar</a></li>
+
+                <!-- Topluluk Links -->
+                <div class="col-lg-2 col-6">
+                    <h6 class="footer-heading mb-3">Topluluk</h6>
+                    <ul class="footer-links">
+                        <li><a asp-controller="Events" asp-action="Index">Etkinlikler</a></li>
+                        <li><a asp-controller="Projects" asp-action="Index">Projelerimiz</a></li>
+                        <li><a asp-controller="Blog" asp-action="Index">Blog &amp; Duyurular</a></li>
+                        <li><a asp-controller="Account" asp-action="Register">Katıl</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4">
-                    <h5 class="text-white mb-4 fw-bold">E-Bülten</h5>
-                    <p class="text-secondary">Teknoloji zirveleri, atölyeler ve açık kaynak projelerimizden haberdar olun.</p>
-                    <form onsubmit="event.preventDefault(); alert('E-bülten kaydınız başarıyla alındı!'); this.reset();" class="input-group mb-3">
-                        <input type="email" class="form-control bg-transparent border-secondary text-white px-3" placeholder="E-posta adresiniz" required>
-                        <button class="btn btn-primary px-4" type="submit">Abone Ol</button>
+
+                <!-- E-Bülten Abone -->
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="footer-heading mb-3">E-Bülten</h6>
+                    <p class="footer-desc mb-3">Etkinlikler, hackathonlar ve teknoloji haberlerinden ilk siz haberdar olun.</p>
+                    <form onsubmit="event.preventDefault(); alert('E-bülten kaydınız başarıyla alındı!'); this.reset();" class="footer-newsletter">
+                        <div class="input-group">
+                            <input type="email" class="form-control footer-input" placeholder="E-posta adresiniz" required />
+                            <button class="btn footer-btn" type="submit"><i class="bi bi-send"></i></button>
+                        </div>
                     </form>
                 </div>
+
             </div>
-            <hr class="border-secondary border-opacity-25 my-5">
-            <div class="text-center text-secondary small">
-                <p class="mb-0">&copy; @DateTime.Now.Year Düzce Üniversitesi Yazılım ve Bilişim Topluluğu. Tüm Hakları Saklıdır.</p>
+
+            <div class="footer-bottom mt-5 pt-4 d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+                <span class="footer-copy">&copy; @DateTime.Now.Year Düzce Üniversitesi YBT. Tüm hakları saklıdır.</span>
+                <span class="footer-tagline">Code. Build. Elevate.</span>
             </div>
         </div>
     </footer>
