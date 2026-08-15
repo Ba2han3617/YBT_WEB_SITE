@@ -1070,7 +1070,6 @@ C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\v0zgfp0y55-87fc7y1x7t.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\yfc7ypekbg-mlv21k5csn.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\0x2ppurb09-61n19gt1b8.gz
-C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\1qtj0b5hmx-bg063r25r2.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\yufq3af4jc-bqjiyaj88i.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\wny3bdiymq-c2jlpeoesf.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\gikz5zspu2-erw9l3u2r3.gz
@@ -1139,11 +1138,12 @@ C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\Ybt.Web.genruntimeconfig.cache
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\ref\Ybt.Web.dll
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\Ybt.Web.sourcelink.json
-C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\ve1k5il125-4a3fepbcr9.gz
-C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\uto8i4gp62-yzivquh29e.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\bin\Debug\net9.0\libman.json
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\q3wyuknllr-03hjc8e09r.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\euer0dv77y-48y08845bh.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\y62598gc3b-ilo7uva0vt.gz
 C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\h45sro2chw-qlccset4i1.gz
-C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\fl7jkc0mn5-k2t4d5is5g.gz
+C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\ve1k5il125-k96jfq066z.gz
+C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\1qtj0b5hmx-1f4rkd2oy8.gz
+C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\uto8i4gp62-tgs4p6qgf4.gz
+C:\Users\Batuhan\OneDrive\Masaüstü\2025-2026 projeler\YBT WEB SİTESİ\src\Ybt.Web\obj\Debug\net9.0\compressed\fl7jkc0mn5-51yz9juvyb.gz

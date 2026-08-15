@@ -1,31 +1,29 @@
-/* Core Space Theme Global Styles */
+/* Core Developer-Tools Theme Global Styles */
 :root {
     --primary: #38bdf8;
     --primary-dark: #0284c7;
     --secondary: #94a3b8;
-    --dark: #070b14;
+    --dark: #080d1a;
     --light: #f8fafc;
     --accent: #a855f7;
-    --glass: rgba(15, 23, 42, 0.75);
-    --glass-border: rgba(56, 189, 248, 0.18);
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --glass: rgba(13, 20, 38, 0.8);
+    --glass-border: rgba(56, 189, 248, 0.14);
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #070b14 !important;
+    background-color: #080d1a !important;
     color: #f8fafc !important;
     line-height: 1.6;
     overflow-x: hidden;
+    /* Clean dark background — no stars, subtle depth only */
     background-image:
-        radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
-        radial-gradient(circle at 85% 65%, rgba(56, 189, 248, 0.12) 0%, transparent 45%),
-        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0, 0, 0, 0)),
-        radial-gradient(2px 2px at 50px 90px, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0)),
-        radial-gradient(1px 1px at 130px 40px, #ffffff, rgba(0, 0, 0, 0)),
-        radial-gradient(2px 2px at 180px 140px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0));
-    background-size: 100% 100%, 100% 100%, 250px 250px, 300px 300px, 200px 200px, 350px 350px;
+        radial-gradient(ellipse 70% 50% at 15% 10%, rgba(99, 60, 180, 0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 85% 80%, rgba(30, 100, 180, 0.08) 0%, transparent 60%);
+    background-size: 100% 100%, 100% 100%;
+    background-attachment: fixed;
 }
 
 /* Global Overrides for Dark Space Theme */

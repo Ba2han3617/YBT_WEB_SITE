@@ -1,122 +1,695 @@
+@model Ybt.Web.Models.HomeViewModel
 @{
     ViewData["Title"] = "Ana Sayfa";
+    ViewData["Description"] = "YBT — Düzce Üniversitesi Yazılım ve Bilişim Topluluğu. Yazılım geliştirme, hackathon, eğitim ve kariyer fırsatları.";
 }
 
-<!-- Futuristic Hero Banner -->
-<section class="hero">
-    <div class="container">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-6 reveal">
-                <div class="tech-badge">
-                    <i class="bi bi-stars me-2"></i> Düzce Üniversitesi Yazılım & Bilişim Topluluğu
+<!-- ═══════════════════════════════════════════════
+     HERO — Left: Content | Right: Platform panels
+     ═══════════════════════════════════════════════ -->
+<section class="hero-v2" id="hero" aria-label="Ana sayfa hero">
+
+    <!-- Grid doku arka planı (yıldızsız) -->
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <!-- Hafif ambient ışıklar -->
+    <div class="hero-ambient-l" aria-hidden="true"></div>
+    <div class="hero-ambient-r" aria-hidden="true"></div>
+
+    <div class="container hero-wrap">
+        <div class="hero-layout">
+
+            <!-- ─── SOL: METİN ─── -->
+            <div class="hero-left reveal">
+
+                <!-- Üst badge -->
+                <div class="hero-top-badge">
+                    <span class="htb-dot"></span>
+                    <span>Düzce Üniversitesi &nbsp;·&nbsp; YBT</span>
                 </div>
-                <h1 class="display-1 hero-title fw-extrabold mb-4">Geleceğin Teknolojisini Birlikte Kodluyoruz.</h1>
-                <p class="lead mb-5 fs-5 text-secondary">Yazılım ve Bilişim Topluluğu (YBT), öğrencilerin uzay ve teknoloji çağındaki yolculuklarına rehberlik eden, açık kaynak projeler üreten ve inovasyonu yaşatan topluluk platformudur.</p>
-                <div class="d-flex flex-wrap gap-3">
-                    <a href="#features" class="btn btn-primary btn-lg px-5 rounded-pill shadow-lg"><i class="bi bi-rocket-takeoff me-2"></i>Topluluğu Keşfet</a>
-                    <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary btn-lg px-5 rounded-pill"><i class="bi bi-person-plus me-2"></i>Hemen Katıl</a>
+
+                <h1 class="hero-h1">
+                    Yazılım Üreten<br>
+                    <span class="hero-h1-accent">Topluluk</span>
+                </h1>
+
+                <p class="hero-sub">
+                    Projeler, etkinlikler ve teknolojiyle büyüyen YBT ekosistemi.
+                </p>
+
+                <p class="hero-desc">
+                    YBT; öğrencilerin yazılım projeleri geliştirdiği, teknik etkinliklere katıldığı
+                    ve teknoloji dünyasına birlikte hazırlandığı modern bir topluluk platformudur.
+                </p>
+
+                <!-- CTA -->
+                <div class="hero-ctas">
+                    <a asp-controller="Account" asp-action="Register"
+                       class="btn-primary-cta" id="cta-join">
+                        <i class="bi bi-person-plus"></i>
+                        Topluluğa Katıl
+                    </a>
+                    <a asp-controller="Events" asp-action="Index"
+                       class="btn-ghost-cta" id="cta-events">
+                        <i class="bi bi-calendar-event"></i>
+                        Etkinlikleri Keşfet
+                    </a>
+                </div>
+
+                <!-- Metrik şerit -->
+                <div class="hero-metrics">
+                    <div class="hm-item">
+                        <span class="hm-val counter-value" data-target="@Model.MemberCount" data-suffix="+">0+</span>
+                        <span class="hm-lbl">Üye</span>
+                    </div>
+                    <div class="hm-sep" aria-hidden="true"></div>
+                    <div class="hm-item">
+                        <span class="hm-val counter-value" data-target="@Model.EventCount" data-suffix="">0</span>
+                        <span class="hm-lbl">Etkinlik</span>
+                    </div>
+                    <div class="hm-sep" aria-hidden="true"></div>
+                    <div class="hm-item">
+                        <span class="hm-val counter-value" data-target="@Model.ActiveProjectCount" data-suffix="">0</span>
+                        <span class="hm-lbl">Aktif Proje</span>
+                    </div>
+                    <div class="hm-sep" aria-hidden="true"></div>
+                    <div class="hm-item">
+                        <span class="hm-val counter-value" data-target="@Model.BlogCount" data-suffix="">0</span>
+                        <span class="hm-lbl">Blog</span>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-6 d-none d-lg-block reveal">
-                <div class="hero-image-wrapper p-2 floating">
-                    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Space Tech Hero" class="img-fluid rounded-4 shadow-lg">
+
+            <!-- ─── SAĞ: PLATFORM PANEL KOMPOZİSYONU ─── -->
+            <div class="hero-right d-none d-lg-flex reveal">
+                <div class="platform-mockup">
+
+                    <!-- Üst satır: 2 kart yan yana -->
+                    <div class="pm-row">
+
+                        <!-- Yaklaşan Etkinlik paneli -->
+                        <div class="pm-card pm-card--event">
+                            <div class="pm-card-header">
+                                <span class="pm-card-icon pm-icon-cyan"><i class="bi bi-calendar-check"></i></span>
+                                <span class="pm-card-title">Yaklaşan Etkinlik</span>
+                                <span class="pm-live-dot"></span>
+                            </div>
+                            @{
+                                var nextEvent = Model.UpcomingEvents.FirstOrDefault();
+                            }
+                            @if (nextEvent != null)
+                            {
+                                <div class="pm-event-name">@(nextEvent.Title.Length > 28 ? nextEvent.Title[..28] + "…" : nextEvent.Title)</div>
+                                <div class="pm-event-meta">
+                                    <i class="bi bi-clock me-1"></i>@nextEvent.EventDate.ToLocalTime().ToString("dd MMM, HH:mm")
+                                </div>
+                                <div class="pm-event-loc">
+                                    <i class="bi bi-geo-alt me-1"></i>@(nextEvent.Location.Length > 22 ? nextEvent.Location[..22] + "…" : nextEvent.Location)
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="pm-event-name">Etkinlik Bekleniyor</div>
+                                <div class="pm-event-meta"><i class="bi bi-clock me-1"></i>Yakında duyurulacak</div>
+                                <div class="pm-event-loc"><i class="bi bi-geo-alt me-1"></i>YBT Platformu</div>
+                            }
+                            <div class="pm-event-bar">
+                                <div class="pm-event-bar-fill"></div>
+                            </div>
+                        </div>
+
+                        <!-- Aktif Proje paneli -->
+                        <div class="pm-card pm-card--project">
+                            <div class="pm-card-header">
+                                <span class="pm-card-icon pm-icon-purple"><i class="bi bi-code-slash"></i></span>
+                                <span class="pm-card-title">Aktif Projeler</span>
+                            </div>
+                            <div class="pm-project-count">
+                                <span class="pm-big-num">@Model.ActiveProjectCount</span>
+                                <span class="pm-big-lbl">proje</span>
+                            </div>
+                            @{
+                                var topProject = Model.FeaturedProjects.FirstOrDefault();
+                            }
+                            @if (topProject != null)
+                            {
+                                <div class="pm-project-tags">
+                                    @if (!string.IsNullOrEmpty(topProject.TechTags))
+                                    {
+                                        @foreach (var tag in topProject.TechTags.Split(',').Take(3))
+                                        {
+                                            <span class="pm-tag">@tag.Trim()</span>
+                                        }
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="pm-project-tags">
+                                    <span class="pm-tag">Python</span>
+                                    <span class="pm-tag">React</span>
+                                    <span class="pm-tag">ML</span>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+
+                    <!-- Orta: Kod snippet + Activity -->
+                    <div class="pm-row">
+
+                        <!-- Kod snippet -->
+                        <div class="pm-card pm-card--code pm-card--wide">
+                            <div class="pm-card-header">
+                                <span class="pm-card-icon pm-icon-teal"><i class="bi bi-terminal"></i></span>
+                                <span class="pm-card-title">ybt/workspace</span>
+                                <div class="pm-tb-dots ms-auto"><span></span><span></span><span></span></div>
+                            </div>
+                            <div class="pm-code-body">
+                                <div class="pm-code-line"><span class="pm-c-kw">const</span> <span class="pm-c-var">community</span> <span class="pm-c-op">=</span> <span class="pm-c-str">'YBT'</span><span class="pm-c-op">;</span></div>
+                                <div class="pm-code-line"><span class="pm-c-kw">const</span> <span class="pm-c-var">members</span> <span class="pm-c-op">=</span> <span class="pm-c-num">@Model.MemberCount</span><span class="pm-c-op">;</span></div>
+                                <div class="pm-code-line"><span class="pm-c-fn">buildFuture</span><span class="pm-c-op">(</span><span class="pm-c-var">community</span><span class="pm-c-op">,</span> <span class="pm-c-var">members</span><span class="pm-c-op">);</span></div>
+                                <div class="pm-code-line pm-c-comment">// @Model.EventCount etkinlik · @Model.ActiveProjectCount proje aktif</div>
+                                <div class="pm-code-line"><span class="pm-c-kw">return</span> <span class="pm-c-str">'success'</span><span class="pm-c-cursor"></span></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Alt satır: Activity + Üye kartı -->
+                    <div class="pm-row">
+
+                        <!-- GitHub benzeri activity -->
+                        <div class="pm-card pm-card--activity">
+                            <div class="pm-card-header">
+                                <span class="pm-card-icon pm-icon-cyan"><i class="bi bi-graph-up"></i></span>
+                                <span class="pm-card-title">Topluluk Aktivitesi</span>
+                            </div>
+                            <div class="pm-activity-grid" id="activityGrid">
+                                @for (int w = 0; w < 12; w++)
+                                {
+                                    <div class="pm-activity-col">
+                                        @for (int d = 0; d < 7; d++)
+                                        {
+                                            <div class="pm-act-cell pm-act-@(new Random(w * 7 + d).Next(0, 5))" title=""></div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                            <div class="pm-act-legend">
+                                <span>Az</span>
+                                <span class="pm-act-cell pm-act-0"></span>
+                                <span class="pm-act-cell pm-act-1"></span>
+                                <span class="pm-act-cell pm-act-2"></span>
+                                <span class="pm-act-cell pm-act-3"></span>
+                                <span class="pm-act-cell pm-act-4"></span>
+                                <span>Çok</span>
+                            </div>
+                        </div>
+
+                        <!-- Topluluk stat -->
+                        <div class="pm-card pm-card--stat">
+                            <div class="pm-card-header">
+                                <span class="pm-card-icon pm-icon-purple"><i class="bi bi-people-fill"></i></span>
+                                <span class="pm-card-title">Üye Topluluğu</span>
+                            </div>
+                            <div class="pm-stat-row">
+                                <div class="pm-stat-item">
+                                    <span class="pm-stat-val">@Model.MemberCount<span class="pm-stat-plus">+</span></span>
+                                    <span class="pm-stat-lbl">Üye</span>
+                                </div>
+                                <div class="pm-stat-item">
+                                    <span class="pm-stat-val">@Model.BlogCount</span>
+                                    <span class="pm-stat-lbl">Blog</span>
+                                </div>
+                            </div>
+                            <div class="pm-avatar-stack">
+                                <span class="pm-av pm-av-1"><i class="bi bi-person-fill"></i></span>
+                                <span class="pm-av pm-av-2"><i class="bi bi-person-fill"></i></span>
+                                <span class="pm-av pm-av-3"><i class="bi bi-person-fill"></i></span>
+                                <span class="pm-av-more">+@(Model.MemberCount - 3)</span>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
+
         </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="hero-scroll-cue" aria-hidden="true">
+        <div class="hsc-line"></div>
+        <span class="hsc-label">Keşfet</span>
     </div>
 </section>
 
-<!-- Space Counter Bar -->
-<section class="counter-section py-4 reveal">
+<!-- ═══════════════════════════════════════════════ -->
+<!-- NELER YAPIYORUZ — 3 Özellik                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="features" class="section-block" aria-label="Topluluk faaliyetleri">
     <div class="container">
-        <div class="row g-4">
-            <div class="col-md-3 col-6">
-                <div class="counter-box">
-                    <span class="counter-value" data-target="500">0</span>
-                    <span class="counter-label">Aktif Üye</span>
-                </div>
-            </div>
-            <div class="col-md-3 col-6">
-                <div class="counter-box">
-                    <span class="counter-value" data-target="25">0</span>
-                    <span class="counter-label">Tamamlanan Proje</span>
-                </div>
-            </div>
-            <div class="col-md-3 col-6">
-                <div class="counter-box">
-                    <span class="counter-value" data-target="12">0</span>
-                    <span class="counter-label">Yıllık Etkinlik</span>
-                </div>
-            </div>
-            <div class="col-md-3 col-6">
-                <div class="counter-box">
-                    <span class="counter-value" data-target="100">0</span>
-                    <span class="counter-label">Eğitim Saati</span>
-                </div>
-            </div>
+        <div class="section-header text-center reveal">
+            <span class="section-tag">Ne Yapıyoruz?</span>
+            <h2 class="section-title gradient-text">Topluluk Faaliyetlerimiz</h2>
+            <p class="section-desc">Yazılımdan yapay zekaya, hackathondan eğitime — geniş bir yelpazede üretiyoruz.</p>
         </div>
-    </div>
-</section>
 
-<!-- Features Grid -->
-<section id="features" class="py-5 mt-5">
-    <div class="container">
-        <div class="text-center mb-5 reveal">
-            <span class="section-tag">Neler Yapıyoruz?</span>
-            <h2 class="display-4 fw-bold gradient-text">Topluluk Faaliyetlerimiz</h2>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4 reveal">
-                <div class="card h-100 p-4 border-0">
-                    <div class="feature-icon-box">
+        <div class="row g-4 mt-2">
+            <div class="col-lg-4 col-md-6 reveal">
+                <div class="feature-card h-100">
+                    <div class="feature-icon-wrap icon-cyan">
                         <i class="bi bi-code-square"></i>
                     </div>
-                    <h3 class="h4 fw-bold text-white mb-3">Yazılım Geliştirme</h3>
-                    <p class="text-secondary">Açık kaynaklı projelerden kurumsal yazılımlara kadar geniş bir yelpazede geleceğin sistemlerini inşa ediyoruz.</p>
+                    <h3 class="feature-title">Yazılım Geliştirme</h3>
+                    <p class="feature-desc">Açık kaynak projelerden kurumsal uygulamalara uzanan geniş yelpazede, gerçek dünya problemlerine yazılım çözümleri üretiyoruz.</p>
+                    <div class="feature-tags">
+                        <span class="ftag">Open Source</span>
+                        <span class="ftag">Web Dev</span>
+                        <span class="ftag">AI/ML</span>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4 reveal">
-                <div class="card h-100 p-4 border-0">
-                    <div class="feature-icon-box">
+            <div class="col-lg-4 col-md-6 reveal">
+                <div class="feature-card h-100">
+                    <div class="feature-icon-wrap icon-purple">
                         <i class="bi bi-trophy"></i>
                     </div>
-                    <h3 class="h4 fw-bold text-white mb-3">Hackathonlar & Yarışmalar</h3>
-                    <p class="text-secondary">Bölgesel ve ulusal maratonlarda yeteneklerimizi sınıyoruz, inovatif çözümler üreterek sınırları zorluyoruz.</p>
+                    <h3 class="feature-title">Hackathon &amp; Yarışmalar</h3>
+                    <p class="feature-desc">Bölgesel ve ulusal maratonlarda takım olarak yarışıyor, inovatif çözümler geliştirerek sınırları zorluyoruz.</p>
+                    <div class="feature-tags">
+                        <span class="ftag">Hackathon</span>
+                        <span class="ftag">Teknofest</span>
+                        <span class="ftag">Yarışma</span>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4 reveal">
-                <div class="card h-100 p-4 border-0">
-                    <div class="feature-icon-box">
-                        <i class="bi bi-people"></i>
+            <div class="col-lg-4 col-md-6 reveal">
+                <div class="feature-card h-100">
+                    <div class="feature-icon-wrap icon-teal">
+                        <i class="bi bi-mortarboard"></i>
                     </div>
-                    <h3 class="h4 fw-bold text-white mb-3">Network & Kariyer</h3>
-                    <p class="text-secondary">Sektörün lider mühendisleri ve teknoloji devleriyle buluşarak staj ve iş imkanlarını öğrencilerimize ulaştırıyoruz.</p>
+                    <h3 class="feature-title">Eğitim &amp; Kariyer</h3>
+                    <p class="feature-desc">Sektörün öncü isimleriyle atölyeler düzenliyor, üyelerimizi staj ve iş fırsatlarıyla buluşturuyoruz.</p>
+                    <div class="feature-tags">
+                        <span class="ftag">Workshop</span>
+                        <span class="ftag">Mentörlük</span>
+                        <span class="ftag">Staj</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- About Callout Section -->
-<section class="py-5 mt-5">
+<!-- ═══════════════════════════════════════════════ -->
+<!-- YAKLAŞAN ETKİNLİKLER                           -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section-block section-alt" aria-label="Yaklaşan etkinlikler">
     <div class="container">
-        <div class="card p-4 p-md-5 border-0 shadow-lg">
-            <div class="row align-items-center g-5">
-                <div class="col-lg-6 reveal">
-                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="About Us" class="img-fluid rounded-4 shadow-lg border border-secondary border-opacity-25">
+        <div class="section-header-row reveal">
+            <div>
+                <span class="section-tag">Takvim</span>
+                <h2 class="section-title gradient-text">Yaklaşan Etkinlikler</h2>
+            </div>
+            <a asp-controller="Events" asp-action="Index" class="btn-see-all" id="link-all-events">
+                Tümünü Gör <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        @if (Model.UpcomingEvents.Any())
+        {
+            <div class="row g-4 mt-1">
+                @foreach (var ev in Model.UpcomingEvents)
+                {
+                    <div class="col-lg-4 col-md-6 reveal">
+                        <a asp-controller="Events" asp-action="Details" asp-route-slug="@ev.Slug"
+                           class="event-card-link" id="event-@ev.Id">
+                            <div class="event-card h-100">
+                                @if (!string.IsNullOrEmpty(ev.ImageUrl))
+                                {
+                                    <div class="event-img-wrap">
+                                        <img src="@ev.ImageUrl" alt="@ev.Title" class="event-img" loading="lazy" />
+                                        @if (!string.IsNullOrEmpty(ev.Category))
+                                        {
+                                            <span class="event-category-badge">@ev.Category</span>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="event-img-placeholder">
+                                        <i class="bi bi-calendar-event"></i>
+                                        @if (!string.IsNullOrEmpty(ev.Category))
+                                        {
+                                            <span class="event-category-badge">@ev.Category</span>
+                                        }
+                                    </div>
+                                }
+                                <div class="event-body">
+                                    <div class="event-date-row">
+                                        <i class="bi bi-clock me-1"></i>
+                                        @ev.EventDate.ToLocalTime().ToString("dd MMM yyyy, HH:mm")
+                                    </div>
+                                    <h3 class="event-title">@ev.Title</h3>
+                                    <p class="event-desc">@(ev.Description.Length > 100 ? ev.Description[..100] + "…" : ev.Description)</p>
+                                    <div class="event-footer">
+                                        <span class="event-location"><i class="bi bi-geo-alt me-1"></i>@ev.Location</span>
+                                        <span class="event-arrow"><i class="bi bi-arrow-right"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state reveal">
+                <div class="empty-icon"><i class="bi bi-calendar-x"></i></div>
+                <p class="empty-text">Yaklaşan etkinlik bulunmuyor. Yakında yeni etkinlikler eklenecek!</p>
+                <a asp-controller="Events" asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
+                    Geçmiş Etkinliklere Bak
+                </a>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- ÖNE ÇIKAN PROJELER                             -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section-block" aria-label="Öne çıkan projeler">
+    <div class="container">
+        <div class="section-header-row reveal">
+            <div>
+                <span class="section-tag">Üretiyoruz</span>
+                <h2 class="section-title gradient-text">Öne Çıkan Projeler</h2>
+            </div>
+            <a asp-controller="Projects" asp-action="Index" class="btn-see-all" id="link-all-projects">
+                Tümünü Gör <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        @if (Model.FeaturedProjects.Any())
+        {
+            <div class="row g-4 mt-1">
+                @foreach (var project in Model.FeaturedProjects)
+                {
+                    <div class="col-lg-4 col-md-6 reveal">
+                        <div class="project-card h-100" id="project-@project.Id">
+                            @if (!string.IsNullOrEmpty(project.ImageUrl))
+                            {
+                                <div class="project-img-wrap">
+                                    <img src="@project.ImageUrl" alt="@project.Name" class="project-img" loading="lazy" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="project-img-placeholder">
+                                    <i class="bi bi-window-stack"></i>
+                                </div>
+                            }
+                            <div class="project-body">
+                                <h3 class="project-title">@project.Name</h3>
+                                <p class="project-desc">@(project.Description.Length > 110 ? project.Description[..110] + "…" : project.Description)</p>
+                                @if (!string.IsNullOrEmpty(project.TechTags))
+                                {
+                                    <div class="project-tags">
+                                        @foreach (var tag in project.TechTags.Split(',', StringSplitOptions.RemoveEmptyEntries).Take(4))
+                                        {
+                                            <span class="ptag">@tag.Trim()</span>
+                                        }
+                                    </div>
+                                }
+                                <div class="project-links mt-3">
+                                    @if (!string.IsNullOrEmpty(project.GitHubUrl))
+                                    {
+                                        <a href="@project.GitHubUrl" target="_blank" rel="noopener noreferrer"
+                                           class="project-link-btn" title="GitHub">
+                                            <i class="bi bi-github me-1"></i>GitHub
+                                        </a>
+                                    }
+                                    @if (!string.IsNullOrEmpty(project.DemoUrl))
+                                    {
+                                        <a href="@project.DemoUrl" target="_blank" rel="noopener noreferrer"
+                                           class="project-link-btn project-link-demo" title="Demo">
+                                            <i class="bi bi-box-arrow-up-right me-1"></i>Demo
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state reveal">
+                <div class="empty-icon"><i class="bi bi-code-slash"></i></div>
+                <p class="empty-text">Henüz proje eklenmemiş. Yakında projelerimiz burada olacak!</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- HAKKIMIZDA — Split layout                      -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section-block section-alt about-split" aria-label="YBT hakkında">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5 reveal">
+                <div class="about-visual">
+                    <div class="about-visual-inner">
+                        <div class="av-icon-grid">
+                            <div class="av-icon c"><i class="bi bi-cpu"></i></div>
+                            <div class="av-icon p"><i class="bi bi-braces"></i></div>
+                            <div class="av-icon b"><i class="bi bi-rocket-takeoff"></i></div>
+                            <div class="av-icon t"><i class="bi bi-people"></i></div>
+                            <div class="av-icon m"><i class="bi bi-trophy"></i></div>
+                            <div class="av-icon w"><i class="bi bi-lightbulb"></i></div>
+                        </div>
+                        <div class="av-center-badge">
+                            <span class="av-badge-text">YBT</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-6 reveal">
-                    <span class="section-tag">Geleceğe Adım Atın</span>
-                    <h2 class="display-5 fw-bold mb-4 gradient-text">Bizimle Birlikte Büyüyün</h2>
-                    <p class="fs-5 text-secondary mb-4">YBT sadece bir öğrenci kulübü değil; aynı zamanda üretken, meraklı ve birbirini destekleyen dinamik bir teknoloji ekosistemidir.</p>
-                    <ul class="list-unstyled d-flex flex-column gap-3 mb-4">
-                        <li class="fs-5 text-light"><i class="bi bi-check-circle-fill text-info me-3"></i> Ücretsiz Kodlama & Yapay Zeka Eğitimleri</li>
-                        <li class="fs-5 text-light"><i class="bi bi-check-circle-fill text-info me-3"></i> Gerçek Dünya Projelerine Katılım Desteği</li>
-                        <li class="fs-5 text-light"><i class="bi bi-check-circle-fill text-info me-3"></i> Birebir Ekip Mentorluğu & Yol Haritası</li>
-                    </ul>
-                    <a asp-controller="About" asp-action="Index" class="btn btn-primary btn-lg rounded-pill px-5">Daha Fazla Bilgi</a>
-                </div>
+            </div>
+            <div class="col-lg-7 reveal">
+                <span class="section-tag">Geleceğe Adım Atın</span>
+                <h2 class="section-title gradient-text mb-3">Bizimle Birlikte Büyüyün</h2>
+                <p class="about-desc">YBT sadece bir öğrenci kulübü değil; aynı zamanda üretken, meraklı ve birbirini destekleyen dinamik bir teknoloji ekosistemidir.</p>
+                <ul class="about-benefits">
+                    <li>
+                        <span class="ab-icon"><i class="bi bi-check-circle-fill"></i></span>
+                        <div>
+                            <strong>Ücretsiz Kodlama &amp; Yapay Zeka Eğitimleri</strong>
+                            <p>Sektör uzmanlarıyla birebir atölyeler ve workshop'lar</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="ab-icon"><i class="bi bi-check-circle-fill"></i></span>
+                        <div>
+                            <strong>Gerçek Dünya Projelerine Katılım</strong>
+                            <p>CV'ni güçlendirecek, portföyüne katkı sağlayacak projeler</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="ab-icon"><i class="bi bi-check-circle-fill"></i></span>
+                        <div>
+                            <strong>Birebir Mentörlük &amp; Kariyer Yol Haritası</strong>
+                            <p>Deneyimli ekip arkadaşlarından rehberlik ve kariyer desteği</p>
+                        </div>
+                    </li>
+                </ul>
+                <a asp-controller="About" asp-action="Index" class="btn btn-primary rounded-pill px-5 mt-2">
+                    Daha Fazla Bilgi <i class="bi bi-arrow-right ms-2"></i>
+                </a>
             </div>
         </div>
     </div>
 </section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- BLOG / DUYURULAR                               -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section-block" aria-label="Son blog yazıları">
+    <div class="container">
+        <div class="section-header-row reveal">
+            <div>
+                <span class="section-tag">Güncel</span>
+                <h2 class="section-title gradient-text">Blog &amp; Duyurular</h2>
+            </div>
+            <a asp-controller="Blog" asp-action="Index" class="btn-see-all" id="link-all-blogs">
+                Tümünü Gör <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        @if (Model.RecentBlogs.Any())
+        {
+            <div class="row g-4 mt-1">
+                @foreach (var blog in Model.RecentBlogs)
+                {
+                    <div class="col-lg-4 col-md-6 reveal">
+                        <a asp-controller="Blog" asp-action="Details" asp-route-slug="@blog.Slug"
+                           class="blog-card-link" id="blog-@blog.Id">
+                            <div class="blog-card h-100">
+                                @if (!string.IsNullOrEmpty(blog.ImageUrl))
+                                {
+                                    <div class="blog-img-wrap">
+                                        <img src="@blog.ImageUrl" alt="@blog.Title" class="blog-img" loading="lazy" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="blog-img-placeholder">
+                                        <i class="bi bi-file-richtext"></i>
+                                    </div>
+                                }
+                                <div class="blog-body">
+                                    @if (!string.IsNullOrEmpty(blog.Category))
+                                    {
+                                        <span class="blog-category">@blog.Category</span>
+                                    }
+                                    <h3 class="blog-title">@blog.Title</h3>
+                                    @if (!string.IsNullOrEmpty(blog.Summary))
+                                    {
+                                        <p class="blog-summary">@(blog.Summary.Length > 100 ? blog.Summary[..100] + "…" : blog.Summary)</p>
+                                    }
+                                    <div class="blog-meta">
+                                        <span class="blog-author"><i class="bi bi-person me-1"></i>@(blog.Author?.FullName ?? blog.Author?.UserName ?? "YBT")</span>
+                                        <span class="blog-date">@blog.CreatedAt.ToLocalTime().ToString("dd MMM yyyy")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state reveal">
+                <div class="empty-icon"><i class="bi bi-journal-x"></i></div>
+                <p class="empty-text">Henüz blog yazısı yok. Yakında içeriklerimiz burada olacak!</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- TAKIM VİTRİNİ                                  -->
+<!-- ═══════════════════════════════════════════════ -->
+@if (Model.TeamMembers.Any())
+{
+    <section class="section-block section-alt" aria-label="Yönetim ekibi">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <span class="section-tag">İnsan Kaynağı</span>
+                <h2 class="section-title gradient-text">Ekibimizle Tanışın</h2>
+                <p class="section-desc">YBT'yi geleceğe taşıyan yetenekli ve tutkulu ekibimiz.</p>
+            </div>
+            <div class="row g-4 mt-2 justify-content-center">
+                @foreach (var member in Model.TeamMembers)
+                {
+                    <div class="col-xl-2 col-lg-3 col-md-4 col-6 reveal">
+                        <div class="team-card-v2" id="member-@member.Id">
+                            <div class="team-avatar-v2">
+                                @if (!string.IsNullOrEmpty(member.ImageUrl))
+                                {
+                                    <img src="@member.ImageUrl" alt="@member.FullName" loading="lazy" />
+                                }
+                                else
+                                {
+                                    <div class="team-avatar-placeholder">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+                                }
+                            </div>
+                            <div class="team-info-v2">
+                                <h4 class="team-name-v2">@member.FullName</h4>
+                                <p class="team-role-v2">@member.Role</p>
+                                <div class="team-socials-v2">
+                                    @if (!string.IsNullOrEmpty(member.LinkedInUrl))
+                                    {
+                                        <a href="@member.LinkedInUrl" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="team-social-link">
+                                            <i class="bi bi-linkedin"></i>
+                                        </a>
+                                    }
+                                    @if (!string.IsNullOrEmpty(member.GitHubUrl))
+                                    {
+                                        <a href="@member.GitHubUrl" target="_blank" rel="noopener noreferrer" title="GitHub" class="team-social-link">
+                                            <i class="bi bi-github"></i>
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SON CTA BANNER                                 -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="cta-section" aria-label="Topluluğa katıl çağrısı">
+    <div class="cta-bg-glow" aria-hidden="true"></div>
+    <div class="container position-relative">
+        <div class="cta-inner text-center reveal">
+            <div class="cta-badge mb-4">
+                <i class="bi bi-lightning-charge-fill me-1"></i> Hemen Başla
+            </div>
+            <h2 class="cta-title">YBT ile Teknoloji Topluluğunun<br class="d-none d-md-block"> Bir Parçası Ol</h2>
+            <p class="cta-desc">Yazılım geliştir, hackathonlara katıl, eğitimlere eriş ve kariyerini şekillendir.</p>
+            <div class="d-flex flex-wrap gap-3 justify-content-center mt-5">
+                <a asp-controller="Account" asp-action="Register"
+                   class="btn btn-cta-primary" id="cta-bottom-join">
+                    <i class="bi bi-person-plus-fill me-2"></i>Ücretsiz Üye Ol
+                </a>
+                <a asp-controller="Contact" asp-action="Index"
+                   class="btn btn-cta-outline" id="cta-bottom-contact">
+                    <i class="bi bi-envelope me-2"></i>İletişime Geç
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+<script>
+// Counter animasyonu metrics şeridinde de çalışsın
+(function() {
+    const heroMetrics = document.querySelector('.hero-metrics');
+    if (!heroMetrics) return;
+    const obs = new IntersectionObserver((entries, o) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.querySelectorAll('.counter-value').forEach(c => {
+                    const target = parseInt(c.getAttribute('data-target') || '0', 10);
+                    const suffix = c.getAttribute('data-suffix') || '';
+                    const dur = 1600;
+                    const start = performance.now();
+                    function tick(now) {
+                        const p = Math.min((now - start) / dur, 1);
+                        const ease = 1 - Math.pow(1 - p, 3);
+                        c.textContent = Math.round(ease * target) + suffix;
+                        if (p < 1) requestAnimationFrame(tick);
+                        else c.textContent = target + suffix;
+                    }
+                    requestAnimationFrame(tick);
+                });
+                o.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.4 });
+    obs.observe(heroMetrics);
+})();
+</script>
+}
