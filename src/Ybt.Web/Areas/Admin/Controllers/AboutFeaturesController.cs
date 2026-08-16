@@ -70,8 +70,10 @@ public class AboutFeaturesController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit([Bind("Id,Title,Description,Icon,Tags,AccentType,Order,IsActive")] AboutFeature feature)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Icon,Tags,AccentType,Order,IsActive")] AboutFeature feature)
     {
+        if (id != feature.Id) return NotFound();
+
         if (string.IsNullOrWhiteSpace(feature.Title))
         {
             ModelState.AddModelError("Title", "Başlık alanı zorunludur.");
@@ -84,10 +86,19 @@ public class AboutFeaturesController : Controller
 
         if (ModelState.IsValid)
         {
-            feature.Icon = string.IsNullOrWhiteSpace(feature.Icon) ? "bi-code-slash" : feature.Icon.Trim();
-            feature.AccentType = string.IsNullOrWhiteSpace(feature.AccentType) ? "cyan" : feature.AccentType.Trim().ToLower();
+            var existing = await _featureService.GetByIdAsync(id);
+            if (existing == null) return NotFound();
 
-            await _featureService.UpdateAsync(feature);
+            existing.Title = feature.Title;
+            existing.Description = feature.Description;
+            existing.Icon = string.IsNullOrWhiteSpace(feature.Icon) ? "bi-code-slash" : feature.Icon.Trim();
+            existing.Tags = feature.Tags;
+            existing.AccentType = string.IsNullOrWhiteSpace(feature.AccentType) ? "cyan" : feature.AccentType.Trim().ToLower();
+            existing.Order = feature.Order;
+            existing.IsActive = feature.IsActive;
+            existing.UpdatedAt = DateTime.UtcNow;
+
+            await _featureService.UpdateAsync(existing);
             TempData["Success"] = "Kart bilgileri başarıyla güncellendi.";
             return RedirectToAction(nameof(Index));
         }

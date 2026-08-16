@@ -9,6 +9,9 @@
      ═══════════════════════════════════════════════ -->
 <section class="about-hero-section" aria-label="Hakkımızda Giriş">
     <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-ambient-l" aria-hidden="true"></div>
+    <div class="hero-ambient-r" aria-hidden="true"></div>
+
     <div class="container position-relative z-2">
         <div class="row align-items-center g-5">
             <div class="col-lg-7 reveal">
@@ -21,10 +24,10 @@
                     <span class="hero-h1-accent">Birlikte Üretim</span> Ekosistemi
                 </h1>
                 <p class="hero-sub mb-3">
-                    Geleceğin teknoloji liderlerini ve yazılımcılarını bir araya getiren bağımsız topluluk.
+                    Geleceğin teknoloji liderlerini ve yazılımcılarını bir araya getiren dinamik üniversite topluluğu.
                 </p>
                 <p class="hero-desc mb-4">
-                    Düzce Üniversitesi Yazılım ve Bilişim Topluluğu (YBT); öğrencilerin teorik bilgilerini gerçek dünya projelerine dönüştürdüğü, açık kaynak kültürünün benimsendiği ve teknik yetkinliklerin geliştirildiği dinamik bir üniversite teknoloji platformudur.
+                    Düzce Üniversitesi Yazılım ve Bilişim Topluluğu (YBT); öğrencilerin teorik bilgilerini gerçek dünya projelerine dönüştürdüğü, açık kaynak kültürünün benimsendiği ve teknik yetkinliklerin geliştirildiği üretken bir teknoloji platformudur.
                 </p>
 
                 <!-- Metrik Rozetleri -->
@@ -110,13 +113,13 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════
-     FAALİYET ALANLARIMIZ (DB Sourced Cards)
+     NELER YAPIYORUZ? (DB Sourced Cards)
      ═══════════════════════════════════════════════ -->
-<section class="section-block" aria-label="Faaliyet Alanlarımız">
+<section class="section-block" aria-label="Neler Yapıyoruz? Faaliyetlerimiz">
     <div class="container">
         <div class="section-header text-center reveal">
             <span class="section-tag">Ne Yapıyoruz?</span>
-            <h2 class="section-title gradient-text">Faaliyet Alanlarımız</h2>
+            <h2 class="section-title gradient-text">Neler Yapıyoruz?</h2>
             <p class="section-desc">YBT çatısı altında yürüttüğümüz temel çalışma ve üretim alanları.</p>
         </div>
 
@@ -158,14 +161,14 @@
         {
             <div class="empty-state reveal">
                 <div class="empty-icon"><i class="bi bi-info-square"></i></div>
-                <p class="empty-text">Henüz yönetilebilir içerik eklenmemiş. Yakında eklenecek!</p>
+                <p class="empty-text">Henüz faaliyet alanı kartı eklenmemiş. Yakında yeni içerikler eklenecektir!</p>
             </div>
         }
     </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════
-     TOPLULUK DEĞERLERİMİZ / NASIL ÇALIŞIYORUZ?
+     TOPLULUK DEĞERLERİMİZ / KÜLTÜRÜMÜZ
      ═══════════════════════════════════════════════ -->
 <section class="section-block section-alt" aria-label="Topluluk Değerleri">
     <div class="container">
@@ -186,7 +189,7 @@
             <div class="col-lg-3 col-md-6 reveal">
                 <div class="value-card">
                     <span class="value-num">02</span>
-                    <h4 class="value-title">Açık Kaynak</h4>
+                    <h4 class="value-title">Açık Kaynak Kültürü</h4>
                     <p class="value-desc">Ürettiğimiz kodu ve bilgiyi toplulukla paylaşarak kolektif gelişimi destekleriz.</p>
                 </div>
             </div>
@@ -194,13 +197,13 @@
                 <div class="value-card">
                     <span class="value-num">03</span>
                     <h4 class="value-title">Sürekli Öğrenme</h4>
-                    <p class="value-desc">Teknolojideki hızlı değişime ayak uydurur, yeni araç ve yaklaşımları deneriz.</p>
+                    <p class="value-desc">Teknolojideki hızlı değişime ayak uydurur, yeni araç ve yaklaşımları pratik ederiz.</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 reveal">
                 <div class="value-card">
                     <span class="value-num">04</span>
-                    <h4 class="value-title">Sektör Odaklılık</h4>
+                    <h4 class="value-title">Sektör Entegrasyonu</h4>
                     <p class="value-desc">Öğrendiklerimizi gerçek dünya problemleri ve sektör ihtiyaçlarıyla hizalarız.</p>
                 </div>
             </div>
@@ -286,10 +289,10 @@
             <h2 class="cta-title">Geleceğin Teknolojisini<br class="d-none d-md-block"> Birlikte Kodlayalım</h2>
             <p class="cta-desc">Projeler geliştirmek, etkinliklere katılmak ve sektörle buluşmak için hemen YBT üyesi ol.</p>
             <div class="d-flex flex-wrap gap-3 justify-content-center mt-4">
-                <a asp-controller="Account" asp-action="Register" class="btn btn-cta-primary">
+                <a asp-controller="Account" asp-action="Register" class="btn btn-cta-primary" id="cta-about-join">
                     <i class="bi bi-person-plus-fill me-2"></i>Topluluğa Katıl
                 </a>
-                <a asp-controller="Contact" asp-action="Index" class="btn btn-cta-outline">
+                <a asp-controller="Contact" asp-action="Index" class="btn btn-cta-outline" id="cta-about-contact">
                     <i class="bi bi-envelope me-2"></i>İletişime Geç
                 </a>
             </div>

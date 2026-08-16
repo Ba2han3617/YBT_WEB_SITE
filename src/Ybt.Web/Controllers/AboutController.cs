@@ -33,11 +33,8 @@ public class AboutController : Controller
 
         try
         {
-            var features = await _context.AboutFeatures
-                .OrderBy(f => f.Order)
-                .ToListAsync();
-
-            if (!features.Any())
+            var hasAnyFeatures = await _context.AboutFeatures.AnyAsync();
+            if (!hasAnyFeatures)
             {
                 var defaultFeatures = new List<AboutFeature>
                 {
@@ -51,26 +48,12 @@ public class AboutController : Controller
 
                 await _context.AboutFeatures.AddRangeAsync(defaultFeatures);
                 await _context.SaveChangesAsync();
-                features = defaultFeatures;
-            }
-            else
-            {
-                bool needSave = false;
-                foreach (var f in features)
-                {
-                    if (!f.IsActive)
-                    {
-                        f.IsActive = true;
-                        needSave = true;
-                    }
-                }
-                if (needSave)
-                {
-                    await _context.SaveChangesAsync();
-                }
             }
 
-            model.AboutFeatures = features.Where(f => f.IsActive).ToList();
+            model.AboutFeatures = await _context.AboutFeatures
+                .Where(f => f.IsActive)
+                .OrderBy(f => f.Order)
+                .ToListAsync();
         }
         catch
         {
