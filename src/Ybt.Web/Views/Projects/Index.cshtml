@@ -1,75 +1,161 @@
 @model IEnumerable<Ybt.Core.Entities.Project>
 @{
     ViewData["Title"] = "Projelerimiz";
+    ViewData["Description"] = "Düzce Üniversitesi YBT üyeleri tarafından geliştirilen açık kaynak yazılım projeleri, mobil uygulamalar ve web çözümleri.";
+    var techTags = ViewBag.TechTags as List<string> ?? new List<string>();
+    var selectedTech = ViewBag.SelectedTech as string;
+    var searchQuery = ViewBag.SearchQuery as string;
 }
 
-<section class="py-5 mt-5">
-    <div class="container">
-        <div class="text-center mb-5 reveal">
-            <span class="section-tag">Açık Kaynak & İnovasyon</span>
-            <h1 class="display-4 fw-extrabold gradient-text">Projelerimiz</h1>
-            <p class="lead text-secondary fs-5">Öğrencilerimizle geliştirdiğimiz ve açık kaynak dünyasına kazandırdığımız projeler.</p>
-        </div>
-        <div class="row g-4">
-            @if (!Model.Any())
-            {
-                <div class="col-12 text-center py-5">
-                    <p class="text-secondary fs-5">Henüz yayınlanmış bir proje bulunmamaktadır.</p>
-                </div>
-            }
-            @foreach (var item in Model)
-            {
-                <div class="col-md-6 col-lg-4 reveal">
-                    <div class="card h-100 border-0 overflow-hidden glass-card">
-                        @if (!string.IsNullOrEmpty(item.ImageUrl))
-                        {
-                            <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="height: 180px; object-fit: cover;">
-                        }
-                        <div class="card-body p-4 d-flex flex-column justify-content-between">
-                            <div>
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="feature-icon-box mb-0 me-3" style="width: 44px; height: 44px; font-size: 1.2rem;">
-                                        <i class="bi bi-code-slash"></i>
-                                    </div>
-                                    <h4 class="fw-bold text-white mb-0 fs-5">@item.Name</h4>
-                                </div>
-                                <p class="text-secondary mb-3 small" style="line-height: 1.6;">@item.Description</p>
-                                
-                                @if (!string.IsNullOrEmpty(item.TeamMembers))
-                                {
-                                    <div class="mb-3 small text-secondary">
-                                        <i class="bi bi-people me-1 text-info"></i><span class="text-light">@item.TeamMembers</span>
-                                    </div>
-                                }
+<!-- ═══════════════════════════════════════════════
+     HERO & BAŞLIK ALANI
+     ═══════════════════════════════════════════════ -->
+<section class="projects-hero-section" aria-label="Projeler Giriş">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-ambient-l" aria-hidden="true"></div>
+    <div class="hero-ambient-r" aria-hidden="true"></div>
 
-                                @if (!string.IsNullOrEmpty(item.TechTags))
-                                {
-                                    <div class="mb-4">
-                                        @foreach (var tag in item.TechTags.Split(',', StringSplitOptions.RemoveEmptyEntries))
-                                        {
-                                            <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 me-1 mb-1 font-monospace small">@tag.Trim()</span>
-                                        }
+    <div class="container position-relative z-2">
+        <div class="text-center max-w-700 mx-auto reveal mb-4">
+            <div class="hero-top-badge mb-3">
+                <span class="htb-dot"></span>
+                <span>Açık Kaynak &nbsp;·&nbsp; YBT Proje Hub</span>
+            </div>
+            <h1 class="hero-h1 mb-3">
+                Geliştirdiğimiz <span class="hero-h1-accent">Projeler</span>
+            </h1>
+            <p class="hero-sub mb-2">
+                YBT üyeleri ve ekipleri tarafından üretilen açık kaynak yazılımlar, mobil uygulamalar ve teknoloji çözümleri.
+            </p>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════
+             FİLTRELEME VE ARAMA ÇUBUĞU
+             ═══════════════════════════════════════════════ -->
+        <div class="projects-filter-bar reveal">
+            <!-- Teknoloji Pill Düğmeleri -->
+            <div class="project-tech-pills">
+                <a asp-action="Index" 
+                   class="project-tech-pill @(string.IsNullOrEmpty(selectedTech) ? "project-tech-pill--active" : "")">
+                    <i class="bi bi-layers-fill me-1"></i> Tümü
+                </a>
+                @foreach (var tag in techTags)
+                {
+                    <a asp-action="Index" asp-route-tech="@tag" asp-route-q="@searchQuery"
+                       class="project-tech-pill @(selectedTech == tag ? "project-tech-pill--active" : "")">
+                        @tag
+                    </a>
+                }
+            </div>
+
+            <!-- Arama Kutusu -->
+            <form method="get" asp-action="Index" class="event-search-wrap">
+                @if (!string.IsNullOrEmpty(selectedTech))
+                {
+                    <input type="hidden" name="tech" value="@selectedTech" />
+                }
+                <i class="bi bi-search event-search-icon"></i>
+                <input type="text" name="q" value="@searchQuery" class="form-control event-search-input" placeholder="Proje veya teknoloji ara..." autocomplete="off" />
+            </form>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════
+             PROJE KARTLARI GRID
+             ═══════════════════════════════════════════════ -->
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-4">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-4 col-md-6 reveal">
+                        <div class="project-repo-card" id="project-repo-@item.Id">
+                            <!-- Repo Üst Başlığı -->
+                            <div class="project-repo-header">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="project-repo-icon">
+                                        <i class="bi bi-folder-symlink"></i>
                                     </div>
-                                }
+                                    <span class="badge bg-purple bg-opacity-25 text-purple border border-purple border-opacity-25" style="font-size: 0.68rem;">Açık Kaynak</span>
+                                </div>
+                                <span class="font-monospace text-secondary small" title="Oluşturulma Tarihi">
+                                    <i class="bi bi-clock me-1 text-purple"></i>@item.CreatedAt.ToLocalTime().ToString("dd MMM yyyy")
+                                </span>
                             </div>
-                            <div class="d-flex gap-2">
-                                @if (!string.IsNullOrEmpty(item.GitHubUrl))
-                                {
-                                    <a href="@item.GitHubUrl" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary flex-fill rounded-pill py-2">
-                                        <i class="bi bi-github me-1"></i>GitHub
-                                    </a>
-                                }
-                                @if (!string.IsNullOrEmpty(item.DemoUrl))
-                                {
-                                    <a href="@item.DemoUrl" target="_blank" rel="noopener noreferrer" class="btn btn-primary flex-fill rounded-pill py-2 shadow">
-                                        <i class="bi bi-box-arrow-up-right me-1"></i>Canlı Demo
-                                    </a>
-                                }
+
+                            <!-- Kapak Görseli (Varsa) -->
+                            @if (!string.IsNullOrEmpty(item.ImageUrl))
+                            {
+                                <div class="project-img-wrap">
+                                    <img src="@item.ImageUrl" alt="@item.Name" class="project-img" loading="lazy" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="project-img-placeholder">
+                                    <i class="bi bi-window-stack"></i>
+                                </div>
+                            }
+
+                            <!-- Gövde İletişimi -->
+                            <div class="project-body d-flex flex-column flex-grow-1 justify-content-between p-4">
+                                <div>
+                                    <h3 class="project-title mb-2">@item.Name</h3>
+                                    <p class="project-desc mb-3">
+                                        @(item.Description?.Length > 120 ? item.Description[..120] + "…" : item.Description)
+                                    </p>
+
+                                    @if (!string.IsNullOrEmpty(item.TeamMembers))
+                                    {
+                                        <div class="d-flex align-items-center gap-2 mb-3 text-secondary small">
+                                            <i class="bi bi-people text-info"></i>
+                                            <span class="text-light truncate-1" title="@item.TeamMembers">@item.TeamMembers</span>
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(item.TechTags))
+                                    {
+                                        <div class="project-tags mb-4">
+                                            @foreach (var tag in item.TechTags.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                                            {
+                                                <span class="ptag">@tag.Trim()</span>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+
+                                <!-- Alt Bağlantılar -->
+                                <div class="project-links pt-3 border-top border-secondary border-opacity-15">
+                                    @if (!string.IsNullOrEmpty(item.GitHubUrl))
+                                    {
+                                        <a href="@item.GitHubUrl" target="_blank" rel="noopener noreferrer"
+                                           class="project-link-btn flex-fill justify-content-center" title="GitHub Deposu">
+                                            <i class="bi bi-github me-1"></i>GitHub Reposu
+                                        </a>
+                                    }
+                                    @if (!string.IsNullOrEmpty(item.DemoUrl))
+                                    {
+                                        <a href="@item.DemoUrl" target="_blank" rel="noopener noreferrer"
+                                           class="project-link-btn project-link-demo flex-fill justify-content-center" title="Canlı Demo">
+                                            <i class="bi bi-box-arrow-up-right me-1"></i>Canlı Demo
+                                        </a>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state reveal my-5">
+                <div class="empty-icon"><i class="bi bi-code-slash"></i></div>
+                <p class="empty-text fs-5 mb-2">Kriterlerinize uygun proje bulunamadı.</p>
+                <p class="text-secondary small mb-4">Farklı bir teknoloji seçebilir veya tüm projeleri listeleyebilirsiniz.</p>
+                <a asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
+                    <i class="bi bi-arrow-counterclockwise me-2"></i>Filtreleri Temizle
+                </a>
+            </div>
+        }
     </div>
 </section>
