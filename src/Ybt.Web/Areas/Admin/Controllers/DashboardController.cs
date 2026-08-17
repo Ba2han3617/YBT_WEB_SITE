@@ -19,15 +19,17 @@ public class DashboardController : Controller
     public async Task<IActionResult> Index()
     {
         ViewBag.UserCount = await _context.Users.CountAsync();
-        ViewBag.EventCount = await _context.Events.CountAsync();
-        ViewBag.ProjectCount = await _context.Projects.CountAsync();
-        ViewBag.BlogCount = await _context.Blogs.CountAsync();
+        ViewBag.EventCount = await _context.Events.CountAsync(e => e.IsActive);
+        ViewBag.ProjectCount = await _context.Projects.CountAsync(p => p.IsActive);
+        ViewBag.BlogCount = await _context.Blogs.CountAsync(b => b.IsActive);
+        ViewBag.ApplicationCount = await _context.EventApplications.CountAsync();
+        ViewBag.PendingApplicationCount = await _context.EventApplications.CountAsync(a => a.Status == "Yeni Başvuru" || a.Status == "Değerlendiriliyor");
 
         var recentApplications = await _context.EventApplications
             .Include(ea => ea.Event)
             .Include(ea => ea.User)
             .OrderByDescending(ea => ea.CreatedAt)
-            .Take(6)
+            .Take(8)
             .ToListAsync();
 
         return View(recentApplications);

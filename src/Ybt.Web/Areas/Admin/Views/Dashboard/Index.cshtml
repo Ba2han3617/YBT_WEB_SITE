@@ -4,7 +4,7 @@
 }
 
 <!-- Stats Overview Cards -->
-<div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3 mb-4">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-xl-5 g-3 mb-4">
     <div class="col">
         <div class="card stats-card members h-100">
             <div class="d-flex align-items-center justify-content-between">
@@ -57,6 +57,19 @@
             </div>
         </div>
     </div>
+    <div class="col">
+        <div class="card stats-card members h-100 border-info border-opacity-25">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label text-info">Bekleyen Başvuru</div>
+                    <div class="stat-value mt-1 text-info">@(ViewBag.PendingApplicationCount ?? 0)</div>
+                </div>
+                <div class="stats-icon-badge members">
+                    <i class="bi bi-inboxes-fill"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row g-4">
@@ -67,7 +80,7 @@
                     <h6 class="mb-0 fw-bold text-white"><i class="bi bi-clock-history me-2 text-info"></i>Son Etkinlik Başvuruları</h6>
                     <span class="text-secondary small">Etkinliklere yapılan en güncel başvurular</span>
                 </div>
-                <a asp-controller="Applications" asp-action="Index" class="btn btn-sm btn-outline-info rounded-pill px-3">
+                <a asp-controller="Applications" asp-action="Index" class="btn btn-sm btn-outline-light-space px-3">
                     <i class="bi bi-inboxes me-1"></i>Tüm Başvurular
                 </a>
             </div>
@@ -103,7 +116,7 @@
                                     <td class="text-light">
                                         @(item.Event?.Title ?? "Silinmiş Etkinlik")
                                     </td>
-                                    <td class="text-secondary small font-monospace">@item.CreatedAt.ToString("dd.MM.yyyy")</td>
+                                    <td class="text-secondary small font-monospace">@item.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
                                     <td>
                                         @if (item.Status == "Onaylandı" || item.Status == "Approved")
                                         {
@@ -154,6 +167,9 @@
                 <a asp-controller="TeamMembers" asp-action="Create" class="quick-action-btn">
                     <i class="bi bi-person-plus text-info"></i> Yeni Ekip Üyesi Ekle
                 </a>
+                <a asp-controller="AboutFeatures" asp-action="Create" class="quick-action-btn">
+                    <i class="bi bi-grid-3x3-gap text-purple"></i> Yeni Neler Yapıyoruz Kartı Ekle
+                </a>
             </div>
         </div>
     </div>
@@ -165,11 +181,12 @@
         <div class="modal-content glass-card border-secondary text-white" style="background: rgba(15, 23, 42, 0.98);">
             <div class="modal-header border-secondary border-opacity-25">
                 <h5 class="modal-title fw-bold" id="appModalLabel">
-                    <i class="bi bi-card-text text-info me-2"></i>Başvuru Detayı & Değerlendirme
+                    <i class="bi bi-card-text text-info me-2"></i>Başvuru Detayı &amp; Değerlendirme
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
             </div>
             <form asp-controller="Applications" asp-action="UpdateStatus" method="post" id="statusUpdateForm">
+                @Html.AntiForgeryToken()
                 <input type="hidden" name="id" id="modalAppId" />
                 <input type="hidden" name="status" id="modalStatusInput" />
                 <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
@@ -206,7 +223,7 @@
                                 <strong class="text-white" id="modalApplicantDepartment">-</strong>
                             </div>
                             <div class="col-12">
-                                <span class="text-secondary d-block">İlgi Alanları & Teknolojiler:</span>
+                                <span class="text-secondary d-block">İlgi Alanları &amp; Teknolojiler:</span>
                                 <strong class="text-white" id="modalApplicantInterests">-</strong>
                             </div>
                         </div>
@@ -268,24 +285,24 @@
         function loadApplicationDetails(appId) {
             $.get('/Admin/Applications/GetDetails/' + appId, function(data) {
                 $('#modalAppId').val(data.id);
-                $('#modalApplicantName').text(data.fullName);
-                $('#modalApplicantEmail').text(data.email);
-                $('#modalApplicantPhone').text(data.phone);
-                $('#modalApplicantStudentNo').text(data.studentNumber);
-                $('#modalApplicantGrade').text(data.grade);
-                $('#modalApplicantFaculty').text(data.faculty);
-                $('#modalApplicantDepartment').text(data.department);
-                $('#modalApplicantInterests').text(data.interests);
-                $('#modalEventTitle').text(data.eventTitle);
-                $('#modalEventDate').text(data.eventDate);
-                $('#modalEventLocation').text(data.eventLocation);
-                $('#modalApplicantNotes').text(data.notes);
-                $('#modalAdminNotes').val(data.adminNotes);
-                $('#modalCreatedAt').text(data.createdAt);
+                $('#modalApplicantName').text(data.fullName || '-');
+                $('#modalApplicantEmail').text(data.email || '-');
+                $('#modalApplicantPhone').text(data.phone || '-');
+                $('#modalApplicantStudentNo').text(data.studentNumber || '-');
+                $('#modalApplicantGrade').text(data.grade || '-');
+                $('#modalApplicantFaculty').text(data.faculty || '-');
+                $('#modalApplicantDepartment').text(data.department || '-');
+                $('#modalApplicantInterests').text(data.interests || '-');
+                $('#modalEventTitle').text(data.eventTitle || '-');
+                $('#modalEventDate').text(data.eventDate || '-');
+                $('#modalEventLocation').text(data.eventLocation || '-');
+                $('#modalApplicantNotes').text(data.notes || 'Not girilmemiş.');
+                $('#modalAdminNotes').val(data.adminNotes || '');
+                $('#modalCreatedAt').text(data.createdAt || '-');
 
                 var badge = $('#modalStatusBadge');
                 badge.removeClass('bg-info bg-warning bg-success bg-danger text-dark text-white');
-                badge.text(data.status);
+                badge.text(data.status || 'Yeni Başvuru');
 
                 if (data.status === 'Onaylandı' || data.status === 'Approved') {
                     badge.addClass('bg-success text-white');
@@ -310,4 +327,3 @@
         }
     </script>
 }
-
