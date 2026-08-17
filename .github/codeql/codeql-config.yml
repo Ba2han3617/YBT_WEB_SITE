@@ -1,6 +1,5 @@
-name: CodeQL config
+name: "CodeQL config"
 
 paths-ignore:
   - "src/Ybt.Web/wwwroot/lib/**"
-  - "src/Ybt.Web/wwwroot/**/dist/jquery*.js"
-  - "src/Ybt.Web/wwwroot/**/dist/jquery.validate*.js"
+  - "**/jquery*.js"

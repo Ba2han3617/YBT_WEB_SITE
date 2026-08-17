@@ -1,4 +1,4 @@
-name: CodeQL
+name: "CodeQL Analysis"
 
 on:
   push:
@@ -10,13 +10,22 @@ on:
 
 jobs:
   analyze:
-    name: Analyze C#
-    runs-on: windows-latest
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
     permissions:
       security-events: write
       packages: read
       actions: read
       contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: csharp
+            build-mode: autobuild
+          - language: javascript-typescript
+            build-mode: none
 
     steps:
       - name: Checkout repository
@@ -25,11 +34,9 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: csharp
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
           config-file: ./.github/codeql/codeql-config.yml
-
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
