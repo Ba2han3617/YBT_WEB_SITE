@@ -240,7 +240,7 @@ public class AccountController : Controller
                 {
                     if (!await _userManager.IsInRoleAsync(user, "Admin"))
                     {
-                        ModelState.AddModelError(string.Empty, "Bu giriş ekranı yalnızca yöneticiler içindir.");
+                        ModelState.AddModelError(string.Empty, "Bu alana erişim yetkiniz yok. Bu giriş ekranı yalnızca yöneticiler içindir.");
                         ViewData["IsAdminLogin"] = true;
                         return View("AdminLogin", model);
                     }
@@ -257,7 +257,7 @@ public class AccountController : Controller
                     }
 
                     await _signInManager.SignOutAsync();
-                    ModelState.AddModelError(string.Empty, "Bu giriş ekranı yalnızca yöneticiler içindir.");
+                    ModelState.AddModelError(string.Empty, "Bu alana erişim yetkiniz yok. Bu giriş ekranı yalnızca yöneticiler içindir.");
                     ViewData["IsAdminLogin"] = true;
                     return View("AdminLogin", model);
                 }
@@ -270,7 +270,7 @@ public class AccountController : Controller
                 }
             }
 
-            ModelState.AddModelError(string.Empty, "Geçersiz giriş denemesi.");
+            ModelState.AddModelError(string.Empty, "E-posta veya şifre hatalı.");
         }
         ViewData["IsAdminLogin"] = true;
         return View("AdminLogin", model);

@@ -9,211 +9,531 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - YBT Admin</title>
+    <title>@ViewData["Title"] - YBT Yönetim Paneli</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/modern-custom.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
     <style>
+        :root {
+            --admin-bg: #070b1a;
+            --card-bg: rgba(13, 20, 38, 0.85);
+            --card-border: rgba(56, 189, 248, 0.16);
+            --card-border-hover: rgba(56, 189, 248, 0.35);
+            --accent-cyan: #38bdf8;
+            --accent-blue: #2563eb;
+            --accent-purple: #a855f7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --input-bg: rgba(7, 11, 20, 0.85);
+            --input-border: rgba(56, 189, 248, 0.18);
+        }
+
         body {
-            background-color: #070b14;
+            background-color: var(--admin-bg) !important;
+            color: var(--text-main) !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 50% at 85% 90%, rgba(168, 85, 247, 0.06) 0%, transparent 70%),
+                linear-gradient(rgba(56, 189, 248, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.025) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+            background-position: center center;
+        }
+
+        /* Top Navigation Header */
+        .admin-nav-header {
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .btn-back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            background: rgba(13, 20, 38, 0.6);
+            border: 1px solid var(--card-border);
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-back-home:hover {
+            color: #ffffff;
+            background: rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.3);
+            transform: translateX(-2px);
+        }
+
+        /* Auth Container & Card */
+        .admin-auth-wrapper {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Inter', sans-serif;
-            color: #f8fafc;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.2) 0%, transparent 45%),
-                radial-gradient(circle at 85% 65%, rgba(56, 189, 248, 0.18) 0%, transparent 45%),
-                radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 50px 90px, rgba(255,255,255,0.7), rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 130px 40px, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 180px 140px, rgba(255,255,255,0.9), rgba(0,0,0,0));
-            background-size: 100% 100%, 100% 100%, 250px 250px, 300px 300px, 200px 200px, 350px 350px;
+            padding: 1.5rem 1rem;
+            z-index: 5;
         }
-        .admin-login-container {
+
+        .admin-auth-container {
             width: 100%;
             max-width: 440px;
-            padding: 20px;
         }
-        .admin-login-card {
-            background: rgba(15, 23, 42, 0.8) !important;
+
+        .admin-auth-card {
+            background: var(--card-bg) !important;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(56, 189, 248, 0.2) !important;
+            border: 1px solid var(--card-border) !important;
             border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.1);
-            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55), 0 0 30px rgba(56, 189, 248, 0.05);
+            padding: 2.25rem 2rem;
+            transition: border-color 0.3s ease;
         }
-        .admin-header {
+
+        .admin-auth-card:hover {
+            border-color: rgba(56, 189, 248, 0.28) !important;
+        }
+
+        /* Header Section */
+        .admin-card-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 1.75rem;
         }
-        .admin-logo {
-            height: 70px;
+
+        .admin-logo-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .admin-logo-img {
+            height: 48px;
             width: auto;
-            margin-bottom: 16px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            filter: drop-shadow(0 0 10px rgba(56,189,248,0.4));
+            object-fit: contain;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
         }
-        .admin-badge {
-            display: inline-block;
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            color: #38bdf8;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
+
+        .admin-shield-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.22);
+            color: var(--accent-cyan);
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.72rem;
             font-weight: 700;
-            margin-bottom: 16px;
-            letter-spacing: 1px;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.85rem;
         }
-        .admin-header h2 {
+
+        .admin-card-header h1 {
             color: #ffffff;
             font-weight: 800;
-            font-size: 26px;
-            margin-bottom: 6px;
+            font-size: 1.5rem;
+            margin-bottom: 0.4rem;
             letter-spacing: -0.02em;
         }
-        .admin-header p {
-            color: #94a3b8;
-            font-size: 14px;
+
+        .admin-card-header p {
+            color: var(--text-muted);
+            font-size: 0.86rem;
             margin: 0;
+            line-height: 1.45;
         }
-        .form-label-space {
+
+        /* Form Inputs */
+        .form-group-admin {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label-admin {
             color: #cbd5e1;
-            font-weight: 500;
-            font-size: 13px;
-            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.82rem;
+            margin-bottom: 0.45rem;
+            display: block;
         }
-        .form-control-space {
-            background-color: rgba(15, 23, 42, 0.7) !important;
-            border: 1px solid rgba(56, 189, 248, 0.25) !important;
-            border-radius: 10px !important;
-            padding: 12px 16px !important;
-            font-size: 14px !important;
-            color: #f8fafc !important;
-            transition: all 0.3s ease !important;
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
         }
-        .form-control-space::placeholder {
-            color: #64748b !important;
+
+        .input-icon-left {
+            position: absolute;
+            left: 0.9rem;
+            color: var(--text-dim);
+            font-size: 1.05rem;
+            pointer-events: none;
+            transition: color 0.2s ease;
         }
-        .form-control-space:focus {
-            background-color: rgba(15, 23, 42, 0.9) !important;
-            border-color: #38bdf8 !important;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3) !important;
+
+        .form-control-admin {
+            width: 100%;
+            background-color: var(--input-bg) !important;
+            border: 1px solid var(--input-border) !important;
+            border-radius: 12px !important;
+            padding: 0.75rem 0.9rem 0.75rem 2.6rem !important;
+            font-size: 0.88rem !important;
             color: #ffffff !important;
+            transition: all 0.2s ease !important;
         }
-        .btn-admin-login {
-            background: linear-gradient(135deg, #38bdf8 0%, #8b5cf6 100%);
+
+        .form-control-admin::placeholder {
+            color: var(--text-dim) !important;
+        }
+
+        .form-control-admin:focus {
+            background-color: rgba(7, 11, 20, 0.95) !important;
+            border-color: var(--accent-cyan) !important;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15) !important;
+            outline: none;
+        }
+
+        .form-control-admin:focus + .input-icon-left,
+        .input-wrapper:focus-within .input-icon-left {
+            color: var(--accent-cyan);
+        }
+
+        .btn-toggle-pw {
+            position: absolute;
+            right: 0.75rem;
+            background: none;
             border: none;
-            border-radius: 10px;
-            padding: 12px 0;
+            color: var(--text-dim);
+            padding: 0.35rem 0.5rem;
+            cursor: pointer;
+            font-size: 1.05rem;
+            border-radius: 6px;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-toggle-pw:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Checkbox & Forgot Pw */
+        .form-options-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.35rem;
+            font-size: 0.82rem;
+        }
+
+        .form-check-custom {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            user-select: none;
+            color: var(--text-muted);
+        }
+
+        .form-check-input-admin {
+            width: 16px;
+            height: 16px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 4px;
+            cursor: pointer;
+            accent-color: var(--accent-cyan);
+        }
+
+        .forgot-pw-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .forgot-pw-link:hover {
+            color: var(--accent-cyan);
+            text-decoration: underline;
+        }
+
+        /* Submit Button CTA */
+        .btn-admin-cta {
+            width: 100%;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
             font-weight: 700;
-            font-size: 15px;
-            color: white;
-            margin-top: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
-        }
-        .btn-admin-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.45);
-            color: white;
-        }
-        .form-check-input-space {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            background-color: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-        }
-        .form-check-input-space:checked {
-            background-color: #38bdf8;
-            border-color: #38bdf8;
-        }
-        .form-check-label-space {
-            color: #cbd5e1;
-            font-size: 13px;
+            font-size: 0.9rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
             cursor: pointer;
         }
-        .alert-space {
-            background-color: rgba(225, 29, 72, 0.15) !important;
-            border: 1px solid rgba(244, 63, 94, 0.4) !important;
-            color: #fecdd3 !important;
-            border-radius: 10px !important;
-            font-size: 14px !important;
+
+        .btn-admin-cta:hover {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35);
+            transform: translateY(-1px);
+            color: #ffffff;
         }
-        .alert-space .btn-close {
-            filter: invert(1);
+
+        .btn-admin-cta:active {
+            transform: translateY(0);
         }
-        .border-top-space {
-            border-top: 1px solid rgba(56, 189, 248, 0.15) !important;
+
+        /* Alert styling */
+        .alert-admin-danger {
+            background: rgba(239, 68, 68, 0.1) !important;
+            border: 1px solid rgba(239, 68, 68, 0.3) !important;
+            color: #fca5a5 !important;
+            border-radius: 12px !important;
+            font-size: 0.84rem !important;
+            padding: 0.75rem 1rem !important;
+            margin-bottom: 1.25rem !important;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
         }
-        .footer-text {
-            color: #64748b;
-            font-size: 13px;
+
+        .alert-admin-danger ul {
+            margin: 0;
+            padding-left: 1rem;
+        }
+
+        /* Footer Note */
+        .admin-footer-bar {
+            padding: 1.25rem 1rem;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.78rem;
+            z-index: 10;
+        }
+
+        .security-badge-footer {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 0.35rem;
+        }
+
+        /* Modal styling */
+        .modal-content-admin {
+            background-color: #0d1426 !important;
+            border: 1px solid var(--card-border) !important;
+            color: var(--text-main) !important;
+            border-radius: 16px;
+        }
+
+        .modal-header-admin {
+            border-bottom: 1px solid var(--card-border) !important;
+        }
+
+        .modal-footer-admin {
+            border-top: 1px solid var(--card-border) !important;
+        }
+
+        @@media (max-width: 576px) {
+            .admin-nav-header {
+                padding: 1rem;
+            }
+            .admin-auth-card {
+                padding: 1.75rem 1.25rem;
+                border-radius: 16px;
+            }
+            .admin-card-header h1 {
+                font-size: 1.35rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="admin-login-container">
-        <div class="admin-login-card">
-            <div class="admin-header">
-                <img src="~/assets/images/logo/logo.png" alt="YBT Logo" class="admin-logo" />
-                <div class="admin-badge">YÖNETİM ALANINA GİRİŞ</div>
-                <h2>Admin Paneli</h2>
-                <p>Lütfen kimlik bilgilerinizi girin</p>
-            </div>
 
-            <form asp-action="AdminLogin" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
-                @if (!ViewData.ModelState.IsValid)
-                {
-                    <div class="alert alert-space alert-dismissible fade show" role="alert">
-                        <div asp-validation-summary="ModelOnly" class="mb-0"></div>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <!-- Top Navigation Header -->
+    <header class="admin-nav-header">
+        <a href="/" class="btn-back-home">
+            <i class="bi bi-arrow-left"></i> Siteye Dön
+        </a>
+    </header>
+
+    <!-- Main Auth Content -->
+    <main class="admin-auth-wrapper">
+        <div class="admin-auth-container">
+            <div class="admin-auth-card">
+                
+                <!-- Card Header -->
+                <div class="admin-card-header">
+                    <div class="admin-logo-wrapper">
+                        <img src="~/assets/images/logo/logo.png" alt="YBT Logo" class="admin-logo-img" />
                     </div>
-                }
-
-                <div class="mb-3">
-                    <label asp-for="Email" class="form-label form-label-space">Kullanıcı Adı veya Email</label>
-                    <input asp-for="Email" class="form-control form-control-space" placeholder="admin" autofocus>
-                    <span asp-validation-for="Email" class="text-danger small d-block mt-1"></span>
+                    <div>
+                        <span class="admin-shield-badge">
+                            <i class="bi bi-shield-lock-fill"></i> Yönetici Erişimi
+                        </span>
+                    </div>
+                    <h1>Yönetim Paneli</h1>
+                    <p>Yetkili hesapla giriş yaparak yönetim paneline erişin.</p>
                 </div>
 
-                <div class="mb-3">
-                    <label asp-for="Password" class="form-label form-label-space">Şifre</label>
-                    <input asp-for="Password" class="form-control form-control-space" placeholder="Şifrenizi girin">
-                    <span asp-validation-for="Password" class="text-danger small d-block mt-1"></span>
+                <!-- Form Area -->
+                <form asp-action="AdminLogin" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="adminLoginForm">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-admin-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill flex-shrink-0 mt-0.5"></i>
+                            <div class="flex-grow-1">
+                                <div asp-validation-summary="ModelOnly" class="mb-0"></div>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white ms-2" data-bs-dismiss="alert" aria-label="Kapat"></button>
+                        </div>
+                    }
+
+                    <!-- Email / Username Input -->
+                    <div class="form-group-admin">
+                        <label asp-for="Email" class="form-label-admin">E-posta veya Kullanıcı Adı</label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-person-fill input-icon-left"></i>
+                            <input asp-for="Email" class="form-control-admin" placeholder="admin veya e-posta adresi" autofocus autocomplete="username">
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small d-block mt-1"></span>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="form-group-admin">
+                        <label asp-for="Password" class="form-label-admin">Şifre</label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-lock-fill input-icon-left"></i>
+                            <input asp-for="Password" id="passwordInput" class="form-control-admin" placeholder="••••••••" autocomplete="current-password">
+                            <button type="button" class="btn-toggle-pw" id="togglePwBtn" aria-label="Şifreyi Göster veya Gizle">
+                                <i class="bi bi-eye-slash" id="togglePwIcon"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small d-block mt-1"></span>
+                    </div>
+
+                    <!-- Checkbox & Forgot Password -->
+                    <div class="form-options-row">
+                        <label class="form-check-custom">
+                            <input class="form-check-input-admin" asp-for="RememberMe" id="rememberMeCheck">
+                            <span>Beni Hatırla</span>
+                        </label>
+                        <a href="#" class="forgot-pw-link" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
+                            Şifremi unuttum
+                        </a>
+                    </div>
+
+                    <!-- Submit CTA Button -->
+                    <button type="submit" class="btn-admin-cta" id="btnAdminSubmit">
+                        <i class="bi bi-shield-check"></i>
+                        <span>Giriş Yap</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Bar -->
+    <footer class="admin-footer-bar">
+        <div>&copy; @DateTime.Now.Year Yazılım ve Bilişim Topluluğu</div>
+        <div class="security-badge-footer">
+            <i class="bi bi-lock-fill text-cyan"></i> 256-bit SSL Korumalı Güvenli Admin Erişimi
+        </div>
+    </footer>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-admin">
+                <div class="modal-header modal-header-admin">
+                    <h5 class="modal-title d-flex align-items-center gap-2" id="forgotPasswordModalLabel">
+                        <i class="bi bi-key-fill text-cyan"></i> Şifre Sıfırlama Bilgisi
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
                 </div>
-
-                <div class="form-check mb-4">
-                    <input class="form-check-input form-check-input-space" asp-for="RememberMe" id="rememberMe">
-                    <label class="form-check-label form-check-label-space" for="rememberMe">
-                        Beni Hatırla
-                    </label>
+                <div class="modal-body p-4">
+                    <p class="text-slate-300 mb-3">
+                        Güvenlik protokolleri gereğince admin hesabı şifre sıfırlama işlemleri yalnızca baş yönetici (Root Admin) tarafından gerçekleştirilebilir.
+                    </p>
+                    <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 small">
+                        <i class="bi bi-info-circle text-info me-2"></i>
+                        Erişim sorunu yaşıyorsanız lütfen topluluk sistem yöneticiniz ile doğrudan iletişime geçiniz.
+                    </div>
                 </div>
-
-                <button type="submit" class="btn btn-admin-login w-100">
-                    <i class="bi bi-lock-fill me-1"></i> Giriş Yap
-                </button>
-            </form>
-
-            <div class="mt-4 pt-3 border-top-space">
-                <p class="text-center footer-text mb-0">
-                    &copy; @DateTime.Now.Year - Yazılım ve Bilişim Topluluğu
-                </p>
+                <div class="modal-footer modal-footer-admin">
+                    <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-4" data-bs-dismiss="modal">Anladım</button>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Password Visibility Toggle
+            const togglePwBtn = document.getElementById('togglePwBtn');
+            const passwordInput = document.getElementById('passwordInput');
+            const togglePwIcon = document.getElementById('togglePwIcon');
+
+            if (togglePwBtn && passwordInput && togglePwIcon) {
+                togglePwBtn.addEventListener('click', function () {
+                    const isPassword = passwordInput.getAttribute('type') === 'password';
+                    passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+                    
+                    if (isPassword) {
+                        togglePwIcon.classList.remove('bi-eye-slash');
+                        togglePwIcon.classList.add('bi-eye');
+                    } else {
+                        togglePwIcon.classList.remove('bi-eye');
+                        togglePwIcon.classList.add('bi-eye-slash');
+                    }
+                });
+            }
+
+            // Submit Button Loading Feedback
+            const adminLoginForm = document.getElementById('adminLoginForm');
+            const btnAdminSubmit = document.getElementById('btnAdminSubmit');
+
+            if (adminLoginForm && btnAdminSubmit) {
+                adminLoginForm.addEventListener('submit', function () {
+                    if (adminLoginForm.checkValidity && adminLoginForm.checkValidity()) {
+                        btnAdminSubmit.disabled = true;
+                        btnAdminSubmit.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Doğrulanıyor...';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
