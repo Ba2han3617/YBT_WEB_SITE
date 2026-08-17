@@ -12,10 +12,20 @@ using System.Reflection;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 
+using Microsoft.AspNetCore.HttpOverrides;
+
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Forwarded Headers for Reverse Proxies (Nginx, Docker, Render, Railway, Azure)
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = GetPostgresConnectionString(builder.Configuration);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
@@ -81,6 +91,8 @@ builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 var app = builder.Build();
+
+app.UseForwardedHeaders();
 
 // Security Headers
 app.Use(async (context, next) =>
@@ -161,3 +173,29 @@ app.Lifetime.ApplicationStarted.Register(() =>
 });
 
 app.Run();
+
+static string GetPostgresConnectionString(IConfiguration configuration)
+{
+    // 1. Check for DATABASE_URL (common in Render, Railway, Heroku, Supabase, Neon)
+    var rawUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+    if (!string.IsNullOrWhiteSpace(rawUrl))
+    {
+        if (rawUrl.StartsWith("postgres://") || rawUrl.StartsWith("postgresql://"))
+        {
+            var uri = new Uri(rawUrl);
+            var userInfo = uri.UserInfo.Split(':');
+            var user = userInfo.Length > 0 ? Uri.UnescapeDataString(userInfo[0]) : "";
+            var password = userInfo.Length > 1 ? Uri.UnescapeDataString(userInfo[1]) : "";
+            var host = uri.Host;
+            var port = uri.Port > 0 ? uri.Port : 5432;
+            var database = uri.AbsolutePath.TrimStart('/');
+
+            return $"Host={host};Port={port};Database={database};Username={user};Password={password};SSL Mode=Require;Trust Server Certificate=true;";
+        }
+        return rawUrl;
+    }
+
+    // 2. Fall back to standard ConnectionStrings:DefaultConnection
+    return configuration.GetConnectionString("DefaultConnection") 
+        ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found in configuration or environment variables.");
+}
