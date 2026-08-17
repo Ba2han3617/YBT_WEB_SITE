@@ -24,9 +24,27 @@
             <h1 class="hero-h1 mb-3">
                 Geliştirdiğimiz <span class="hero-h1-accent">Projeler</span>
             </h1>
-            <p class="hero-sub mb-2">
-                YBT üyeleri ve ekipleri tarafından üretilen açık kaynak yazılımlar, mobil uygulamalar ve teknoloji çözümleri.
+            <p class="hero-sub mb-3">
+                YBT üyeleri ve ekipleri tarafından üretilen açık kaynak yazılımlar, mobil uygulamalar, botlar ve kampüs çözümleri.
             </p>
+
+            <!-- Metrik Şeridi -->
+            <div class="about-stats-strip mt-3 mb-2 justify-content-center">
+                <div class="astat-item">
+                    <span class="astat-val">20+</span>
+                    <span class="astat-lbl">Açık Kaynak Proje</span>
+                </div>
+                <div class="astat-sep"></div>
+                <div class="astat-item">
+                    <span class="astat-val">100%</span>
+                    <span class="astat-lbl">Topluluk Üretimi</span>
+                </div>
+                <div class="astat-sep"></div>
+                <div class="astat-item">
+                    <span class="astat-val">15+</span>
+                    <span class="astat-lbl">Aktif Katılımcı</span>
+                </div>
+            </div>
         </div>
 
         <!-- ═══════════════════════════════════════════════
@@ -55,7 +73,7 @@
                     <input type="hidden" name="tech" value="@selectedTech" />
                 }
                 <i class="bi bi-search event-search-icon"></i>
-                <input type="text" name="q" value="@searchQuery" class="form-control event-search-input" placeholder="Proje veya teknoloji ara..." autocomplete="off" />
+                <input type="text" name="q" value="@searchQuery" class="form-control event-search-input" placeholder="Proje, teknoloji veya geliştirici ara..." autocomplete="off" />
             </form>
         </div>
 
@@ -67,6 +85,12 @@
             <div class="row g-4">
                 @foreach (var item in Model)
                 {
+                    // Proje durumu belirleme
+                    var hasDemo = !string.IsNullOrEmpty(item.DemoUrl);
+                    var hasGit = !string.IsNullOrEmpty(item.GitHubUrl);
+                    var statusTitle = hasDemo ? "Aktif & Yayında" : (hasGit ? "Geliştiriliyor" : "Açık Kaynak");
+                    var statusBadgeClass = hasDemo ? "bg-success bg-opacity-25 text-success border-success" : "bg-purple bg-opacity-25 text-purple border-purple";
+
                     <div class="col-lg-4 col-md-6 reveal">
                         <div class="project-repo-card" id="project-repo-@item.Id">
                             <!-- Repo Üst Başlığı -->
@@ -75,7 +99,10 @@
                                     <div class="project-repo-icon">
                                         <i class="bi bi-folder-symlink"></i>
                                     </div>
-                                    <span class="badge bg-purple bg-opacity-25 text-purple border border-purple border-opacity-25" style="font-size: 0.68rem;">Açık Kaynak</span>
+                                    <span class="badge border border-opacity-25 px-2 py-1" style="font-size: 0.68rem; background-color: rgba(13,20,38,0.8);">
+                                        <span class="d-inline-block rounded-circle me-1" style="width: 6px; height: 6px; background-color: @(hasDemo ? "#4ade80" : "#c084fc");"></span>
+                                        @statusTitle
+                                    </span>
                                 </div>
                                 <span class="font-monospace text-secondary small" title="Oluşturulma Tarihi">
                                     <i class="bi bi-clock me-1 text-purple"></i>@item.CreatedAt.ToLocalTime().ToString("dd MMM yyyy")
@@ -104,13 +131,12 @@
                                         @(item.Description?.Length > 120 ? item.Description[..120] + "…" : item.Description)
                                     </p>
 
-                                    @if (!string.IsNullOrEmpty(item.TeamMembers))
-                                    {
-                                        <div class="d-flex align-items-center gap-2 mb-3 text-secondary small">
-                                            <i class="bi bi-people text-info"></i>
-                                            <span class="text-light truncate-1" title="@item.TeamMembers">@item.TeamMembers</span>
-                                        </div>
-                                    }
+                                    <div class="d-flex align-items-center gap-2 mb-3 text-secondary small">
+                                        <i class="bi bi-people text-info"></i>
+                                        <span class="text-light truncate-1" title="@(string.IsNullOrEmpty(item.TeamMembers) ? "YBT Geliştirme Ekibi" : item.TeamMembers)">
+                                            @(string.IsNullOrEmpty(item.TeamMembers) ? "YBT Geliştirme Ekibi" : item.TeamMembers)
+                                        </span>
+                                    </div>
 
                                     @if (!string.IsNullOrEmpty(item.TechTags))
                                     {
@@ -119,6 +145,13 @@
                                             {
                                                 <span class="ptag">@tag.Trim()</span>
                                             }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="project-tags mb-4">
+                                            <span class="ptag">Open Source</span>
+                                            <span class="ptag">Software</span>
                                         </div>
                                     }
                                 </div>
@@ -150,7 +183,7 @@
         {
             <div class="empty-state reveal my-5">
                 <div class="empty-icon"><i class="bi bi-code-slash"></i></div>
-                <p class="empty-text fs-5 mb-2">Kriterlerinize uygun proje bulunamadı.</p>
+                <p class="empty-text fs-5 mb-2">Henüz yayınlanmış proje yok veya kriterlere uygun bulunamadı.</p>
                 <p class="text-secondary small mb-4">Farklı bir teknoloji seçebilir veya tüm projeleri listeleyebilirsiniz.</p>
                 <a asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
                     <i class="bi bi-arrow-counterclockwise me-2"></i>Filtreleri Temizle
