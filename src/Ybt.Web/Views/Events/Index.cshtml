@@ -1,35 +1,144 @@
 @model IEnumerable<Ybt.Core.Entities.Event>
 @{
     ViewData["Title"] = "Etkinlikler";
+    ViewData["Description"] = "Düzce Üniversitesi YBT tarafından düzenlenen yazılım, yapay zeka, hackathon, workshop ve teknoloji etkinlikleri.";
+    var categories = ViewBag.Categories as List<string> ?? new List<string>();
+    var selectedCategory = ViewBag.SelectedCategory as string;
+    var searchQuery = ViewBag.SearchQuery as string;
 }
 
-<section class="py-5 mt-5">
-    <div class="container">
-        <div class="text-center mb-5 reveal">
-            <span class="section-tag">YBT Etkinlik Takvimi</span>
-            <h1 class="display-4 fw-extrabold gradient-text">Etkinlikler</h1>
-            <p class="lead text-secondary fs-5">Teknoloji tutkunları için düzenlenen workshop, hackathon ve zirveler.</p>
+<!-- ═══════════════════════════════════════════════
+     HERO & BAŞLIK ALANI
+     ═══════════════════════════════════════════════ -->
+<section class="events-hero-section" aria-label="Etkinlikler Giriş">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-ambient-l" aria-hidden="true"></div>
+    <div class="hero-ambient-r" aria-hidden="true"></div>
+
+    <div class="container position-relative z-2">
+        <div class="text-center max-w-700 mx-auto reveal mb-4">
+            <div class="hero-top-badge mb-3">
+                <span class="htb-dot"></span>
+                <span>YBT Etkinlik Takvimi &nbsp;·&nbsp; Geleceği Birlikte Kodluyoruz</span>
+            </div>
+            <h1 class="hero-h1 mb-3">
+                Etkinlikler &amp; <span class="hero-h1-accent">Atölyeler</span>
+            </h1>
+            <p class="hero-sub mb-2">
+                Teknoloji tutkunları için düzenlenen workshop, hackathon, siber güvenlik maratonları ve seminerler.
+            </p>
         </div>
-        <div class="row g-4">
-            @foreach (var item in Model)
-            {
-                <div class="col-md-4 reveal">
-                    <div class="card h-100 border-0 overflow-hidden">
-                        <img src="@(item.ImageUrl ?? "https://images.unsplash.com/photo-1540575861501-7ad05823c9f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80")" class="card-img-top" alt="@item.Title" style="height: 220px; object-fit: cover;">
-                        <div class="card-body p-4 d-flex flex-column justify-content-between">
-                            <div>
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="badge bg-info bg-opacity-25 text-info px-3 py-2 border border-info border-opacity-25 rounded-pill"><i class="bi bi-rocket me-1"></i> Etkinlik</span>
-                                    <small class="text-secondary font-monospace"><i class="bi bi-calendar3 me-1 text-primary"></i> @item.EventDate.ToString("dd MMM yyyy")</small>
+
+        <!-- ═══════════════════════════════════════════════
+             FİLTRELEME VE ARAMA ÇUBUĞU
+             ═══════════════════════════════════════════════ -->
+        <div class="events-filter-bar reveal">
+            <!-- Kategori Pill Düğmeleri -->
+            <div class="event-cat-pills">
+                <a asp-action="Index" 
+                   class="event-cat-pill @(string.IsNullOrEmpty(selectedCategory) ? "event-cat-pill--active" : "")">
+                    <i class="bi bi-grid-fill me-1"></i> Tümü
+                </a>
+                @foreach (var cat in categories)
+                {
+                    <a asp-action="Index" asp-route-category="@cat" asp-route-q="@searchQuery"
+                       class="event-cat-pill @(selectedCategory == cat ? "event-cat-pill--active" : "")">
+                        @cat
+                    </a>
+                }
+            </div>
+
+            <!-- Arama Kutusu -->
+            <form method="get" asp-action="Index" class="event-search-wrap">
+                @if (!string.IsNullOrEmpty(selectedCategory))
+                {
+                    <input type="hidden" name="category" value="@selectedCategory" />
+                }
+                <i class="bi bi-search event-search-icon"></i>
+                <input type="text" name="q" value="@searchQuery" class="form-control event-search-input" placeholder="Etkinlik veya konum ara..." autocomplete="off" />
+            </form>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════
+             ETKİNLİK KARTLARI GRID
+             ═══════════════════════════════════════════════ -->
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-4">
+                @foreach (var item in Model)
+                {
+                    var isPast = item.EventDate < DateTime.UtcNow;
+                    <div class="col-lg-4 col-md-6 reveal">
+                        <a asp-action="Details" asp-route-slug="@item.Slug" class="event-card-link" id="event-card-@item.Id">
+                            <div class="event-card h-100">
+                                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                {
+                                    <div class="event-img-wrap">
+                                        <img src="@item.ImageUrl" alt="@item.Title" class="event-img" loading="lazy" />
+                                        @if (!string.IsNullOrEmpty(item.Category))
+                                        {
+                                            <span class="event-category-badge">@item.Category</span>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="event-img-placeholder">
+                                        <i class="bi bi-calendar-event"></i>
+                                        @if (!string.IsNullOrEmpty(item.Category))
+                                        {
+                                            <span class="event-category-badge">@item.Category</span>
+                                        }
+                                    </div>
+                                }
+
+                                <div class="event-body">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="event-date-row mb-0">
+                                            <i class="bi bi-clock me-1"></i>
+                                            @item.EventDate.ToLocalTime().ToString("dd MMM yyyy, HH:mm")
+                                        </span>
+                                        @if (isPast)
+                                        {
+                                            <span class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary border-opacity-25" style="font-size:0.65rem;">Tamamlandı</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25" style="font-size:0.65rem;">Yaklaşan</span>
+                                        }
+                                    </div>
+
+                                    <h3 class="event-title">@item.Title</h3>
+                                    <p class="event-desc">
+                                        @(item.Description?.Length > 100 ? item.Description[..100] + "…" : item.Description)
+                                    </p>
+
+                                    <div class="event-footer">
+                                        <span class="event-location" title="@item.Location">
+                                            <i class="bi bi-geo-alt me-1 text-info"></i>
+                                            @(item.Location.Length > 22 ? item.Location[..22] + "…" : item.Location)
+                                        </span>
+                                        <span class="event-arrow">
+                                            <i class="bi bi-arrow-right"></i>
+                                        </span>
+                                    </div>
                                 </div>
-                                <h4 class="fw-bold text-white mb-3">@item.Title</h4>
-                                <p class="text-secondary mb-4 small">@(item.Description?.Length > 100 ? item.Description.Substring(0, 100) + "..." : item.Description)</p>
                             </div>
-                            <a asp-action="Details" asp-route-slug="@item.Slug" class="btn btn-outline-primary w-100 rounded-pill"><i class="bi bi-arrow-right-circle me-2"></i>Detayları Gör</a>
-                        </div>
+                        </a>
                     </div>
-                </div>
-            }
-        </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state reveal my-5">
+                <div class="empty-icon"><i class="bi bi-calendar-x"></i></div>
+                <p class="empty-text fs-5 mb-2">Kriterlerinize uygun etkinlik bulunamadı.</p>
+                <p class="text-secondary small mb-4">Arama filtrenizi değiştirebilir veya tüm etkinlikleri listeleyebilirsiniz.</p>
+                <a asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
+                    <i class="bi bi-arrow-counterclockwise me-2"></i>Filtreleri Temizle
+                </a>
+            </div>
+        }
     </div>
 </section>

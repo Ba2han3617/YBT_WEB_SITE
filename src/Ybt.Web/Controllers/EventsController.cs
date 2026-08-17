@@ -21,17 +21,49 @@ public class EventsController : Controller
         _context = context;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? category, string? q)
     {
-        var events = await _eventService.GetAllAsync();
+        var query = _context.Events.Where(e => e.IsActive).AsQueryable();
+
+        // Get distinct active categories for filter tabs
+        var categories = await _context.Events
+            .Where(e => e.IsActive && !string.IsNullOrEmpty(e.Category))
+            .Select(e => e.Category!)
+            .Distinct()
+            .ToListAsync();
+
+        ViewBag.Categories = categories;
+        ViewBag.SelectedCategory = category;
+        ViewBag.SearchQuery = q;
+
+        if (!string.IsNullOrWhiteSpace(category))
+        {
+            query = query.Where(e => e.Category == category);
+        }
+
+        if (!string.IsNullOrWhiteSpace(q))
+        {
+            var search = q.Trim().ToLower();
+            query = query.Where(e => e.Title.ToLower().Contains(search) || 
+                                     e.Description.ToLower().Contains(search) || 
+                                     e.Location.ToLower().Contains(search) ||
+                                     (e.Speaker != null && e.Speaker.ToLower().Contains(search)));
+        }
+
+        var events = await query
+            .OrderBy(e => e.EventDate)
+            .ToListAsync();
+
         return View(events);
     }
 
     public async Task<IActionResult> Details(string slug)
     {
+        if (string.IsNullOrWhiteSpace(slug)) return NotFound();
+
         var @event = await _context.Events
             .Include(e => e.Applications)
-            .FirstOrDefaultAsync(e => e.Slug == slug);
+            .FirstOrDefaultAsync(e => e.Slug == slug && e.IsActive);
 
         if (@event == null) return NotFound();
 
@@ -59,7 +91,7 @@ public class EventsController : Controller
         var @event = await _context.Events.FindAsync(eventId);
         if (@event == null || !@event.IsActive)
         {
-            TempData["Error"] = "Başvurulmak istenen etkinlik bulunamadı veya aktif değil.";
+            TempData["Error"] = "Başvurulmak istenen etkinlik bulunamadı veya yayınlanmamış.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -90,7 +122,7 @@ public class EventsController : Controller
         await _context.EventApplications.AddAsync(application);
         await _context.SaveChangesAsync();
 
-        TempData["Success"] = $"'{ @event.Title }' etkinliğine başvurunuz başarıyla alındı! Başvurunuzun durumunu aşağıdan takip edebilirsiniz.";
-        return RedirectToAction("Applications", "Account");
+        TempData["Success"] = $"'{ @event.Title }' etkinliğine başvurunuz başarıyla alındı!";
+        return RedirectToAction(nameof(Details), new { slug = @event.Slug });
     }
 }
