@@ -26,7 +26,15 @@ public static class DbInitializer
 
         if (admin == null)
         {
-            var initialPassword = Environment.GetEnvironmentVariable("ADMIN_INITIAL_PASSWORD") ?? "Admin123*";
+            var envPassword = Environment.GetEnvironmentVariable("ADMIN_INITIAL_PASSWORD");
+            var isProduction = string.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"), "Production", StringComparison.OrdinalIgnoreCase);
+
+            if (isProduction && string.IsNullOrWhiteSpace(envPassword))
+            {
+                throw new InvalidOperationException("CRITICAL SECURITY ERROR: ADMIN_INITIAL_PASSWORD environment variable must be set in Production environments. Hardcoded default admin password cannot be used.");
+            }
+
+            var initialPassword = envPassword ?? "Admin123*";
             admin = new AppUser
             {
                 UserName = adminUserName,

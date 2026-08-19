@@ -215,7 +215,7 @@
         });
 
         function loadApplicationDetails(appId) {
-            $.get('/Admin/Applications/GetDetails/' + appId, function(data) {
+            $.get('/ybt-yonetim/basvurular/GetDetails/' + appId, function(data) {
                 $('#modalAppId').val(data.id);
                 $('#modalApplicantName').text(data.fullName);
                 $('#modalApplicantEmail').text(data.email);

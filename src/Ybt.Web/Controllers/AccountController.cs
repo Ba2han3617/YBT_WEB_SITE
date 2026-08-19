@@ -216,8 +216,7 @@ public class AccountController : Controller
         return View();
     }
 
-    [HttpGet("adminstrator")]
-    [HttpGet("administrative")]
+    [HttpGet("ybt-yonetim")]
     public IActionResult AdminLogin(string? returnUrl = null)
     {
         ViewData["ReturnUrl"] = returnUrl;
@@ -225,8 +224,7 @@ public class AccountController : Controller
         return View("AdminLogin");
     }
 
-    [HttpPost("adminstrator")]
-    [HttpPost("administrative")]
+    [HttpPost("ybt-yonetim")]
     [ValidateAntiForgeryToken]
     [EnableRateLimiting("strict-limit")]
     public async Task<IActionResult> AdminLogin(LoginViewModel model, string? returnUrl = null)
@@ -236,37 +234,33 @@ public class AccountController : Controller
             var user = await _userManager.FindByEmailAsync(model.Email) ?? await _userManager.FindByNameAsync(model.Email);
             if (user != null)
             {
-                if (await _userManager.CheckPasswordAsync(user, model.Password))
+                if (await _userManager.IsLockedOutAsync(user))
                 {
-                    if (!await _userManager.IsInRoleAsync(user, "Admin"))
-                    {
-                        ModelState.AddModelError(string.Empty, "Bu alana erişim yetkiniz yok. Bu giriş ekranı yalnızca yöneticiler içindir.");
-                        ViewData["IsAdminLogin"] = true;
-                        return View("AdminLogin", model);
-                    }
+                    ModelState.AddModelError(string.Empty, "Hesabınız çok sayıda hatalı giriş nedeniyle geçici olarak kilitlenmiştir. Lütfen daha sonra tekrar deneyiniz.");
+                    ViewData["IsAdminLogin"] = true;
+                    return View("AdminLogin", model);
                 }
 
-                var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: true);
-                if (result.Succeeded)
+                if (await _userManager.IsInRoleAsync(user, "Admin"))
                 {
-                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: true);
+                    if (result.Succeeded)
                     {
                         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                             return Redirect(returnUrl);
                         return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
                     }
 
-                    await _signInManager.SignOutAsync();
-                    ModelState.AddModelError(string.Empty, "Bu alana erişim yetkiniz yok. Bu giriş ekranı yalnızca yöneticiler içindir.");
-                    ViewData["IsAdminLogin"] = true;
-                    return View("AdminLogin", model);
+                    if (result.IsLockedOut)
+                    {
+                        ModelState.AddModelError(string.Empty, "Hesabınız çok sayıda hatalı giriş nedeniyle geçici olarak kilitlenmiştir. Lütfen daha sonra tekrar deneyiniz.");
+                        ViewData["IsAdminLogin"] = true;
+                        return View("AdminLogin", model);
+                    }
                 }
-
-                if (result.IsLockedOut)
+                else
                 {
-                    ModelState.AddModelError(string.Empty, "Hesabınız çok sayıda hatalı giriş nedeniyle geçici olarak kilitlenmiştir. Lütfen daha sonra tekrar deneyiniz.");
-                    ViewData["IsAdminLogin"] = true;
-                    return View("AdminLogin", model);
+                    await _userManager.AccessFailedAsync(user);
                 }
             }
 

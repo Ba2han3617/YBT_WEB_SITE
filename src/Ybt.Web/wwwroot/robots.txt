@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /ybt-yonetim
+Disallow: /ybt-yonetim/

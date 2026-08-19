@@ -54,9 +54,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
     options.Events.OnRedirectToLogin = context =>
     {
-        if (context.Request.Path.StartsWithSegments("/Admin") || context.Request.Path.StartsWithSegments("/admin"))
+        if (context.Request.Path.StartsWithSegments("/ybt-yonetim"))
         {
-            context.Response.Redirect("/adminstrator?ReturnUrl=" + System.Net.WebUtility.UrlEncode(context.Request.Path + context.Request.QueryString));
+            context.Response.Redirect("/ybt-yonetim?ReturnUrl=" + System.Net.WebUtility.UrlEncode(context.Request.Path + context.Request.QueryString));
             return Task.CompletedTask;
         }
         context.Response.Redirect(context.RedirectUri);
@@ -145,19 +145,77 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.MapControllerRoute(
-    name: "administrative",
-    pattern: "administrative",
-    defaults: new { controller = "Account", action = "AdminLogin" });
+// Block legacy admin routes completely
+app.Use(async (context, next) =>
+{
+    var path = context.Request.Path.Value?.ToLowerInvariant();
+    if (path != null && (path == "/administrative" || path.StartsWith("/administrative/") ||
+                         path == "/adminstrator" || path.StartsWith("/adminstrator/") ||
+                         path == "/admin" || path.StartsWith("/admin/")))
+    {
+        context.Response.StatusCode = StatusCodes.Status404NotFound;
+        return;
+    }
+    await next();
+});
 
 app.MapControllerRoute(
-    name: "adminstrator",
-    pattern: "adminstrator",
+    name: "ybt-yonetim-login",
+    pattern: "ybt-yonetim",
     defaults: new { controller = "Account", action = "AdminLogin" });
 
-app.MapControllerRoute(
-    name: "areas",
-    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+app.MapAreaControllerRoute(
+    name: "ybt-yonetim-dashboard",
+    areaName: "Admin",
+    pattern: "ybt-yonetim/panel/{action=Index}/{id?}",
+    defaults: new { controller = "Dashboard" });
+
+app.MapAreaControllerRoute(
+    name: "ybt-yonetim-etkinlikler",
+    areaName: "Admin",
+    pattern: "ybt-yonetim/etkinlikler/{action=Index}/{id?}",
+    defaults: new { controller = "Events" });
+
+app.MapAreaControllerRoute(
+    name: "ybt-yonetim-bloglar",
+    areaName: "Admin",
+    pattern: "ybt-yonetim/bloglar/{action=Index}/{id?}",
+    defaults: new { controller = "Blogs" });
+
+app.MapAreaControllerRoute(
+    name: "ybt-yonetim-projeler",
+    areaName: "Admin",
+    pattern: "ybt-yonetim/projeler/{action=Index}/{id?}",
+    defaults: new { controller = "Projects" });
+
+app.MapAreaControllerRoute(
+    name: "ybt-yonetim-kullanicilar",
+    areaName: "Admin",
+    pattern: "ybt-yonetim/kullanicilar/{action=Index}/{id?}",
+    defaults: new { controller = "Users" });
+
+app.MapAreaControllerRoute(
+    name: "ybt-yonetim-basvurular",
+    areaName: "Admin",
+    pattern: "ybt-yonetim/basvurular/{action=Index}/{id?}",
+    defaults: new { controller = "Applications" });
+
+app.MapAreaControllerRoute(
+    name: "ybt-yonetim-hakkimizda",
+    areaName: "Admin",
+    pattern: "ybt-yonetim/hakkimizda-icerikleri/{action=Index}/{id?}",
+    defaults: new { controller = "AboutFeatures" });
+
+app.MapAreaControllerRoute(
+    name: "ybt-yonetim-ekip",
+    areaName: "Admin",
+    pattern: "ybt-yonetim/ekip-uyeleri/{action=Index}/{id?}",
+    defaults: new { controller = "TeamMembers" });
+
+app.MapAreaControllerRoute(
+    name: "ybt-yonetim-fallback",
+    areaName: "Admin",
+    pattern: "ybt-yonetim/{controller=Dashboard}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
